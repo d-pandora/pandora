@@ -1,0 +1,29 @@
+{
+  "name": "d-pandora",
+  "version": "1.0.0",
+  "description": "cli tool",
+  "main": "bin/index.js",
+  "bin": {
+    "d-pandora": "bin/index.js"
+  },
+  "license": "MIT",
+  "scripts": {
+    "compile": "tsc --watch"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "colors": "^1.4.0",
+    "commander": "^3.0.1",
+    "inquirer": "^7.0.0",
+    "ncp": "^2.0.0",
+    "ora": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/colors": "^1.2.1",
+    "@types/commander": "^2.12.2",
+    "@types/inquirer": "^6.5.0",
+    "@types/ncp": "^2.0.1",
+    "@types/node": "^12.7.5",
+    "typescript": "^3.6.3"
+  }
+}
