@@ -11,7 +11,7 @@ module.exports = {
   entry: [
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://127.0.0.1:3001',
-    path.resolve(__dirname, '/../src/view/index.tsx'),
+    path.resolve(__dirname, '../src/view/index.tsx'),
   ],
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -71,7 +71,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '/../src/view/index.html'),
+      template: path.resolve(__dirname, '../src/view/index.html'),
     }),
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,

@@ -62,14 +62,12 @@ export default function FormTemplate () {
         rules={[{ required: true }]}
         id="inputItem"
         formItemLabel="InputItem"
-        formItemLayout={{ labelCol: { span: 10 }, wrapperCol: { span: 14 } }}
       />
       <InputNumberItem
         span={6}
         rules={[{ required: true }]}
         id="inputNumberItem"
         formItemLabel="InputNumberItem"
-        formItemLayout={{ labelCol: { span: 10 }, wrapperCol: { span: 14 } }}
       />
       <SelectItem
         span={6}
@@ -79,7 +77,6 @@ export default function FormTemplate () {
         optionLabelKey="mean"
         options={[{ code: 1, mean: 'a'}, {code: 2, mean: 'b'}]}
         formItemLabel="SelectItem"
-        formItemLayout={{ labelCol: { span: 10 }, wrapperCol: { span: 14 } }}
       />
       <RadioItem
         span={6}
@@ -89,26 +86,22 @@ export default function FormTemplate () {
         optionLabelKey="mean"
         options={[{ code: 1, mean: 'a'}, {code: 2, mean: 'b'}]}
         formItemLabel="RadioItem"
-        formItemLayout={{ labelCol: { span: 10 }, wrapperCol: { span: 14 } }}
       />
       <CheckboxItem
         span={6}
         id="checkboxItem"
         formItemLabel="RadioItem"
-        formItemLayout={{ labelCol: { span: 10 }, wrapperCol: { span: 14 } }}
       />
       <TreeSelectItem
         span={6}
         id="treeSelectItem"
         treeData={treeData}
         formItemLabel="TreeSelectItem"
-        formItemLayout={{ labelCol: { span: 10 }, wrapperCol: { span: 14 } }}
       />
       <DatePickerItem
         span={6}
         id="datePickerItem"
         formItemLabel="DatePickerItem"
-        formItemLayout={{ labelCol: { span: 10 }, wrapperCol: { span: 14 } }}
       />
       <RangePickerItem
         span={12}
