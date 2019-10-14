@@ -58,7 +58,8 @@
     "baseUrl": ".",
     "paths": {
       "pages/*": ["pages/*"],
-      "components/*": ["components/*"]
+      "components/*": ["components/*"],
+      "utils/*": ["utils/*"],
     },
     /* Experimental Options */
     "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */

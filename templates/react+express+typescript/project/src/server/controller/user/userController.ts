@@ -24,11 +24,17 @@ export default class UserController {
     @QueryParam('mobile') mobile: string
   ) {
     const result = await this.UserService.getUserList(id)
+    await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(true)
+      }, 3000)
+    })
     this.logger.info(result)
     return {
-      ...result,
-      name,
-      mobile,
+      totalCount: 0,
+      currentPage: 1,
+      pageSize: 20,
+      data: [],
     }
   }
 

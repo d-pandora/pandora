@@ -7,7 +7,7 @@ import './style.less'
 const { Sider, Header, Content } = Layout
 
 const menuData = [
-  { name: 'Home', url: '/home', icon: '' },
+  { name: 'Users', url: '/user/list', icon: '' },
   { name: 'About', url: '/about', icon: '' },
 ]
 
@@ -17,9 +17,9 @@ const PageLayout: SFC<{}> = function (props) {
       <Sider>
         <Menu data={menuData} />
       </Sider>
-      <Layout>
+      <Layout className="layout-content">
         <Header className="layout-header">Header</Header>
-        <Content>{props.children}</Content>
+        <Content style={{ padding: '8px 16px' }}>{props.children}</Content>
       </Layout>
     </Layout>
   )
