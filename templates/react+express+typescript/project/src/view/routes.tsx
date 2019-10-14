@@ -1,13 +1,14 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import home from 'pages/about/index'
-import about from 'pages/about/index'
+import Container from './container'
+
+import home from 'pages/home'
+import about from 'pages/about'
 
 const routes = (
-  <div>
+  <Container>
     <Route exact path="/home" component={home} />
     <Route exact path="/about" component={about} />
-  </div>
+  </Container>
 )
-
 export default routes

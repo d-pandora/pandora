@@ -42,11 +42,10 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var commander_1 = __importDefault(require("commander"));
 var inquirer_1 = __importDefault(require("inquirer"));
-var ncp_1 = require("ncp");
 var ora_1 = __importDefault(require("ora"));
 var path_1 = __importDefault(require("path"));
 var fs_1 = __importDefault(require("fs"));
-var colors_1 = __importDefault(require("colors"));
+var createFactory_1 = __importDefault(require("./processor/createFactory"));
 commander_1.default.command('create')
     .option('-c, --create', 'create a new component')
     .description('create a new component')
@@ -54,45 +53,56 @@ commander_1.default.command('create')
     .action(function (option) { return __awaiter(_this, void 0, void 0, function () {
     function inquire() {
         return __awaiter(this, void 0, void 0, function () {
-            var result, component, page, type, spinning, path, targetPath, tagertContainer;
+            function handleSuccess(msg) {
+                spinning.succeed(msg);
+                process.exit();
+            }
+            function handleFailed(msg) {
+                spinning.fail(msg);
+                process.exit();
+            }
+            var choices, spinning, processor, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, inquirer_1.default.prompt(promps)];
                     case 1:
-                        result = _a.sent();
-                        component = result.component, page = result.page, type = result.type;
-                        spinning = ora_1.default('start init project ing...');
-                        path = type === 'components' ? componentsPath : pagesPath;
-                        targetPath = type === 'components' ? process.cwd() + "/src/view/components/" + component : process.cwd() + "/src/view/pages/" + page;
-                        tagertContainer = type === 'components' ? process.cwd() + "/src/view/components" : process.cwd() + "/src/view/pages";
-                        if (!fs_1.default.existsSync(tagertContainer)) {
-                            fs_1.default.mkdirSync(tagertContainer);
+                        choices = _a.sent();
+                        spinning = ora_1.default('start creating...');
+                        processor = createFactory_1.default.createComponent;
+                        switch (choices.type) {
+                            case 'components':
+                                processor = createFactory_1.default.createComponent;
+                                break;
+                            case 'pages':
+                                processor = createFactory_1.default.createPage;
                         }
                         spinning.start();
-                        ncp_1.ncp(path + "/" + (type === 'components' ? component : page), targetPath, function (err) {
-                            if (err) {
-                                console.log(colors_1.default.red("build fail!, " + err));
-                                process.exit();
-                            }
-                            spinning.stop();
-                            console.log(colors_1.default.green('create success!'));
-                        });
+                        return [4 /*yield*/, processor(config, choices, spinning)];
+                    case 2:
+                        result = _a.sent();
+                        if (result.success) {
+                            handleSuccess(result.msg);
+                        }
+                        else {
+                            handleFailed(result.msg);
+                        }
+                        spinning.stop();
                         return [2 /*return*/];
                 }
             });
         });
     }
-    var cwd, template, componentsPath, components, pagesPath, pages, promps;
+    var cwd, config, componentsPath, components, pagesPath, pages, promps;
     return __generator(this, function (_a) {
         cwd = process.cwd();
         if (!fs_1.default.existsSync(cwd + "/package.json")) {
             console.log('.....请在项目根目录下进行操作');
             return [2 /*return*/];
         }
-        template = require(cwd + "/package.json");
-        componentsPath = path_1.default.resolve(__dirname, "../templates/" + template.templateName + "/components");
+        config = require(cwd + "/package.json");
+        componentsPath = path_1.default.resolve(__dirname, "../templates/" + config.templateName + "/components");
         components = fs_1.default.readdirSync("" + componentsPath);
-        pagesPath = path_1.default.resolve(__dirname, "../templates/" + template.templateName + "/pages");
+        pagesPath = path_1.default.resolve(__dirname, "../templates/" + config.templateName + "/pages");
         pages = fs_1.default.readdirSync("" + pagesPath);
         promps = [
             {
@@ -117,6 +127,15 @@ commander_1.default.command('create')
                 choices: pages,
                 when: function (answers) {
                     return answers.type === 'pages';
+                }
+            },
+            {
+                type: 'list',
+                name: 'routes',
+                message: 'link page to routes?',
+                choices: ['Yes', 'No'],
+                when: function (answers) {
+                    return pages.indexOf(answers.type) > -1;
                 }
             },
         ];

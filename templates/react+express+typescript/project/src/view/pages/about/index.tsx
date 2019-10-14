@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function home (): JSX.Element {
+export default function About (): JSX.Element {
   return (
-    <div>11111</div>
+    <div>This page is created by d-pandora.</div>
   )
 }

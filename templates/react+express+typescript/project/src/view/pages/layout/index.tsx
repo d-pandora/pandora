@@ -1,23 +1,28 @@
-import React from 'react'
+import React, { SFC } from 'react'
 import { Layout } from 'antd'
-import FormTemplate from 'compontents/form/template'
+import Menu from './menu'
 
 import './style.less'
 
 const { Sider, Header, Content } = Layout
 
-export default function PageLayout () {
+const menuData = [
+  { name: 'Home', url: '/home', icon: '' },
+  { name: 'About', url: '/about', icon: '' },
+]
 
+const PageLayout: SFC<{}> = function (props) {
   return (
     <Layout className="layout-container">
-      <Sider>Sider</Sider>
+      <Sider>
+        <Menu data={menuData} />
+      </Sider>
       <Layout>
         <Header className="layout-header">Header</Header>
-        <Content>Content</Content>
-        <div style={{ width: "80%", margin: '30px auto'}}>
-          <FormTemplate />
-        </div>
+        <Content>{props.children}</Content>
       </Layout>
     </Layout>
   )
 }
+
+export default PageLayout

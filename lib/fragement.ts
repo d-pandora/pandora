@@ -7,6 +7,8 @@ import path from 'path'
 import fs from 'fs'
 import colors from 'colors'
 
+import createFactory from './processor/createFactory'
+
 commander.command('create')
 .option('-c, --create', 'create a new component')
 .description('create a new component')
@@ -20,12 +22,12 @@ commander.command('create')
     return
   }
 
-  const template = require(`${cwd}/package.json`)
+  const config = require(`${cwd}/package.json`)
 
-  const componentsPath = path.resolve(__dirname, `../templates/${template.templateName}/components`)
+  const componentsPath = path.resolve(__dirname, `../templates/${config.templateName}/components`)
   const components = fs.readdirSync(`${componentsPath}`)
 
-  const pagesPath = path.resolve(__dirname, `../templates/${template.templateName}/pages`)
+  const pagesPath = path.resolve(__dirname, `../templates/${config.templateName}/pages`)
   const pages = fs.readdirSync(`${pagesPath}`)
 
 
@@ -54,37 +56,53 @@ commander.command('create')
         return answers.type === 'pages';
       }
     },
+    {
+      type: 'list',
+      name: 'routes',
+      message: 'link page to routes?',
+      choices: ['Yes', 'No'],
+      when: function (answers: any) {
+        return pages.indexOf(answers.type) > -1;
+      }
+    },
   ];
 
   async function inquire () {
 
-    const result = await inquirer.prompt(promps)
-
-    const { component, page, type } = result
+    const choices = await inquirer.prompt(promps)
   
-    const spinning = ora('start init project ing...')
+    const spinning = ora('start creating...')
 
+    let processor = createFactory.createComponent
 
-    const path = type === 'components' ? componentsPath : pagesPath
-
-    const targetPath = type === 'components' ? `${process.cwd()}/src/view/components/${component}` : `${process.cwd()}/src/view/pages/${page}`
-
-    const tagertContainer = type === 'components' ? `${process.cwd()}/src/view/components` : `${process.cwd()}/src/view/pages`
-    if (!fs.existsSync(tagertContainer)) {
-      fs.mkdirSync(tagertContainer)
+    switch(choices.type) {
+      case 'components':
+          processor = createFactory.createComponent
+        break
+      case 'pages':
+        processor = createFactory.createPage
     }
 
     spinning.start()
-    ncp(`${path}/${type === 'components' ? component : page}`, targetPath, err => {
-      if (err) {
-        console.log(colors.red(`build fail!, ${err}`));
-        process.exit();
-      }
-      spinning.stop()
-  
-      console.log(colors.green('create success!'));
-  
-    });
+    const result = await processor(config, choices, spinning)
+
+    if (result.success) {
+      handleSuccess(result.msg)
+    } else {
+      handleFailed(result.msg)
+    }
+    spinning.stop()
+
+    function handleSuccess(msg: string) {
+      spinning.succeed(msg)
+      process.exit();
+    }
+
+    function handleFailed(msg: string) {
+      spinning.fail(msg);
+      process.exit();
+    }
+
   }
 
   inquire()
