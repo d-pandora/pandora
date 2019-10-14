@@ -11,7 +11,7 @@ import {
   RangePickerItem,
 } from './formItem'
 
-export default Form;
+export default Form
 
 export {
   InputItem,

@@ -25,12 +25,11 @@ export function InputItem(props: InputItemProps) {
   return (
     <Col span={span || 24}>
       <FormItem {...formItemLayout} label={formItemLabel}>
-      {
-        form.getFieldDecorator(id.toString(), {
-          rules: rules ? rules : [],
-        })(
-        <Input {...inputProps} />)
-      }
+        {
+          form.getFieldDecorator(id.toString(), {
+            rules: rules ? rules : [],
+          })(<Input {...inputProps} />)
+        }
       </FormItem>
     </Col>
   )
@@ -42,11 +41,11 @@ export function InputNumberItem (props: InputNumberItemProps) {
   return (
     <Col span={span || 24}>
       <FormItem {...formItemLayout} label={formItemLabel}>
-      {
-        form.getFieldDecorator(id.toString(), {
-          rules: rules ? rules : [],
-        })(<InputNumber { ...inputNumberProps }/>)
-      }
+        {
+          form.getFieldDecorator(id.toString(), {
+            rules: rules ? rules : [],
+          })(<InputNumber { ...inputNumberProps }/>)
+        }
       </FormItem>
     </Col>
   )
@@ -58,12 +57,11 @@ export function TextAreaItem (props: TextAreaItemProps) {
   return (
     <Col span={span || 24}>
       <FormItem {...formItemLayout} label={formItemLabel}>
-      {
-        form.getFieldDecorator(id.toString(), {
-          rules: rules ? rules : [],
-        })(
-        <TextArea {...inputProps} />)
-      }
+        {
+          form.getFieldDecorator(id.toString(), {
+            rules: rules ? rules : [],
+          })(<TextArea {...inputProps} />)
+        }
       </FormItem>
     </Col>
   )
@@ -75,19 +73,19 @@ export function SelectItem(props: SelectItemProps) {
   return (
     <Col span={span || 24}>
       <FormItem {...formItemLayout} label={formItemLabel}>
-      {
-        form.getFieldDecorator(id.toString(), {
-          rules: rules ? rules : [],
-        })(<Select
-          {...selectProps}
-        >
-          {options && options.map((option, index) =>
-            <Option
-              key={index.toString()}
-              value={option[optionValueKey || 'code'].toString()}
-            >{option[optionLabelKey || 'mean']}</Option>)}
-        </Select>)
-      }
+        {
+          form.getFieldDecorator(id.toString(), {
+            rules: rules ? rules : [],
+          })(<Select
+            {...selectProps}
+          >
+            {options && options.map((option, index) =>
+              <Option
+                key={index.toString()}
+                value={option[optionValueKey || 'code'].toString()}
+              >{option[optionLabelKey || 'mean']}</Option>)}
+          </Select>)
+        }
       </FormItem>
     </Col>
   )
@@ -99,20 +97,20 @@ export function RadioItem (props: RadioItemProps) {
   return (
     <Col span={span || 24}>
       <FormItem {...formItemLayout} label={formItemLabel}>
-      {
-        form.getFieldDecorator(id.toString(), {
-          rules: rules ? rules : [],
-        })(<Radio.Group
-          style={{ whiteSpace: 'nowrap' }}
-          name={id.toString()}
-          {...radioProps}
-        >
-          {options && options.map((option, index) =>
-            <Radio key={index.toString()}
-              value={optionValueKey && option[optionValueKey].toString()}
-            >{optionLabelKey && option[optionLabelKey]}</Radio>)}
-        </Radio.Group>)
-      }
+        {
+          form.getFieldDecorator(id.toString(), {
+            rules: rules ? rules : [],
+          })(<Radio.Group
+            style={{ whiteSpace: 'nowrap' }}
+            name={id.toString()}
+            {...radioProps}
+          >
+            {options && options.map((option, index) =>
+              <Radio key={index.toString()}
+                value={optionValueKey && option[optionValueKey].toString()}
+              >{optionLabelKey && option[optionLabelKey]}</Radio>)}
+          </Radio.Group>)
+        }
       </FormItem>
     </Col>
   )
@@ -124,12 +122,12 @@ export function CheckboxItem (props: CheckboxItemProps) {
   return (
     <Col span={span || 24}>
       <FormItem {...formItemLayout} label={formItemLabel}>
-      {
-        form.getFieldDecorator(id.toString(), {
-          rules: rules ? rules : [],
-          valuePropName: 'checked',
-        })(<Checkbox>{checkBoxLabel}</Checkbox>)
-      }
+        {
+          form.getFieldDecorator(id.toString(), {
+            rules: rules ? rules : [],
+            valuePropName: 'checked',
+          })(<Checkbox>{checkBoxLabel}</Checkbox>)
+        }
       </FormItem>
     </Col>
   )
@@ -141,11 +139,11 @@ export function TreeSelectItem (props: TreeSelectItemProps) {
   return (
     <Col span={span || 24}>
       <FormItem {...formItemLayout} label={formItemLabel}>
-      {
-        form.getFieldDecorator(id.toString(), {
-          rules: rules ? rules : [],
-        })(<TreeSelect {...treeSeleteOptions} />)
-      }
+        {
+          form.getFieldDecorator(id.toString(), {
+            rules: rules ? rules : [],
+          })(<TreeSelect {...treeSeleteOptions} />)
+        }
       </FormItem>
     </Col>
   )
@@ -157,11 +155,11 @@ export function DatePickerItem(props: DatePickerItemProps) {
   return (
     <Col span={span || 24}>
       <FormItem {...formItemLayout} label={formItemLabel}>
-      {
-        form.getFieldDecorator(id.toString(), {
-          rules: rules ? rules : [],
-        })(<DatePicker {...datePickerOptions} />)
-      }
+        {
+          form.getFieldDecorator(id.toString(), {
+            rules: rules ? rules : [],
+          })(<DatePicker {...datePickerOptions} />)
+        }
       </FormItem>
     </Col>
   )
@@ -173,17 +171,17 @@ export function RangePickerItem(props: RangePickerItemProps) {
   return (
     <Col span={span || 24}>
       <FormItem {...formItemLayout} label={formItemLabel}>
-      {
-        form.getFieldDecorator(id.toString(), {
-          rules: rules ? rules : [],
-        })(
-          <RangePicker
-            style={{width: '100%'}}
-            key={id.toString()}
-            {...rangePickerOptions}
-          />
-        )
-      }
+        {
+          form.getFieldDecorator(id.toString(), {
+            rules: rules ? rules : [],
+          })(
+            <RangePicker
+              style={{width: '100%'}}
+              key={id.toString()}
+              {...rangePickerOptions}
+            />
+          )
+        }
       </FormItem>
     </Col>
   )

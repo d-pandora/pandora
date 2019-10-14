@@ -4,7 +4,7 @@ import { FormProps } from './interface'
 
 import './style.less'
 
-export const FormContext = React.createContext({} as FormProps);
+export const FormContext: React.Context<FormProps> = React.createContext({} as any)
 
 function Form (props: FormProps): JSX.Element {
 
@@ -28,7 +28,7 @@ export default AntdForm.create<FormProps>({
   },
   mapPropsToFields (props) {
     const fields = props.formValue.fields || {}
-    Object.keys(props.formValue).map((key: any) => {
+    Object.keys(props.formValue).forEach((key: any) => {
       if (key === 'fields') {
         return
       }
