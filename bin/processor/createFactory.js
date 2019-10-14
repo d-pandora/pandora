@@ -45,11 +45,12 @@ var path_1 = __importDefault(require("path"));
 var colors_1 = __importDefault(require("colors"));
 function createPage(config, choices, spinning) {
     return __awaiter(this, void 0, void 0, function () {
-        var page, type, sourcePath, targetPath, tagertContainer;
+        var page, type, component, targetName, sourcePath, targetPath, tagertContainer;
         return __generator(this, function (_a) {
-            page = choices.page, type = choices.type;
-            sourcePath = path_1.default.resolve(__dirname, "../../templates/" + config.templateName + "/" + type + "/" + page);
-            targetPath = process.cwd() + "/src/view/" + type + "/" + page;
+            page = choices.page, type = choices.type, component = choices.component;
+            targetName = type === 'pages' ? page : component;
+            sourcePath = path_1.default.resolve(__dirname, "../../templates/" + config.templateName + "/" + type + "/" + targetName);
+            targetPath = process.cwd() + "/src/view/" + type + "/" + targetName;
             tagertContainer = process.cwd() + "/src/view/" + type;
             if (!fs_1.default.existsSync(tagertContainer)) {
                 fs_1.default.mkdirSync(tagertContainer);
@@ -65,7 +66,7 @@ function createPage(config, choices, spinning) {
                         }
                         resolve({
                             success: true,
-                            msg: colors_1.default.green(type + ":" + page + " created!"),
+                            msg: colors_1.default.green(type + ":" + targetName + " created!"),
                         });
                     });
                 })];

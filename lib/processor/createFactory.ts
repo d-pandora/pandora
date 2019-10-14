@@ -9,11 +9,12 @@ export interface IResult {
   msg: string,
 }
 
-async function createPage(config, choices, spinning: ora.Ora): Promise<IResult> {
+async function createPage(config: { templateName: string }, choices: any, spinning: ora.Ora): Promise<IResult> {
 
-  const { page, type } = choices
-  const sourcePath = path.resolve(__dirname, `../../templates/${config.templateName}/${type}/${page}`)
-  const targetPath = `${process.cwd()}/src/view/${type}/${page}`
+  const { page, type, component } = choices
+  const targetName = type === 'pages' ? page : component
+  const sourcePath = path.resolve(__dirname, `../../templates/${config.templateName}/${type}/${targetName}`)
+  const targetPath = `${process.cwd()}/src/view/${type}/${targetName}`
 
   const tagertContainer = `${process.cwd()}/src/view/${type}`
   if (!fs.existsSync(tagertContainer)) {
@@ -32,7 +33,7 @@ async function createPage(config, choices, spinning: ora.Ora): Promise<IResult> 
       }
       resolve({
         success: true,
-        msg: colors.green(`${type}:${page} created!`),
+        msg: colors.green(`${type}:${targetName} created!`),
       })
     });
   })

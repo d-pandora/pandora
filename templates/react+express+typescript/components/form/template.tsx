@@ -9,7 +9,7 @@ import Form, {
   TreeSelectItem,
   DatePickerItem,
   RangePickerItem,
-} from 'compontents/form/index'
+} from 'components/form/index'
 
 export default function FormTemplate () {
 
