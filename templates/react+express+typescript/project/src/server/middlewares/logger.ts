@@ -8,8 +8,8 @@ export default function accessLogger (req: Request, res: Response, next: NextFun
     const logger = container.get<Logger>('Logger')
     logger.info(`HTTP_REQUEST_INFO: ${req.method} ${req.url}      ================`)
     res.on('finish', () => {
-        const cost = Date.now() - startTime
-        logger.info(`HTTP_REQUEST_INFO: ${req.method} ${req.url} ${res.statusCode} - ${cost} ms ================`)
+      const cost = Date.now() - startTime
+      logger.info(`HTTP_REQUEST_INFO: ${req.method} ${req.url} ${res.statusCode} - ${cost} ms ================`)
     })
   }
   next()

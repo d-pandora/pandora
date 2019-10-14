@@ -19,16 +19,16 @@ app.use(cookieParser())
 app.use(bodyParser())
 app.use(cors())
 
-app.use(express.static(path.resolve(__dirname + '/static')))
+app.use(express.static(path.resolve(__dirname, '/static')))
 
 app.use(accessLogger)
 
-let server = new InversifyExpressServer(app);
+let server = new InversifyExpressServer(app)
 
-let serverInstance = server.build();
+let serverInstance = server.build()
 
 app.use(html)
 
-serverInstance.listen(config.port);
+serverInstance.listen(config.port)
 
-console.log(`Server started on port ${config.port} :)`);
+console.log(`Server started on port ${config.port} :)`)

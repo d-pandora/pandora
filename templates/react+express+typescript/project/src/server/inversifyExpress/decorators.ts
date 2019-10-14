@@ -1,5 +1,5 @@
 import express from 'express'
-import { interfaces } from "./interfaces";
+import { interfaces } from './interfaces'
 import { METADATA_KEY, PARAMETER_TYPE } from './constants'
 
 export function Controller (path: string, ...middleWares: interfaces.Middleware[]) {
@@ -38,20 +38,19 @@ function Method (method: interfaces.METHOD_TYPE, path: string, ...middleWares: i
       path,
       target,
     }
-    let metadataList: interfaces.ControllerMethodMetadata[] = [];
+    let metadataList: interfaces.ControllerMethodMetadata[] = []
     if (!Reflect.hasMetadata(METADATA_KEY.controllerMethod, target.constructor)) {
       Reflect.defineMetadata(METADATA_KEY.controllerMethod, metadataList, target.constructor)
     } else {
       metadataList = Reflect.getMetadata(METADATA_KEY.controllerMethod, target.constructor)
     }
-    metadataList.push(metadata);
+    metadataList.push(metadata)
   }
 }
 
 function paramDecoratorFactory (type: PARAMETER_TYPE): (name?: string) => ParameterDecorator {
-  return (name?: string): ParameterDecorator => { 
-    name = name || 'default'
-    return Params(type, name)
+  return (name?: string): ParameterDecorator => {
+    return Params(type, name || 'default')
   }
 }
 
@@ -62,7 +61,7 @@ function Params (type: PARAMETER_TYPE, parameterName: string): ParameterDecorato
       parameterName,
       index,
     }
-    let metadataList: interfaces.ControllerParameterMetadata = {};
+    let metadataList: interfaces.ControllerParameterMetadata = {}
     let parameterMetadataList: interfaces.ParameterMetadata[] = []
     if (!Reflect.hasMetadata(METADATA_KEY.controllerParameter, target.constructor)) {
       parameterMetadataList.push(metadata)

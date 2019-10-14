@@ -27,30 +27,30 @@ const MenuComponent: SFC<IProps> = function (props) {
       theme="dark"
       onClick={handleClickMenu}
     >
-  {
-    data.map((menu: any, index: number) => {
-      if (menu.children && menu.children.length) {
-        return (
-          <SubMenu
-            key={index}
-            title={<span>{ menu.icon ? <Icon type={menu.icon} /> : null}<span>{menu.name}</span></span>}
-          >
-            {
-              menu.children.map((subMenu: any) => <Menu.Item key={subMenu.url}><span>{subMenu.name}</span></Menu.Item>)
-            }
-          </SubMenu>
-        )
-      } else {
-        return (
-          <Menu.Item key={menu.url}>
-            { menu.icon ? <Icon type={menu.icon} /> : null}
-            <span>{menu.name}</span>
-          </Menu.Item>
-        )
+      {
+        data.map((menu: any, index: number) => {
+          if (menu.children && menu.children.length) {
+            return (
+              <SubMenu
+                key={index}
+                title={<span>{ menu.icon ? <Icon type={menu.icon} /> : null}<span>{menu.name}</span></span>}
+              >
+                {
+                  menu.children.map((subMenu: any) => <Menu.Item key={subMenu.url}><span>{subMenu.name}</span></Menu.Item>)
+                }
+              </SubMenu>
+            )
+          } else {
+            return (
+              <Menu.Item key={menu.url}>
+                { menu.icon ? <Icon type={menu.icon} /> : null}
+                <span>{menu.name}</span>
+              </Menu.Item>
+            )
+          }
+        })
       }
-    })
-  }
-</Menu>
+    </Menu>
   )
 }
 

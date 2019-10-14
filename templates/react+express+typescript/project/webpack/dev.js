@@ -11,7 +11,7 @@ module.exports = {
   entry: [
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://127.0.0.1:3001',
-    path.join(__dirname, '/../src/view/index.tsx'),
+    path.resolve(__dirname, '/../src/view/index.tsx'),
   ],
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -63,15 +63,15 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: ['.tsx', '.ts', '.js'],
     alias: {
-      pages: path.resolve(__dirname, `../src/view/pages`),
-      components: path.resolve(__dirname, "../src/view/components")
+      pages: path.resolve(__dirname, '../src/view/pages'),
+      components: path.resolve(__dirname, '../src/view/components')
     }
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '/../src/view/index.html'),
+      template: path.resolve(__dirname, '/../src/view/index.html'),
     }),
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,
@@ -90,7 +90,7 @@ module.exports = {
       'Access-Control-Allow-Origin': '*'
     },
     proxy: {
-      "/api": "http://127.0.0.1:3000",
+      '/api': 'http://127.0.0.1:3000',
     }
   },
 }

@@ -9,7 +9,7 @@ const version = require('../package.json').version
 module.exports = {
   mode: 'production',
   entry: [
-    path.join(__dirname, '../src/view/index.tsx'),
+    path.resolve(__dirname, '../src/view/index.tsx'),
   ],
   output: {
     path: path.resolve(__dirname, '../dist/static'),

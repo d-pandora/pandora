@@ -1,5 +1,5 @@
 import express from 'express'
-import inversify from "inversify";
+import inversify from 'inversify'
 import { interfaces } from './interfaces'
 import { container, buildProviderModule } from './ioc'
 import { TYPE, METADATA_KEY, PARAMETER_TYPE } from './constants'
@@ -9,7 +9,7 @@ export default class InversifyExpressServer {
   private _router: express.Router
   private _app: express.Application
 
-  constructor (
+  public constructor (
     customApp?: express.Application,
   ) {
     this._container = container
@@ -18,7 +18,7 @@ export default class InversifyExpressServer {
   }
 
   public build (): express.Application {
-    this._container.load(buildProviderModule());
+    this._container.load(buildProviderModule())
     this.registerControllers()
     return this._app
   }
@@ -87,17 +87,17 @@ export default class InversifyExpressServer {
     }
     for (const item of params) {
       switch (item.type) {
-        case PARAMETER_TYPE.RESPONSE: args[item.index] = res; break
-        case PARAMETER_TYPE.REQUEST: args[item.index] = item.parameterName && item.parameterName !== 'default' ? this.getParam(req, null, item.parameterName) : req; break
-        case PARAMETER_TYPE.NEXT: args[item.index] = next; break
-        case PARAMETER_TYPE.PARAMS: args[item.index] = this.getParam(req, 'params', item.parameterName); break
-        case PARAMETER_TYPE.QUERY: args[item.index] = item.parameterName && item.parameterName !== 'default' ? this.getParam(req, 'query', item.parameterName) : req.query; break
-        case PARAMETER_TYPE.BODY: args[item.index] = item.parameterName && item.parameterName !== 'default' ? this.getParam(req, 'body', item.parameterName) : req.body; break
-        case PARAMETER_TYPE.HEADERS: args[item.index] = this.getParam(req, 'headers', item.parameterName); break
-        case PARAMETER_TYPE.COOKIES: args[item.index] = item.parameterName && item.parameterName !== 'default' ? req.cookies[item.parameterName] : req.cookies; break
-        // case PARAMETER_TYPE.SESSION: args[item.index] = item.parameterName && item.parameterName !== 'default' ? req.session[item.parameterName] : req.session; break
-        default:
-          args[item.index] = res; break
+      case PARAMETER_TYPE.RESPONSE: args[item.index] = res; break
+      case PARAMETER_TYPE.REQUEST: args[item.index] = item.parameterName && item.parameterName !== 'default' ? this.getParam(req, null, item.parameterName) : req; break
+      case PARAMETER_TYPE.NEXT: args[item.index] = next; break
+      case PARAMETER_TYPE.PARAMS: args[item.index] = this.getParam(req, 'params', item.parameterName); break
+      case PARAMETER_TYPE.QUERY: args[item.index] = item.parameterName && item.parameterName !== 'default' ? this.getParam(req, 'query', item.parameterName) : req.query; break
+      case PARAMETER_TYPE.BODY: args[item.index] = item.parameterName && item.parameterName !== 'default' ? this.getParam(req, 'body', item.parameterName) : req.body; break
+      case PARAMETER_TYPE.HEADERS: args[item.index] = this.getParam(req, 'headers', item.parameterName); break
+      case PARAMETER_TYPE.COOKIES: args[item.index] = item.parameterName && item.parameterName !== 'default' ? req.cookies[item.parameterName] : req.cookies; break
+      // case PARAMETER_TYPE.SESSION: args[item.index] = item.parameterName && item.parameterName !== 'default' ? req.session[item.parameterName] : req.session; break
+      default:
+        args[item.index] = res; break
       }
     }
     args.push(req, res, next)

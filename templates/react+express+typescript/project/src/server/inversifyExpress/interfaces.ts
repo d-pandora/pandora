@@ -1,8 +1,9 @@
-import express from "express";
+import express from 'express'
 import { PARAMETER_TYPE } from './constants'
 
-namespace interfaces {
+declare namespace interfaces {
 
+  /* eslint-disable @typescript-eslint/no-empty-interface */
   export interface Controller {}
 
   export type Middleware = express.RequestHandler
@@ -38,4 +39,4 @@ namespace interfaces {
 
 }
 
-export { interfaces };
+export { interfaces }
