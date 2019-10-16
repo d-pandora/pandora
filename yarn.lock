@@ -283,6 +283,11 @@ signal-exit@^3.0.2:
   resolved "https://registry.npm.taobao.org/signal-exit/download/signal-exit-3.0.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsignal-exit%2Fdownload%2Fsignal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
+stream-replace@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/stream-replace/download/stream-replace-1.0.0.tgz#0acc0bf3275662666e48bc5da22c080700b2690d"
+  integrity sha1-CswL8ydWYmZuSLxdoiwIBwCyaQ0=
+
 string-width@^4.1.0:
   version "4.1.0"
   resolved "https://registry.npm.taobao.org/string-width/download/string-width-4.1.0.tgz#ba846d1daa97c3c596155308063e075ed1c99aff"

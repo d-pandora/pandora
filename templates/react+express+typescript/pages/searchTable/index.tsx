@@ -15,14 +15,14 @@ import Form, {
 import { fetchJSONByGet } from 'utils/fetchApi'
 import { useStore } from 'utils/store'
 
-export default function UserList () {
+export default function SearchTable () {
 
-  const userListStore = useStore('userListStore')
+  const searchTableStore = useStore('searchTableStore')
 
-  const [formValue, setFormValue] = userListStore({
+  const [formValue, setFormValue] = searchTableStore({
     inputItem: '123456',
     selectItem: '2',
-    treeSelectItem: ['0-0-2'],
+    treeSelectItem: ['0-1'],
     rangePickerItem: [moment(), moment()],
   })
 
@@ -51,11 +51,6 @@ export default function UserList () {
           title: 'Child Node1',
           value: '0-0-1',
           key: '0-0-1',
-        },
-        {
-          title: 'Child Node2',
-          value: '0-0-2',
-          key: '0-0-2',
         },
       ],
     },
@@ -95,18 +90,12 @@ export default function UserList () {
   }
 
   async function  fetchTableData (current: number) {
-    setTableData({
-      ...tableData,
-      loading: true,
-    })
+    setTableData({ ...tableData, loading: true })
     const result = await fetchJSONByGet('/api/user/list', {
       ...formValue,
       current,
     })
-    setTableData({
-      ...result.data,
-      loading: false,
-    })
+    setTableData({ ...result.data, loading: false })
   }
 
   function onPageChange(current: number) {

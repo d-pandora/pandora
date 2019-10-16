@@ -77,7 +77,7 @@ commander_1.default.command('create')
                                 processor = createFactory_1.default.createPage;
                         }
                         spinning.start();
-                        return [4 /*yield*/, processor(config, choices, spinning)];
+                        return [4 /*yield*/, processor(config.templateName, choices, spinning)];
                     case 2:
                         result = _a.sent();
                         if (result.success) {
@@ -125,6 +125,22 @@ commander_1.default.command('create')
                 name: 'page',
                 message: 'please selet a page?',
                 choices: pages,
+                when: function (answers) {
+                    return answers.type === 'pages';
+                }
+            },
+            {
+                type: 'input',
+                name: 'pagedir',
+                message: 'please input you page dirname exmaple：user/list?',
+                when: function (answers) {
+                    return answers.type === 'pages';
+                }
+            },
+            {
+                type: 'input',
+                name: 'moduleName',
+                message: 'please input you page export module name：userList?',
                 when: function (answers) {
                     return answers.type === 'pages';
                 }
