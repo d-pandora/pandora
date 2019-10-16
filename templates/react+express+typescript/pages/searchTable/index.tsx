@@ -15,11 +15,11 @@ import Form, {
 import { fetchJSONByGet } from 'utils/fetchApi'
 import { useStore } from 'utils/store'
 
-export default function UserList () {
+export default function SearchTable () {
 
-  const userListStore = useStore('userListStore')
+  const searchTableStore = useStore('searchTableStore')
 
-  const [formValue, setFormValue] = userListStore({
+  const [formValue, setFormValue] = searchTableStore({
     inputItem: '123456',
     selectItem: '2',
     treeSelectItem: ['0-1'],
