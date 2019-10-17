@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { Table, Button, Col } from 'antd'
 import Form, {
@@ -12,59 +11,17 @@ import Form, {
   DatePickerItem,
   RangePickerItem,
 } from 'components/form/index'
-import { fetchJSONByGet } from 'utils/fetchApi'
-import { useStore } from 'utils/store'
+import userListStore from './store'
 
 export default function UserList () {
 
-  const userListStore = useStore('userListStore')
-
-  const [formValue, setFormValue] = userListStore({
-    inputItem: '123456',
-    selectItem: '2',
-    treeSelectItem: ['0-0-2'],
-    rangePickerItem: [moment(), moment()],
-  })
-
-  const [tableData, setTableData] = useState({
-    totalCount: 0,
-    currentPage: 1,
-    pageSize: 20,
-    data: [],
-    loading: false,
-  })
-
-  function cacheFormValue(value: any) {
-    setFormValue({
-      ...formValue,
-      ...value,
-    })
-  }
-
-  const treeData = [
-    {
-      title: 'Node1',
-      value: '0-0',
-      key: '0-0',
-      children: [
-        {
-          title: 'Child Node1',
-          value: '0-0-1',
-          key: '0-0-1',
-        },
-        {
-          title: 'Child Node2',
-          value: '0-0-2',
-          key: '0-0-2',
-        },
-      ],
-    },
-    {
-      title: 'Node2',
-      value: '0-1',
-      key: '0-1',
-    },
-  ]
+  const {
+    formValue,
+    tableData,
+    treeData,
+    cacheFormValue,
+    fetchTableData,
+  } = userListStore()
 
   function getColumns () {
     return [
@@ -92,21 +49,6 @@ export default function UserList () {
         )
       },
     ]
-  }
-
-  async function  fetchTableData (current: number) {
-    setTableData({
-      ...tableData,
-      loading: true,
-    })
-    const result = await fetchJSONByGet('/api/user/list', {
-      ...formValue,
-      current,
-    })
-    setTableData({
-      ...result.data,
-      loading: false,
-    })
   }
 
   function onPageChange(current: number) {
