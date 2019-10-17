@@ -50,15 +50,32 @@ function createPage(templateName: string, choices: any, spinning: ora.Ora): Prom
 
 function execNcp (sourcePath: string, targetPath: string, moduleName?: string): Promise<IResult> {
   return new Promise((resolve, reject) => {
+
+    // if (fs.existsSync(targetPath)) {
+    //   resolve({
+    //     success: false,
+    //     msg: 'file aleardy exits!'
+    //   })
+    //   return
+    // }
+    console.log('......moduleName', moduleName)
+
     ncp(sourcePath, targetPath, {
       transform: function(reader, writer) {
+        console.log('......moduleName', moduleName)
         if (moduleName) {
+          console.log('......moduleName', moduleName)
           const replaceName = sourcePath.slice(sourcePath.lastIndexOf('/') + 1)
           const UpperReplaceName = replaceName.replace(/^\S/, s => s.toUpperCase())
           const UpperCaseMoudleName = moduleName.replace(/^\S/, s => s.toUpperCase())
           const replaceNameReg = new RegExp(replaceName, "g")
           const UpperReplaceNameReg = new RegExp(UpperReplaceName, "g")
-          reader.pipe(replace(replaceNameReg, moduleName)).pipe(replace(UpperReplaceNameReg, UpperCaseMoudleName)).pipe(writer);
+          console.log('......replaceName', replaceName)
+          reader.pipe(replace(replaceNameReg, moduleName))
+            .pipe(replace(UpperReplaceNameReg, UpperCaseMoudleName))
+            .pipe(replace(/moduleName/g, moduleName))
+            .pipe(replace(/ModuleName/g, UpperCaseMoudleName))
+            .pipe(writer);
         } else {
           reader.pipe(writer)
         }

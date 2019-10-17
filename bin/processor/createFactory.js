@@ -36,15 +36,30 @@ function createPage(templateName, choices, spinning) {
 }
 function execNcp(sourcePath, targetPath, moduleName) {
     return new Promise(function (resolve, reject) {
+        // if (fs.existsSync(targetPath)) {
+        //   resolve({
+        //     success: false,
+        //     msg: 'file aleardy exits!'
+        //   })
+        //   return
+        // }
+        console.log('......moduleName', moduleName);
         ncp_1.ncp(sourcePath, targetPath, {
             transform: function (reader, writer) {
+                console.log('......moduleName', moduleName);
                 if (moduleName) {
+                    console.log('......moduleName', moduleName);
                     var replaceName = sourcePath.slice(sourcePath.lastIndexOf('/') + 1);
                     var UpperReplaceName = replaceName.replace(/^\S/, function (s) { return s.toUpperCase(); });
                     var UpperCaseMoudleName = moduleName.replace(/^\S/, function (s) { return s.toUpperCase(); });
                     var replaceNameReg = new RegExp(replaceName, "g");
                     var UpperReplaceNameReg = new RegExp(UpperReplaceName, "g");
-                    reader.pipe(stream_replace_1.default(replaceNameReg, moduleName)).pipe(stream_replace_1.default(UpperReplaceNameReg, UpperCaseMoudleName)).pipe(writer);
+                    console.log('......replaceName', replaceName);
+                    reader.pipe(stream_replace_1.default(replaceNameReg, moduleName))
+                        .pipe(stream_replace_1.default(UpperReplaceNameReg, UpperCaseMoudleName))
+                        .pipe(stream_replace_1.default(/moduleName/g, moduleName))
+                        .pipe(stream_replace_1.default(/ModuleName/g, UpperCaseMoudleName))
+                        .pipe(writer);
                 }
                 else {
                     reader.pipe(writer);
