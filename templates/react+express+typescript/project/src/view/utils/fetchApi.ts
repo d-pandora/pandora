@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { message } from 'antd'
 
 export function fetchJSON (url: string, params: any) {
@@ -44,7 +45,7 @@ const buildParams = (obj: any) => {
   return params.join('&')
 }
 
-const fetchJSONByMethod = (method: string, headers?: any) => (url: string, query?: any) => {
+const fetchJSONByMethod = (method: string, headers?: any) => (url: string) => (query?: any) => {
   const params: any = {
     method,
     headers: headers || {},
@@ -88,3 +89,28 @@ export const fetchJSONByDelete = fetchJSONByMethod('DELETE')
 export const fetchJSONStringByPost = fetchJSONByMethod('POST', {'Content-Type': 'application/json;charset=UTF-8'})
 
 export const fetchJSONStringByPut = fetchJSONByMethod('PUT', {'Content-Type': 'application/json;charset=UTF-8'})
+
+export const useFetch = (fetchApi: (query?: any) => Promise<any>, initialValue: any, query?: any): [any, React.Dispatch<any>, boolean, boolean] => {
+  const [response, setResponse] = useState(initialValue)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const [param, setParams] = useState(query)
+
+  useEffect(() => {
+    const FetchData = async () => {
+      setLoading(true)
+      try {
+        const result = await fetchApi(param)
+        setResponse(result)
+        setLoading(false)
+      } catch (error) {
+        setError(error)
+        setLoading(false)
+      }
+    }
+    if (param) {
+      FetchData()
+    }
+  }, [param])
+  return [response, setParams, loading, error]
+}

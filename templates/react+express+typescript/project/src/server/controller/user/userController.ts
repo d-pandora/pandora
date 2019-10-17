@@ -31,7 +31,7 @@ export default class UserController {
     })
     this.logger.info(result)
     return {
-      totalCount: 0,
+      totalCount: 100,
       currentPage: 1,
       pageSize: 20,
       data: [],

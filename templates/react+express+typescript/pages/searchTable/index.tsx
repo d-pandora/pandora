@@ -12,7 +12,7 @@ import Form, {
   DatePickerItem,
   RangePickerItem,
 } from 'components/form/index'
-import { fetchJSONByGet } from 'utils/fetchApi'
+import { fetchJSONByGet, useFetch } from 'utils/fetchApi'
 import { useStore } from 'utils/store'
 
 export default function SearchTable () {
@@ -24,14 +24,6 @@ export default function SearchTable () {
     selectItem: '2',
     treeSelectItem: ['0-1'],
     rangePickerItem: [moment(), moment()],
-  })
-
-  const [tableData, setTableData] = useState({
-    totalCount: 0,
-    currentPage: 1,
-    pageSize: 20,
-    data: [],
-    loading: false,
   })
 
   function cacheFormValue(value: any) {
@@ -89,17 +81,19 @@ export default function SearchTable () {
     ]
   }
 
-  async function  fetchTableData (current: number) {
-    setTableData({ ...tableData, loading: true })
-    const result = await fetchJSONByGet('/api/user/list', {
-      ...formValue,
-      current,
-    })
-    setTableData({ ...result.data, loading: false })
-  }
+  const [tableData, fetchTableData, loading] = useFetch(fetchJSONByGet('/api/user/list'), {
+    totalCount: 0,
+    currentPage: 1,
+    pageSize: 20,
+    data: [],
+  })
 
   function onPageChange(current: number) {
-    fetchTableData(current)
+    fetchTableData({ ...formValue, currentPage: current })
+  }
+
+  function handleSubmit () {
+    fetchTableData({ ...formValue, currentPage: 1 })
   }
 
   return (
@@ -164,11 +158,11 @@ export default function SearchTable () {
         />
         <Col style={{ float: 'right', textAlign: 'right' }} className="pull-right">
           <Button>clear</Button>
-          <Button type="primary">submit</Button>
+          <Button type="primary" onClick={handleSubmit}>submit</Button>
         </Col>
       </Form>
       <Table
-        loading={tableData.loading}
+        loading={loading}
         columns={getColumns()}
         dataSource={tableData.data}
         bordered={true}
