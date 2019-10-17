@@ -17,22 +17,13 @@ import { useStore } from 'utils/store'
 
 export default function SearchTable () {
 
-  const searchTableStore = useStore('searchTableStore')
-
-  const [formValue, setFormValue] = searchTableStore({
+  const initFormValue = {
     inputItem: '123456',
     selectItem: '2',
     treeSelectItem: ['0-1'],
     rangePickerItem: [moment(), moment()],
-  })
-
-  function cacheFormValue(value: any) {
-    setFormValue({
-      ...formValue,
-      ...value,
-    })
   }
-
+  
   const treeData = [
     {
       title: 'Node1',
@@ -52,6 +43,25 @@ export default function SearchTable () {
       key: '0-1',
     },
   ]
+
+  const searchTableStore = useStore('searchTableStore')
+
+  const [formValue, setFormValue] = searchTableStore(initFormValue)
+
+  const [tableData, fetchTableData, loading] = useFetch(fetchJSONByGet('/api/user/list'), {
+    totalCount: 0,
+    currentPage: 1,
+    pageSize: 20,
+    data: [],
+  })
+
+  function cacheFormValue(value: any) {
+    setFormValue({
+      ...formValue,
+      ...value,
+    })
+  }
+
 
   function getColumns () {
     return [
@@ -81,19 +91,16 @@ export default function SearchTable () {
     ]
   }
 
-  const [tableData, fetchTableData, loading] = useFetch(fetchJSONByGet('/api/user/list'), {
-    totalCount: 0,
-    currentPage: 1,
-    pageSize: 20,
-    data: [],
-  })
-
   function onPageChange(current: number) {
     fetchTableData({ ...formValue, currentPage: current })
   }
 
   function handleSubmit () {
     fetchTableData({ ...formValue, currentPage: 1 })
+  }
+
+  function handleReset () {
+    setFormValue(initFormValue)
   }
 
   return (
@@ -157,7 +164,7 @@ export default function SearchTable () {
           formItemLayout={{ labelCol: { span: 5 }, wrapperCol: { span: 19 } }}
         />
         <Col style={{ float: 'right', textAlign: 'right' }} className="pull-right">
-          <Button>clear</Button>
+          <Button className="mr8" onClick={handleReset}>clear</Button>
           <Button type="primary" onClick={handleSubmit}>submit</Button>
         </Col>
       </Form>
