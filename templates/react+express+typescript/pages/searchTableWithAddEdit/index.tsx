@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef } from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { Table, Button, Col } from 'antd'
@@ -14,6 +14,7 @@ import Form, {
 } from 'components/form/index'
 import { fetchJSONByGet, useFetch } from 'utils/fetchApi'
 import { useStore } from 'utils/store'
+import AddEdit, { ImperativeHandles } from './addEdit'
 
 export default function ModuleName () {
 
@@ -55,6 +56,8 @@ export default function ModuleName () {
     data: [],
   })
 
+  const addEdit = useRef<ImperativeHandles>(null)
+
   function cacheFormValue(value: any) {
     setFormValue({
       ...formValue,
@@ -82,8 +85,9 @@ export default function ModuleName () {
         title: '操作',
         dataIndex: 'id',
         width: 120,
-        render: (id: string, row: any) => (
+        render: (id: string, record: any) => (
           <div>
+            <Button size="small" type="primary" onClick={() => handleEdit(record)}></Button>
             <Link to={`/order/detail/${id}`}>查看</Link>
           </div>
         )
@@ -101,6 +105,18 @@ export default function ModuleName () {
 
   function onPageChange(current: number) {
     fetchTableData({ ...formValue, currentPage: current })
+  }
+
+  function handleAdd () {
+    if (addEdit && addEdit.current) {
+      addEdit.current.show({})
+    }
+  }
+
+  function handleEdit (record: any) {
+    if (addEdit && addEdit.current) {
+      addEdit.current.show(record, 'edit')
+    }
   }
 
   return (
@@ -168,6 +184,7 @@ export default function ModuleName () {
           <Button type="primary" onClick={handleSubmit}>submit</Button>
         </Col>
       </Form>
+      <Button className="mb8 mt8" type="primary" onClick={handleAdd}>新增</Button>
       <Table
         loading={loading}
         columns={getColumns()}
@@ -182,6 +199,7 @@ export default function ModuleName () {
           current: tableData.currentPage,
         }}
       />
+      <AddEdit ref={addEdit} />
     </div>
   )
 }
