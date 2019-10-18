@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useState } from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { Table, Button, Col } from 'antd'
@@ -12,22 +12,56 @@ import Form, {
   DatePickerItem,
   RangePickerItem,
 } from 'components/form/index'
-import AddEdit, { ImperativeHandles } from './addEdit'
-import userListStore from './store'
+import { fetchJSONByGet, useFetch } from 'utils/fetchApi'
+import { useStore } from 'utils/store'
 
-export default function UserList () {
+export default function ModuleName () {
 
-  const addEdit = useRef<ImperativeHandles>(null)
-  const {
-    formValue,
-    tableData,
-    treeData,
-    loading,
-    initFormValue,
-    cacheFormValue,
-    setFormValue,
-    fetchTableData,
-  } = userListStore()
+  const initFormValue = {
+    inputItem: '123456',
+    selectItem: '2',
+    treeSelectItem: ['0-1'],
+    rangePickerItem: [moment(), moment()],
+  }
+  
+  const treeData = [
+    {
+      title: 'Node1',
+      value: '0-0',
+      key: '0-0',
+      children: [
+        {
+          title: 'Child Node1',
+          value: '0-0-1',
+          key: '0-0-1',
+        },
+      ],
+    },
+    {
+      title: 'Node2',
+      value: '0-1',
+      key: '0-1',
+    },
+  ]
+
+  const moduleNameStore = useStore('moduleNameStore')
+
+  const [formValue, setFormValue] = moduleNameStore(initFormValue)
+
+  const [tableData, fetchTableData, loading] = useFetch(fetchJSONByGet('/api/user/list'), {
+    totalCount: 0,
+    currentPage: 1,
+    pageSize: 20,
+    data: [],
+  })
+
+  function cacheFormValue(value: any) {
+    setFormValue({
+      ...formValue,
+      ...value,
+    })
+  }
+
 
   function getColumns () {
     return [
@@ -48,9 +82,8 @@ export default function UserList () {
         title: '操作',
         dataIndex: 'id',
         width: 120,
-        render: (id: string, record: any) => (
+        render: (id: string, row: any) => (
           <div>
-            <Button size="small" type="primary" onClick={() => handleEdit(record)}></Button>
             <Link to={`/order/detail/${id}`}>查看</Link>
           </div>
         )
@@ -68,18 +101,6 @@ export default function UserList () {
 
   function onPageChange(current: number) {
     fetchTableData({ ...formValue, currentPage: current })
-  }
-
-  function handleAdd () {
-    if (addEdit && addEdit.current) {
-      addEdit.current.show({})
-    }
-  }
-
-  function handleEdit (record: any) {
-    if (addEdit && addEdit.current) {
-      addEdit.current.show(record, 'edit')
-    }
   }
 
   return (
@@ -147,7 +168,6 @@ export default function UserList () {
           <Button type="primary" onClick={handleSubmit}>submit</Button>
         </Col>
       </Form>
-      <Button className="mb8 mt8" type="primary" onClick={handleAdd}>新增</Button>
       <Table
         loading={loading}
         columns={getColumns()}
@@ -162,7 +182,6 @@ export default function UserList () {
           current: tableData.currentPage,
         }}
       />
-      <AddEdit ref={addEdit} />
     </div>
   )
 }

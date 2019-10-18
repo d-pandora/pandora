@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 import commander from 'commander'
 import inquirer from 'inquirer'
-import { ncp } from 'ncp'
 import ora from 'ora'
 import path from 'path'
 import fs from 'fs'
-import colors from 'colors'
 
 import createFactory from './processor/createFactory'
 
@@ -57,6 +55,22 @@ commander.command('create')
       }
     },
     {
+      type: 'input',
+      name: 'pagedir',
+      message: 'please input you page dirname exmaple：user/list?',
+      when: function (answers: any) {
+        return answers.type === 'pages';
+      }
+    },
+    {
+      type: 'input',
+      name: 'moduleName',
+      message: 'please input you page export module name：userList?',
+      when: function (answers: any) {
+        return answers.type === 'pages';
+      }
+    },
+    {
       type: 'list',
       name: 'routes',
       message: 'link page to routes?',
@@ -84,7 +98,8 @@ commander.command('create')
     }
 
     spinning.start()
-    const result = await processor(config, choices, spinning)
+
+    const result = await processor(config.templateName, choices, spinning)
 
     if (result.success) {
       handleSuccess(result.msg)

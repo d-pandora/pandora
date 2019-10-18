@@ -16,7 +16,8 @@
     "commander": "^3.0.1",
     "inquirer": "^7.0.0",
     "ncp": "^2.0.0",
-    "ora": "^4.0.0"
+    "ora": "^4.0.0",
+    "stream-replace": "^1.0.0"
   },
   "devDependencies": {
     "@types/colors": "^1.2.1",
