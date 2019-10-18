@@ -25,6 +25,7 @@ module.exports = {
     "indent": ["error", 2],
     "quotes": [2, "single"],
     "semi": [2, "never"],
+    "complexity": ["error", 24],
   },
   "settings": {
     "react": {

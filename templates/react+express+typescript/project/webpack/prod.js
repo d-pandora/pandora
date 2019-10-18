@@ -8,12 +8,13 @@ const version = require('../package.json').version
 
 module.exports = {
   mode: 'production',
-  entry: [
-    path.resolve(__dirname, '../src/view/index.tsx'),
-  ],
+  entry: {
+    main: path.resolve(__dirname, '../src/view/index.tsx'),
+    login: path.resolve(__dirname, '../src/view/pages/login/index.tsx'),
+  },
   output: {
     path: path.resolve(__dirname, '../dist/static'),
-    filename: `${version}-main.js`,
+    filename: `${version}-[name].js`,
     publicPath: '/',
   },
   module: {
@@ -61,7 +62,8 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
     alias: {
       pages: path.resolve(__dirname, `../src/view/pages`),
-      components: path.resolve(__dirname, "../src/view/components")
+      components: path.resolve(__dirname, "../src/view/components"),
+      utils: path.resolve(__dirname, '../src/view/utils'),
     }
   },
   plugins: [

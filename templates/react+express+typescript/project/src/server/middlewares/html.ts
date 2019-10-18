@@ -12,9 +12,15 @@ export default function html(req: express.Request, res: express.Response, next: 
   }
 
   let main = `//${req.host}:${config.port}/${version}-main.js`
+  
   if (ENV === 'localdev') {
     main = `//127.0.0.1:3001/${version}-main.js`
   }
+
+  if (req.path === '/login') {
+    main = `//127.0.0.1:3001/${version}-login.js`
+  }
+
   res.status(200)
   res.send(`
     <!DOCTYPE html>

@@ -12,10 +12,25 @@ module.exports = {
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://127.0.0.1:3001',
     path.resolve(__dirname, '../src/view/index.tsx'),
+    path.resolve(__dirname, '../src/view/pages/login/index.tsx'),
   ],
+  
+  // output: {
+  //   path: path.resolve(__dirname, 'build'),
+  //   filename: `${version}-[name].js`,
+  //   publicPath: 'http://127.0.0.1:3001/',
+  //   hotUpdateMainFilename: '__hmr/[hash].hot-update.json',
+  //   hotUpdateChunkFilename: '__hmr/[id].[hash].hot-update.js'
+  // },
+  entry: {
+    patch: 'react-hot-loader/patch',
+    server: 'webpack-dev-server/client?http://127.0.0.1:3001',
+    main: path.resolve(__dirname, '../src/view/index.tsx'),
+    login: path.resolve(__dirname, '../src/view/pages/login/index.tsx'),
+  },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: `${version}-main.js`,
+    filename: `${version}-[name].js`,
     publicPath: 'http://127.0.0.1:3001/',
     hotUpdateMainFilename: '__hmr/[hash].hot-update.json',
     hotUpdateChunkFilename: '__hmr/[id].[hash].hot-update.js'

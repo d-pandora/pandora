@@ -9,6 +9,7 @@ import 'utils/loader'
 
 import accessLogger from 'middlewares/logger'
 import html from 'middlewares/html'
+import auth from 'middlewares/auth'
 import Config from 'config/index'
 
 const config = container.get<Config>('Config')
@@ -22,6 +23,8 @@ app.use(cors())
 app.use(express.static(path.resolve(__dirname, '/static')))
 
 app.use(accessLogger)
+
+app.use(auth)
 
 let server = new InversifyExpressServer(app)
 

@@ -10,6 +10,7 @@ import { DatePickerProps, RangePickerProps, RangePickerValue } from 'antd/es/dat
 export { RangePickerValue }
 
 export interface FormProps extends FormComponentProps {
+  className?: string,
   children: React.ReactNode;
   formValue: { [key: string]: any };
   cacheFormValue: Function;

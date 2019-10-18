@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react'
 import { message } from 'antd'
+import { PROJECT_TOKERN_NAME } from 'utils/constants'
 
 export function fetchJSON (url: string, params: any) {
+
+  const token = localStorage.getItem(PROJECT_TOKERN_NAME)
+
   const fetchparam = {
     ...params,
     credentials: 'include',
@@ -10,10 +14,15 @@ export function fetchJSON (url: string, params: any) {
       'Connection': 'keep-alive',
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
       ...params.headers,
+      authorization: token,
     },
   }
+
   return fetch(url, fetchparam)
     .then(resp => {
+      if (resp.status === 302) {
+        location.href = '/login'
+      }
       if(resp.status === 404) {
         message.error('page not found')
       }

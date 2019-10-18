@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form as AntdForm, Row } from 'antd'
+
 import { FormProps } from './interface'
 
 import './style.less'
@@ -9,7 +10,7 @@ export const FormContext: React.Context<FormProps> = React.createContext({} as a
 function Form (props: FormProps): JSX.Element {
 
   return (
-    <AntdForm className="form-wrapper">
+    <AntdForm className={`form-wrapper ${props.className}`}>
       <FormContext.Provider value={props}>
         <Row gutter={16}>
           {props.children}
