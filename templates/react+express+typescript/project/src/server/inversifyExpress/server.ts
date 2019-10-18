@@ -1,5 +1,6 @@
 import express from 'express'
 import inversify from 'inversify'
+import { Logger } from 'winston'
 import { interfaces } from './interfaces'
 import { container, buildProviderModule } from './ioc'
 import { TYPE, METADATA_KEY, PARAMETER_TYPE } from './constants'
@@ -8,6 +9,7 @@ export default class InversifyExpressServer {
   private _container: inversify.interfaces.Container
   private _router: express.Router
   private _app: express.Application
+  private _logger: Logger
 
   public constructor (
     customApp?: express.Application,
@@ -15,6 +17,7 @@ export default class InversifyExpressServer {
     this._container = container
     this._router = express.Router()
     this._app = customApp || express()
+    this._logger = container.get<Logger>('Logger')
   }
 
   public build (): express.Application {
@@ -71,6 +74,7 @@ export default class InversifyExpressServer {
         args = await controllerBeforeMetadata(args, req, res, next)
       }
       let result = await method(...args)
+      this._logger.info(`${req.method} ${req.path} ====> result`, result)
       if (controllerAfterMetadata) {
         result = await controllerAfterMetadata(result, req, res, next)
       }
