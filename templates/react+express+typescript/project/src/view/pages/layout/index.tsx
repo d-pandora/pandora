@@ -1,10 +1,11 @@
 import React, { SFC } from 'react'
 import { Layout } from 'antd'
 import Menu from './menu'
+import Header from './header'
 
 import './style.less'
 
-const { Sider, Header, Content } = Layout
+const { Sider, Content } = Layout
 
 const menuData = [
   { name: 'Users', url: '/user/list', icon: '' },
@@ -18,7 +19,7 @@ const PageLayout: SFC<{}> = function (props) {
         <Menu data={menuData} />
       </Sider>
       <Layout className="layout-content">
-        <Header className="layout-header">Header</Header>
+        <Header />
         <Content style={{ padding: '8px 16px' }}>{props.children}</Content>
       </Layout>
     </Layout>
