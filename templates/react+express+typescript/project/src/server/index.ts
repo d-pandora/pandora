@@ -10,6 +10,7 @@ import 'utils/loader'
 import accessLogger from 'middlewares/logger'
 import html from 'middlewares/html'
 import auth from 'middlewares/auth'
+import traceId from 'middlewares/traceId'
 import Config from 'config/index'
 
 const config = container.get<Config>('Config')
@@ -22,9 +23,11 @@ app.use(cors())
 
 app.use(express.static(path.resolve(__dirname, '/static')))
 
-app.use(accessLogger)
-
 app.use(auth)
+
+app.use(traceId)
+
+app.use(accessLogger)
 
 let server = new InversifyExpressServer(app)
 

@@ -6,6 +6,10 @@ declare namespace interfaces {
   /* eslint-disable @typescript-eslint/no-empty-interface */
   export interface Controller {}
 
+  export interface Request extends express.Request {
+    traceId?: string
+  }
+
   export type Middleware = express.RequestHandler
 
   export interface ControllerMetadata {

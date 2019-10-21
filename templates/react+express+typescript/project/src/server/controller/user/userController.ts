@@ -29,7 +29,6 @@ export default class UserController {
         resolve(true)
       }, 3000)
     })
-    this.logger.info(result)
     return {
       totalCount: 100,
       currentPage: 1,
