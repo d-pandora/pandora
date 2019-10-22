@@ -1,7 +1,8 @@
 import winston, { Logger } from 'winston'
 import path from 'path'
 import { container } from 'inversifyExpress/index'
-import { clsHooked } from 'utils/hooked'
+import { asyncHooks } from 'utils/asyncHooks'
+import async_hooks from 'async_hooks'
 
 let logger = winston.createLogger({
   transports: [
@@ -26,9 +27,9 @@ if (process.env.NODE_ENV === 'localdev') {
       winston.format.printf(info => {
         let traceId
         try {
-          traceId = clsHooked.get('traceId') || require('async_hooks').executionAsyncId()
+          traceId = asyncHooks.get('traceId') || async_hooks.executionAsyncId()
         }catch(e) {
-          traceId = require('async_hooks').executionAsyncId()
+          traceId = async_hooks.executionAsyncId()
         }
         const { timestamp, level, message , ...data } = info 
         return `${timestamp} ${level} traceId=${traceId} ${JSON.stringify(message, null, 2)} ${JSON.stringify(data, null, 2)}`

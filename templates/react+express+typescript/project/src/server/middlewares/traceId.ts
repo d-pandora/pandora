@@ -1,22 +1,17 @@
 import express from 'express'
-import { interfaces, container } from 'inversifyExpress/index'
+import { container } from 'inversifyExpress/index'
 import { v4 } from 'uuid'
 import { Logger } from 'winston'
-import { clsHooked } from 'utils/hooked'
+import { asyncHooks } from 'utils/asyncHooks'
 
-export default async function traceId(req: interfaces.Request, res: express.Response, next: express.NextFunction) {
-
+export default async function traceId(req: express.Request, res: express.Response, next: express.NextFunction) {
   const logger = container.get<Logger>('Logger')
   const traceId = v4()
-  req.traceId = traceId
-  res.setHeader('trace-id', traceId)
   try {
-    await clsHooked.runAndReturn(async () => {
-      clsHooked.set('traceId', traceId)
-      next()
-    })
+    asyncHooks.set('traceId', traceId)
+    next()
   } catch (e) {
-    logger.error(`clsHooked error traceId=${traceId}, ${req.path}`)
+    logger.error(`error traceId=${traceId}, ${req.path}`)
     next()
   }
 }
