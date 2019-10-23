@@ -1,5 +1,6 @@
-import React, { SFC } from 'react'
+import React, { SFC, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { OPEN_TOPTAB_EVENT } from 'utils/constants'
 import tabDataStore, { ITab } from './store'
 import { ITabProps } from './tab'
 
@@ -7,24 +8,31 @@ export interface IProps {
   renderItem: (item: ITabProps) => JSX.Element | null,
 }
 
-let store: any = null
-const handleOpenTab = (event: Event) => {
-  event.stopPropagation()
-  const newtab = (event as CustomEvent).detail as ITab
-  const tabs = store.tabData.tabs
-  if (tabs.some((tab: ITab) => tab.key === newtab.key)) {
-    store.updateTabData({ activeKey: newtab.key })
-  } else {
-    store.updateTabData({ tabs: [...tabs, newtab],activeKey: newtab.key })
-  }
-}
-window.addEventListener('openTab', handleOpenTab)
-
-
 const TopTab: SFC<IProps> = function (props) {
   const { renderItem } = props
-  store = tabDataStore()
-  const {
+    
+  const store = tabDataStore()
+
+  const handleOpenTab = (event: Event) => {
+    event.stopPropagation()
+    const newtab = (event as CustomEvent).detail as ITab
+    const tabs = store.tabData.tabs
+    
+    if (tabs.some((tab: ITab) => tab.key === newtab.key)) {
+      store.updateTabData({ activeKey: newtab.key })
+    } else {
+      store.updateTabData({ tabs: [...tabs, newtab],activeKey: newtab.key })
+    }
+  }
+  
+  useEffect(() => {
+    window.addEventListener(OPEN_TOPTAB_EVENT, handleOpenTab)
+    return () => {
+      window.removeEventListener(OPEN_TOPTAB_EVENT, handleOpenTab)
+    }
+  }, [store])
+
+  let {
     tabData,
     updateTabData,
     removeTab,

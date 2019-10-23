@@ -1,6 +1,7 @@
 import React, { SFC } from 'react'
 import { Menu, Icon } from 'antd'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { OPEN_TOPTAB_EVENT } from 'utils/constants'
 
 const SubMenu = Menu.SubMenu
 
@@ -20,7 +21,7 @@ const MenuComponent: SFC<IProps> = function (props) {
   const handleClickMenu = (e: any) => {
     const { title } = e.item.node.dataset
     props.history.push(e.key)
-    window.dispatchEvent(new CustomEvent('openTab', { detail: { key: e.key, value: title, title }}))
+    window.dispatchEvent(new CustomEvent(OPEN_TOPTAB_EVENT, { detail: { key: e.key, value: title, title }}))
   }
 
   return (
