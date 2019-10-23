@@ -1,6 +1,7 @@
 import React, { SFC } from 'react'
 import { Layout } from 'antd'
 import Menu from './menu'
+import TopTab from 'components/topTab'
 import Header from './header'
 
 import './style.less'
@@ -20,6 +21,7 @@ const PageLayout: SFC<{}> = function (props) {
       </Sider>
       <Layout className="layout-content">
         <Header />
+        <TopTab />
         <Content style={{ padding: '8px 16px' }}>{props.children}</Content>
       </Layout>
     </Layout>

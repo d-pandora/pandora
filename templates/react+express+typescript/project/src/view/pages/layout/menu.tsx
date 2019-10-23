@@ -18,7 +18,9 @@ const MenuComponent: SFC<IProps> = function (props) {
   const { data } = props
 
   const handleClickMenu = (e: any) => {
+    const { title } = e.item.node.dataset
     props.history.push(e.key)
+    window.dispatchEvent(new CustomEvent('openTab', { detail: { key: e.key, value: title, title }}))
   }
 
   return (
@@ -33,6 +35,7 @@ const MenuComponent: SFC<IProps> = function (props) {
             return (
               <SubMenu
                 key={index}
+                data-title={menu.name}
                 title={<span>{ menu.icon ? <Icon type={menu.icon} /> : null}<span>{menu.name}</span></span>}
               >
                 {
@@ -42,7 +45,7 @@ const MenuComponent: SFC<IProps> = function (props) {
             )
           } else {
             return (
-              <Menu.Item key={menu.url}>
+              <Menu.Item key={menu.url} data-title={menu.name}>
                 { menu.icon ? <Icon type={menu.icon} /> : null}
                 <span>{menu.name}</span>
               </Menu.Item>

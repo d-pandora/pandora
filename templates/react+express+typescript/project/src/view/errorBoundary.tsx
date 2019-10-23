@@ -1,12 +1,15 @@
 import React from 'react'
 
-interface IProps {
-
-}
+interface IProps {}
 interface IState {
   hasError: boolean,
 }
 
+/** 
+ * TODO
+ * 目前hooks还不支持 getDerivedStateFromError 和 componentDidCatch
+ * 等支持了之后需要改成function component
+*/
 export default class ErrorBoundary extends React.Component<IProps, IState> {
   state = {
     hasError: false,

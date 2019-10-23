@@ -1,9 +1,9 @@
-import React, { SFC } from 'react'
+import React from 'react'
 import { Layout, Dropdown, Menu, Icon } from 'antd'
 import { PROJECT_TOKERN_NAME } from 'utils/constants'
 
 
-const Header: SFC<{}> = function () {
+const Header = function () {
 
   function handleLogout () {
     localStorage.setItem(PROJECT_TOKERN_NAME, '')
