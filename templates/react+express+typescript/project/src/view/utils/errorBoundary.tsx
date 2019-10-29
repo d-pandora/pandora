@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 interface IProps {
-  children: JSX.Element;
+  children: React.ReactNode;
 }
 interface IState {
   hasError: boolean,
