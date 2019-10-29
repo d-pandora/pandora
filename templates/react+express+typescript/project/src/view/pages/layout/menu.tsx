@@ -1,7 +1,8 @@
 import React, { SFC } from 'react'
 import { Menu, Icon } from 'antd'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { OPEN_TOPTAB_EVENT } from 'utils/constants'
+
 
 const SubMenu = Menu.SubMenu
 
@@ -11,16 +12,17 @@ interface IMenu {
   icon?: string,
   children?: IMenu[],
 }
-export interface IProps extends RouteComponentProps {
+export interface IProps {
   data: IMenu[],
 }
 
 const MenuComponent: SFC<IProps> = function (props) {
   const { data } = props
+  const history = useHistory()
 
   const handleClickMenu = (e: any) => {
     const { title } = e.item.node.dataset
-    props.history.push(e.key)
+    history.push(e.key)
     window.dispatchEvent(new CustomEvent(OPEN_TOPTAB_EVENT, { detail: { key: e.key, value: title, title }}))
   }
 
@@ -58,4 +60,4 @@ const MenuComponent: SFC<IProps> = function (props) {
   )
 }
 
-export default withRouter(MenuComponent)
+export default MenuComponent

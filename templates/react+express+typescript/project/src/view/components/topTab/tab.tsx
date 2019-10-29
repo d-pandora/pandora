@@ -22,7 +22,7 @@ const Tab = function(props: ITabProps) {
     onClose && onClose(item)
   }
   return (
-    <div className={active ? 'tab active-tab' : 'tab'} title={title} onClick={handleClick}>
+    <div className={active ? 'tab active-tab' : 'tab'} key={title} title={title} onClick={handleClick}>
       {value} <Icon type="close" onClick={handleClose} />
     </div>
   )
