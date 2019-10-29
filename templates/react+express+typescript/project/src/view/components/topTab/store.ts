@@ -9,11 +9,8 @@ export interface ITab {
 export default function () {
   
   const initTabData = {
-    tabs: [
-      { value: 'tab 1', title: 'tab 1', key: '/user/list' },
-      { value: 'tab 2', title: 'tab 2', key: '/about' },
-    ],
-    activeKey: '/about',
+    tabs: [],
+    activeKey: '',
   }
   
   const topTabStore = useStore('topTabStore')
@@ -28,7 +25,6 @@ export default function () {
   }
 
   /**
-   * 
    * @param key 需要关闭的tab的key
    */
   function removeTab(key: string) {

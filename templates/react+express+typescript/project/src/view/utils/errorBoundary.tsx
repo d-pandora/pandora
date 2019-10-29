@@ -1,6 +1,8 @@
 import React from 'react'
 
-interface IProps {}
+interface IProps {
+  children: JSX.Element;
+}
 interface IState {
   hasError: boolean,
 }
@@ -11,19 +13,23 @@ interface IState {
  * 等支持了之后需要改成function component
 */
 export default class ErrorBoundary extends React.Component<IProps, IState> {
-  state = {
-    hasError: false,
+
+  public static getDerivedStateFromError(error: Error) {
+    return { hasError: true }
   }
 
-  static getDerivedStateFromError(error: Error) {
-    return { hasError: true };
+  public constructor (props: IProps) {
+    super(props)
+    this.state = {
+      hasError: false,
+    }
   }
 
-  componentDidCatch(error: Error, errorInfo: any) {
+  public componentDidCatch(error: Error, errorInfo: any) {
     // 将错误日志上报给服务器
   }
 
-  render() {
+  public render() {
     const { hasError } = this.state
     if (hasError) {
       return (
@@ -32,7 +38,6 @@ export default class ErrorBoundary extends React.Component<IProps, IState> {
         </div>
       )
     }
-
-    return this.props.children; 
+    return this.props.children
   }
 }

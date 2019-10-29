@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from 'react'
 import { Route } from 'react-router-dom'
 import Layout from 'pages/layout'
-import ErrorBoundary from './errorBoundary'
+import ErrorBoundary from 'utils/errorBoundary'
 
 const UserList = lazy(() => import('pages/user/list/index'))
 
