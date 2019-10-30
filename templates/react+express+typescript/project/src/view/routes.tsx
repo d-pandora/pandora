@@ -4,8 +4,6 @@ import { Spin } from 'antd'
 import Layout from 'pages/layout'
 import ErrorBoundary from 'utils/errorBoundary'
 
-import './styles/index.less'
-
 const UserList = lazy(() => import('pages/user/list/index'))
 
 const routes = (

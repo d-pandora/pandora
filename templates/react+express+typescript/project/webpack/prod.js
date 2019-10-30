@@ -4,8 +4,6 @@ const tsImportPluginFactory = require('ts-import-plugin')
 const version = require('../package.json').version
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-
-
 module.exports = {
   mode: 'production',
   entry: {

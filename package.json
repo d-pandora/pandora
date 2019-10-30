@@ -25,6 +25,7 @@
     "@types/inquirer": "^6.5.0",
     "@types/ncp": "^2.0.1",
     "@types/node": "^12.7.5",
+    "ghooks": "^2.0.4",
     "typescript": "^3.6.3"
   }
 }

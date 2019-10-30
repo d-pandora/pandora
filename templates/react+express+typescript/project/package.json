@@ -9,7 +9,8 @@
     "server": "NODE_ENV=localdev nodemon dist/index.js",
     "web": "webpack-dev-server --progress --config webpack/dev.js",
     "build": "webpack  --progress  --config webpack/prod.js",
-    "lint": "eslint './src/**/*.{ts,tsx}' --fix"
+    "lint": "eslint './src/**/*.{ts,tsx}' --fix",
+    "precommit-msg": "echo Pre-commit checking...please wait && exit 0"
   },
   "devDependencies": {
     "@types/compression": "^1.0.1",
