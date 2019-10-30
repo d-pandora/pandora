@@ -7,12 +7,11 @@ export interface ITab {
 }
 
 export default function () {
-  
   const initTabData = {
     tabs: [],
     activeKey: '',
   }
-  
+
   const topTabStore = useStore('topTabStore')
 
   const [tabData, setTabData] = topTabStore(initTabData)

@@ -7,8 +7,7 @@ import './style.less'
 
 export const FormContext: React.Context<FormProps> = React.createContext({} as any)
 
-function Form (props: FormProps): JSX.Element {
-
+function Form(props: FormProps): JSX.Element {
   return (
     <AntdForm className={`form-wrapper ${props.className}`}>
       <FormContext.Provider value={props}>
@@ -22,12 +21,12 @@ function Form (props: FormProps): JSX.Element {
 
 
 export default AntdForm.create<FormProps>({
-  onFieldsChange (props, field) {
+  onFieldsChange(props, field) {
     const key = Object.keys(field)[0]
     const fields = props.formValue.fields || {}
-    props.cacheFormValue({ [key]: field[key].value === undefined ? '' : field[key].value, fields: { ...fields, ...field }  })
+    props.cacheFormValue({ [key]: field[key].value === undefined ? '' : field[key].value, fields: { ...fields, ...field } })
   },
-  mapPropsToFields (props) {
+  mapPropsToFields(props) {
     const fields = props.formValue.fields || {}
     Object.keys(props.formValue).forEach((key: any) => {
       if (key === 'fields') {

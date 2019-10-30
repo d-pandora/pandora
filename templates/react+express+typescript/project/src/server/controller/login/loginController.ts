@@ -1,6 +1,8 @@
 import { Logger } from 'winston'
 import jwt from 'jsonwebtoken'
-import { Controller, ResponseBody, Post, RequestBody } from 'inversifyExpress/index'
+import {
+  Controller, ResponseBody, Post, RequestBody,
+} from 'inversifyExpress/index'
 import { provideNamed, inject } from 'inversifyExpress/ioc'
 import { TYPE } from 'inversifyExpress/constants'
 
@@ -11,12 +13,11 @@ import Config from 'config/index'
 @provideNamed(TYPE.Controller, 'LoginController')
 @Controller('/')
 export default class LoginController {
-
   @inject('Logger')
   private logger: Logger
 
   @inject('Config')
-  private config: Config;
+  private config: Config
 
   @inject('LoginService')
   private loginService: LoginService
@@ -25,7 +26,7 @@ export default class LoginController {
   @ResponseBody
   public async login(
     @RequestBody('username') username: string,
-    @RequestBody('password') password: string
+    @RequestBody('password') password: string,
   ) {
     const result = await this.loginService.checkUser(username, password)
 
@@ -34,14 +35,12 @@ export default class LoginController {
         {
           username,
           iat: new Date().getTime(),
-          exp: Math.floor(Date.now() / 1000) +  60 * 60
+          exp: Math.floor(Date.now() / 1000) + 60 * 60,
         },
-        this.config.privateKey
+        this.config.privateKey,
       )
       return token
-    } else {
-      throw new Error('用户名密码错误！')
     }
+    throw new Error('用户名密码错误！')
   }
-
 }

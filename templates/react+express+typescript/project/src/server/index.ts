@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import 'module-alias/register'
 import express from 'express'
 import cookieParser from 'cookie-parser'
@@ -29,9 +30,9 @@ app.use(traceId)
 
 app.use(accessLogger)
 
-let server = new InversifyExpressServer(app)
+const server = new InversifyExpressServer(app)
 
-let serverInstance = server.build()
+const serverInstance = server.build()
 
 app.use(html)
 

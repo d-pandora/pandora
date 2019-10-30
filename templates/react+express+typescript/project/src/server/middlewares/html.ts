@@ -1,18 +1,21 @@
 import express from 'express'
 import { container } from 'inversifyExpress/index'
-const ENV = process.env.NODE_ENV || 'localdev'
-const version = require('../../package.json').version
 import Config from 'config/index'
+
+const ENV = process.env.NODE_ENV || 'localdev'
+// eslint-disable-next-line
+const { version } = require('../../package.json')
 
 const config = container.get<Config>('Config')
 
 export default function html(req: express.Request, res: express.Response, next: express.NextFunction) {
   if (req.path.startsWith('/api')) {
-    return next()
+    next()
+    return
   }
 
   let main = `//${req.host}:${config.port}/${version}-main.js`
-  
+
   if (ENV === 'localdev') {
     main = `//127.0.0.1:3001/${version}-main.js`
   }

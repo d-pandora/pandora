@@ -1,37 +1,17 @@
 import express from 'express'
-import { interfaces } from './interfaces'
+import interfaces from './interfaces'
 import { METADATA_KEY, PARAMETER_TYPE } from './constants'
 
-export function Controller (path: string, ...middleWares: interfaces.Middleware[]) {
+export function Controller(path: string, ...middleWares: interfaces.Middleware[]) {
   return function (target: any) {
     const metadata = { target, path, middleWares }
     Reflect.defineMetadata(METADATA_KEY.controller, metadata, target)
   }
 }
 
-export function All (path: string, ...middleWares: interfaces.Middleware[]): interfaces.HandlerDecorator {
-  return Method('all', path, ...middleWares)
-}
-
-export function Get (path: string, ...middleWares: interfaces.Middleware[]): interfaces.HandlerDecorator {
-  return Method('get', path, ...middleWares)
-}
-
-export function Post (path: string, ...middleWares: interfaces.Middleware[]): interfaces.HandlerDecorator {
-  return Method('post', path, ...middleWares)
-}
-
-export function Put (path: string, ...middleWares: interfaces.Middleware[]): interfaces.HandlerDecorator {
-  return Method('put', path, ...middleWares)
-}
-
-export function Delete (path: string, ...middleWares: interfaces.Middleware[]): interfaces.HandlerDecorator {
-  return Method('delete', path, ...middleWares)
-}
-
-function Method (method: interfaces.METHOD_TYPE, path: string, ...middleWares: interfaces.Middleware[]): interfaces.HandlerDecorator {
-  return function (target: any, methodName: string, descriptor: PropertyDescriptor) {
-    let metadata: interfaces.ControllerMethodMetadata = {
+function Method(method: interfaces.METHOD_TYPE, path: string, ...middleWares: interfaces.Middleware[]): interfaces.HandlerDecorator {
+  return function (target: any, methodName: string) {
+    const metadata: interfaces.ControllerMethodMetadata = {
       methodName,
       method,
       middleWares,
@@ -48,15 +28,29 @@ function Method (method: interfaces.METHOD_TYPE, path: string, ...middleWares: i
   }
 }
 
-function paramDecoratorFactory (type: PARAMETER_TYPE): (name?: string) => ParameterDecorator {
-  return (name?: string): ParameterDecorator => {
-    return Params(type, name || 'default')
-  }
+export function All(path: string, ...middleWares: interfaces.Middleware[]): interfaces.HandlerDecorator {
+  return Method('all', path, ...middleWares)
 }
 
-function Params (type: PARAMETER_TYPE, parameterName: string): ParameterDecorator {
+export function Get(path: string, ...middleWares: interfaces.Middleware[]): interfaces.HandlerDecorator {
+  return Method('get', path, ...middleWares)
+}
+
+export function Post(path: string, ...middleWares: interfaces.Middleware[]): interfaces.HandlerDecorator {
+  return Method('post', path, ...middleWares)
+}
+
+export function Put(path: string, ...middleWares: interfaces.Middleware[]): interfaces.HandlerDecorator {
+  return Method('put', path, ...middleWares)
+}
+
+export function Delete(path: string, ...middleWares: interfaces.Middleware[]): interfaces.HandlerDecorator {
+  return Method('delete', path, ...middleWares)
+}
+
+function Params(type: PARAMETER_TYPE, parameterName: string): ParameterDecorator {
   return function (target: any, methodName: string, index : number) {
-    let metadata: interfaces.ParameterMetadata = {
+    const metadata: interfaces.ParameterMetadata = {
       type,
       parameterName,
       index,
@@ -75,7 +69,11 @@ function Params (type: PARAMETER_TYPE, parameterName: string): ParameterDecorato
     metadataList[methodName] = parameterMetadataList
     Reflect.defineMetadata(METADATA_KEY.controllerParameter, metadataList, target.constructor)
   } as ParameterDecorator
-} 
+}
+
+function paramDecoratorFactory(type: PARAMETER_TYPE): (name?: string) => ParameterDecorator {
+  return (name?: string): ParameterDecorator => Params(type, name || 'default')
+}
 
 export const Request = paramDecoratorFactory(PARAMETER_TYPE.REQUEST)
 export const Response = paramDecoratorFactory(PARAMETER_TYPE.RESPONSE)
@@ -97,7 +95,7 @@ export function After(reducer: (result: any, req: express.Request, res: express.
   }
 }
 
-export const ResponseBody = After((result, req, res, next) => {
+export const ResponseBody = After((result, req, res) => {
   if (result instanceof Error) {
     res.json({
       status: 0,

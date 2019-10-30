@@ -1,5 +1,7 @@
 import React, { useContext } from 'react'
-import { Form, Input, Select, InputNumber, Radio, Checkbox, TreeSelect, DatePicker, Col } from 'antd'
+import {
+  Form, Input, Select, InputNumber, Radio, Checkbox, TreeSelect, DatePicker, Col,
+} from 'antd'
 import { FormContext } from './index'
 
 import {
@@ -15,21 +17,23 @@ import {
 } from './interface'
 
 const FormItem = Form.Item
-const Option = Select.Option
-const TextArea = Input.TextArea
-const RangePicker = DatePicker.RangePicker
+const { Option } = Select
+const { TextArea } = Input
+const { RangePicker } = DatePicker
 
 const defaultFormItemLayout = { labelCol: { span: 10 }, wrapperCol: { span: 14 } }
 
 export function InputItem(props: InputItemProps) {
   const { form } = useContext(FormContext)
-  const { formItemLayout, formItemLabel, rules, id, span, ...inputProps } = props
+  const {
+    formItemLayout, formItemLabel, rules, id, span, ...inputProps
+  } = props
   return (
     <Col span={span || 24}>
       <FormItem {...(formItemLayout || defaultFormItemLayout)} label={formItemLabel}>
         {
           form.getFieldDecorator(id.toString(), {
-            rules: rules ? rules : [],
+            rules: rules || [],
           })(<Input {...inputProps} />)
         }
       </FormItem>
@@ -37,31 +41,35 @@ export function InputItem(props: InputItemProps) {
   )
 }
 
-export function InputNumberItem (props: InputNumberItemProps) {
+export function InputNumberItem(props: InputNumberItemProps) {
   const { form } = useContext(FormContext)
-  const { formItemLayout, formItemLabel, rules, id, span, ...inputNumberProps } = props
+  const {
+    formItemLayout, formItemLabel, rules, id, span, ...inputNumberProps
+  } = props
   return (
     <Col span={span || 24}>
       <FormItem {...(formItemLayout || defaultFormItemLayout)} label={formItemLabel}>
         {
           form.getFieldDecorator(id.toString(), {
-            rules: rules ? rules : [],
-          })(<InputNumber { ...inputNumberProps }/>)
+            rules: rules || [],
+          })(<InputNumber {...inputNumberProps} />)
         }
       </FormItem>
     </Col>
   )
 }
 
-export function TextAreaItem (props: TextAreaItemProps) {
+export function TextAreaItem(props: TextAreaItemProps) {
   const { form } = useContext(FormContext)
-  const { formItemLayout, formItemLabel, rules, id, span, ...inputProps } = props
+  const {
+    formItemLayout, formItemLabel, rules, id, span, ...inputProps
+  } = props
   return (
     <Col span={span || 24}>
       <FormItem {...(formItemLayout || defaultFormItemLayout)} label={formItemLabel}>
         {
           form.getFieldDecorator(id.toString(), {
-            rules: rules ? rules : [],
+            rules: rules || [],
           })(<TextArea {...inputProps} />)
         }
       </FormItem>
@@ -71,62 +79,79 @@ export function TextAreaItem (props: TextAreaItemProps) {
 
 export function SelectItem(props: SelectItemProps) {
   const { form } = useContext(FormContext)
-  const { formItemLayout, formItemLabel, rules, id, optionValueKey, optionLabelKey, options, span, ...selectProps } = props
+  const {
+    formItemLayout, formItemLabel, rules, id, optionValueKey, optionLabelKey, options, span, ...selectProps
+  } = props
   return (
     <Col span={span || 24}>
       <FormItem {...(formItemLayout || defaultFormItemLayout)} label={formItemLabel}>
         {
           form.getFieldDecorator(id.toString(), {
-            rules: rules ? rules : [],
-          })(<Select
-            {...selectProps}
-          >
-            {options && options.map((option, index) =>
-              <Option
-                key={index.toString()}
-                value={option[optionValueKey || 'code'].toString()}
-              >{option[optionLabelKey || 'mean']}</Option>)}
-          </Select>)
+            rules: rules || [],
+          })(
+            <Select
+              {...selectProps}
+            >
+              {options && options.map((option, index) => (
+                <Option
+                  key={index.toString()}
+                  value={option[optionValueKey || 'code'].toString()}
+                >
+                  {option[optionLabelKey || 'mean']}
+                </Option>
+              ))}
+            </Select>,
+          )
         }
       </FormItem>
     </Col>
   )
 }
 
-export function RadioItem (props: RadioItemProps) {
+export function RadioItem(props: RadioItemProps) {
   const { form } = useContext(FormContext)
-  const { formItemLayout, formItemLabel, rules, id, optionValueKey, optionLabelKey, options, span, ...radioProps } = props
+  const {
+    formItemLayout, formItemLabel, rules, id, optionValueKey, optionLabelKey, options, span, ...radioProps
+  } = props
   return (
     <Col span={span || 24}>
       <FormItem {...(formItemLayout || defaultFormItemLayout)} label={formItemLabel}>
         {
           form.getFieldDecorator(id.toString(), {
-            rules: rules ? rules : [],
-          })(<Radio.Group
-            style={{ whiteSpace: 'nowrap' }}
-            name={id.toString()}
-            {...radioProps}
-          >
-            {options && options.map((option, index) =>
-              <Radio key={index.toString()}
-                value={optionValueKey && option[optionValueKey].toString()}
-              >{optionLabelKey && option[optionLabelKey]}</Radio>)}
-          </Radio.Group>)
+            rules: rules || [],
+          })(
+            <Radio.Group
+              style={{ whiteSpace: 'nowrap' }}
+              name={id.toString()}
+              {...radioProps}
+            >
+              {options && options.map((option, index) => (
+                <Radio
+                  key={index.toString()}
+                  value={optionValueKey && option[optionValueKey].toString()}
+                >
+                  {optionLabelKey && option[optionLabelKey]}
+                </Radio>
+              ))}
+            </Radio.Group>,
+          )
         }
       </FormItem>
     </Col>
   )
 }
 
-export function CheckboxItem (props: CheckboxItemProps) {
+export function CheckboxItem(props: CheckboxItemProps) {
   const { form } = useContext(FormContext)
-  const { formItemLayout, formItemLabel, rules, id, span, checkBoxLabel } = props
+  const {
+    formItemLayout, formItemLabel, rules, id, span, checkBoxLabel,
+  } = props
   return (
     <Col span={span || 24}>
       <FormItem {...(formItemLayout || defaultFormItemLayout)} label={formItemLabel}>
         {
           form.getFieldDecorator(id.toString(), {
-            rules: rules ? rules : [],
+            rules: rules || [],
             valuePropName: 'checked',
           })(<Checkbox>{checkBoxLabel}</Checkbox>)
         }
@@ -135,15 +160,17 @@ export function CheckboxItem (props: CheckboxItemProps) {
   )
 }
 
-export function TreeSelectItem (props: TreeSelectItemProps) {
+export function TreeSelectItem(props: TreeSelectItemProps) {
   const { form } = useContext(FormContext)
-  const { formItemLayout, formItemLabel, rules, id, span, ...treeSeleteOptions } = props
+  const {
+    formItemLayout, formItemLabel, rules, id, span, ...treeSeleteOptions
+  } = props
   return (
     <Col span={span || 24}>
       <FormItem {...(formItemLayout || defaultFormItemLayout)} label={formItemLabel}>
         {
           form.getFieldDecorator(id.toString(), {
-            rules: rules ? rules : [],
+            rules: rules || [],
           })(<TreeSelect {...treeSeleteOptions} />)
         }
       </FormItem>
@@ -153,13 +180,15 @@ export function TreeSelectItem (props: TreeSelectItemProps) {
 
 export function DatePickerItem(props: DatePickerItemProps) {
   const { form } = useContext(FormContext)
-  const { formItemLayout, formItemLabel, rules, id, span, ...datePickerOptions } = props
+  const {
+    formItemLayout, formItemLabel, rules, id, span, ...datePickerOptions
+  } = props
   return (
     <Col span={span || 24}>
       <FormItem {...(formItemLayout || defaultFormItemLayout)} label={formItemLabel}>
         {
           form.getFieldDecorator(id.toString(), {
-            rules: rules ? rules : [],
+            rules: rules || [],
           })(<DatePicker {...datePickerOptions} />)
         }
       </FormItem>
@@ -169,19 +198,21 @@ export function DatePickerItem(props: DatePickerItemProps) {
 
 export function RangePickerItem(props: RangePickerItemProps) {
   const { form } = useContext(FormContext)
-  const { formItemLayout, formItemLabel, rules, id, span, ...rangePickerOptions } = props
+  const {
+    formItemLayout, formItemLabel, rules, id, span, ...rangePickerOptions
+  } = props
   return (
     <Col span={span || 24}>
       <FormItem {...(formItemLayout || defaultFormItemLayout)} label={formItemLabel}>
         {
           form.getFieldDecorator(id.toString(), {
-            rules: rules ? rules : [],
+            rules: rules || [],
           })(
             <RangePicker
-              style={{width: '100%'}}
+              style={{ width: '100%' }}
               key={id.toString()}
               {...rangePickerOptions}
-            />
+            />,
           )
         }
       </FormItem>

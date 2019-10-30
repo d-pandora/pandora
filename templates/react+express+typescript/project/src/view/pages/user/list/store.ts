@@ -1,17 +1,15 @@
-import React, { useState } from 'react'
 import moment from 'moment'
 import { fetchJSONByGet, useFetch } from 'utils/fetchApi'
 import { useStore } from 'utils/store'
 
 export default function () {
-  
   const initFormValue = {
     inputItem: '123456',
     selectItem: '2',
     treeSelectItem: ['0-1'],
     rangePickerItem: [moment(), moment()],
   }
-  
+
   const treeData = [
     {
       title: 'Node1',
@@ -31,7 +29,7 @@ export default function () {
       key: '0-1',
     },
   ]
-  
+
   const userListStore = useStore('userListStore')
 
   const [formValue, setFormValue] = userListStore(initFormValue)
@@ -60,5 +58,4 @@ export default function () {
     setFormValue,
     fetchTableData,
   }
-
 }

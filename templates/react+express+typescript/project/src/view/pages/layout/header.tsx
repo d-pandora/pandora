@@ -1,25 +1,27 @@
 import React from 'react'
-import { Layout, Dropdown, Menu, Icon } from 'antd'
+import {
+  Layout, Dropdown, Menu, Icon,
+} from 'antd'
 import { PROJECT_TOKERN_NAME } from 'utils/constants'
 
 
 const Header = function () {
-
-  function handleLogout () {
+  function handleLogout() {
     localStorage.setItem(PROJECT_TOKERN_NAME, '')
-    location.href = '/login'
+    window.location.href = '/login'
   }
 
   const menu = (
-    <Menu style={{ width: '200px'}}>
-      <Menu.Item style={{ borderBottom: '1px solid #f0f1f2'}}>
+    <Menu style={{ width: '200px' }}>
+      <Menu.Item style={{ borderBottom: '1px solid #f0f1f2' }}>
         <a>上次登录时间：</a>
         <a>IP：</a>
         <a>城市：</a>
       </Menu.Item>
       <Menu.Item>
         <a target="_self" rel="noopener noreferrer" onClick={handleLogout}>
-          <Icon type="logout" />退出登录
+          <Icon type="logout" />
+            退出登录
         </a>
       </Menu.Item>
     </Menu>

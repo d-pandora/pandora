@@ -1,33 +1,36 @@
 import express from 'express'
 import inversify from 'inversify'
 import { Logger } from 'winston'
-import { interfaces } from './interfaces'
+import interfaces from './interfaces'
 import { container, buildProviderModule } from './ioc'
 import { TYPE, METADATA_KEY, PARAMETER_TYPE } from './constants'
 
 export default class InversifyExpressServer {
-  private _container: inversify.interfaces.Container
-  private _router: express.Router
-  private _app: express.Application
-  private _logger: Logger
+  private container: inversify.interfaces.Container
 
-  public constructor (
+  private router: express.Router
+
+  private app: express.Application
+
+  private logger: Logger
+
+  public constructor(
     customApp?: express.Application,
   ) {
-    this._container = container
-    this._router = express.Router()
-    this._app = customApp || express()
-    this._logger = container.get<Logger>('Logger')
+    this.container = container
+    this.router = express.Router()
+    this.app = customApp || express()
+    this.logger = container.get<Logger>('Logger')
   }
 
-  public build (): express.Application {
-    this._container.load(buildProviderModule())
+  public build(): express.Application {
+    this.container.load(buildProviderModule())
     this.registerControllers()
-    return this._app
+    return this.app
   }
 
-  private registerControllers () {
-    const controllers: interfaces.Controller[] = this._container.getAll<interfaces.Controller>(TYPE.Controller)
+  private registerControllers() {
+    const controllers: interfaces.Controller[] = this.container.getAll<interfaces.Controller>(TYPE.Controller)
     controllers.forEach((controller: interfaces.Controller) => {
       const controllerMetadata: interfaces.ControllerMetadata = Reflect.getMetadata(METADATA_KEY.controller, controller.constructor)
       const methodMetadata: interfaces.ControllerMethodMetadata[] = Reflect.getMetadata(METADATA_KEY.controllerMethod, controller.constructor)
@@ -40,7 +43,7 @@ export default class InversifyExpressServer {
             paramList = parameterMetadata[metadata.methodName] || []
           }
           const handler: express.RequestHandler = this.handlerFactory(controller.constructor.name, metadata.methodName, paramList)
-          this._router[metadata.method](
+          this.router[metadata.method](
             `${controllerMetadata.path}${metadata.path}`,
             ...controllerMetadata.middleWares,
             ...metadata.middleWares,
@@ -49,12 +52,12 @@ export default class InversifyExpressServer {
         })
       }
     })
-    this._app.use(this._router)
+    this.app.use(this.router)
   }
 
   private handlerFactory(controllerName: string, methodName: string, parameterMetadata: interfaces.ParameterMetadata[]): express.RequestHandler {
     return async (req, res, next) => {
-      const controller: any = this._container.getNamed(TYPE.Controller, controllerName)
+      const controller: any = this.container.getNamed(TYPE.Controller, controllerName)
 
       const controllerBeforeMetadata: interfaces.BeforeMetadata = Reflect.getOwnMetadata(
         METADATA_KEY.controllerBefore,
@@ -74,7 +77,7 @@ export default class InversifyExpressServer {
         args = await controllerBeforeMetadata(args, req, res, next)
       }
       let result = await method(...args)
-      this._logger.info(`${req.method} ${req.path} ====> result`, result)
+      this.logger.info(`${req.method} ${req.path} ====> result`, result)
       if (controllerAfterMetadata) {
         result = await controllerAfterMetadata(result, req, res, next)
       }
@@ -91,26 +94,24 @@ export default class InversifyExpressServer {
     }
     for (const item of params) {
       switch (item.type) {
-      case PARAMETER_TYPE.RESPONSE: args[item.index] = res; break
-      case PARAMETER_TYPE.REQUEST: args[item.index] = item.parameterName && item.parameterName !== 'default' ? this.getParam(req, null, item.parameterName) : req; break
-      case PARAMETER_TYPE.NEXT: args[item.index] = next; break
-      case PARAMETER_TYPE.PARAMS: args[item.index] = this.getParam(req, 'params', item.parameterName); break
-      case PARAMETER_TYPE.QUERY: args[item.index] = item.parameterName && item.parameterName !== 'default' ? this.getParam(req, 'query', item.parameterName) : req.query; break
-      case PARAMETER_TYPE.BODY: args[item.index] = item.parameterName && item.parameterName !== 'default' ? this.getParam(req, 'body', item.parameterName) : req.body; break
-      case PARAMETER_TYPE.HEADERS: args[item.index] = this.getParam(req, 'headers', item.parameterName); break
-      case PARAMETER_TYPE.COOKIES: args[item.index] = item.parameterName && item.parameterName !== 'default' ? req.cookies[item.parameterName] : req.cookies; break
-      // case PARAMETER_TYPE.SESSION: args[item.index] = item.parameterName && item.parameterName !== 'default' ? req.session[item.parameterName] : req.session; break
-      default:
-        args[item.index] = res; break
+        case PARAMETER_TYPE.RESPONSE: args[item.index] = res; break
+        case PARAMETER_TYPE.REQUEST: args[item.index] = item.parameterName && item.parameterName !== 'default' ? this.getParam(req, null, item.parameterName) : req; break
+        case PARAMETER_TYPE.NEXT: args[item.index] = next; break
+        case PARAMETER_TYPE.PARAMS: args[item.index] = this.getParam(req, 'params', item.parameterName); break
+        case PARAMETER_TYPE.QUERY: args[item.index] = item.parameterName && item.parameterName !== 'default' ? this.getParam(req, 'query', item.parameterName) : req.query; break
+        case PARAMETER_TYPE.BODY: args[item.index] = item.parameterName && item.parameterName !== 'default' ? this.getParam(req, 'body', item.parameterName) : req.body; break
+        case PARAMETER_TYPE.HEADERS: args[item.index] = this.getParam(req, 'headers', item.parameterName); break
+        case PARAMETER_TYPE.COOKIES: args[item.index] = item.parameterName && item.parameterName !== 'default' ? req.cookies[item.parameterName] : req.cookies; break
+        default:
+          args[item.index] = res; break
       }
     }
     args.push(req, res, next)
     return args
   }
 
-  private getParam (source: any, paramType: string | null, name: string) {
-    const param = paramType && source[paramType] ? source[paramType] : source 
+  private getParam(source: any, paramType: string | null, name: string) {
+    const param = paramType && source[paramType] ? source[paramType] : source
     return param[name]
   }
-
 }

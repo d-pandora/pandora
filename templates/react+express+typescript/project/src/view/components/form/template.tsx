@@ -11,8 +11,7 @@ import Form, {
   RangePickerItem,
 } from 'components/form/index'
 
-export default function FormTemplate () {
-
+export default function FormTemplate() {
   const [state, setState] = useState({
     inputItem: '123456',
     selectItem: '2',
@@ -75,7 +74,7 @@ export default function FormTemplate () {
         rules={[{ required: true }]}
         optionValueKey="code"
         optionLabelKey="mean"
-        options={[{ code: 1, mean: 'a'}, {code: 2, mean: 'b'}]}
+        options={[{ code: 1, mean: 'a' }, { code: 2, mean: 'b' }]}
         formItemLabel="SelectItem"
       />
       <RadioItem
@@ -84,7 +83,7 @@ export default function FormTemplate () {
         rules={[{ required: true }]}
         optionValueKey="code"
         optionLabelKey="mean"
-        options={[{ code: 1, mean: 'a'}, {code: 2, mean: 'b'}]}
+        options={[{ code: 1, mean: 'a' }, { code: 2, mean: 'b' }]}
         formItemLabel="RadioItem"
       />
       <CheckboxItem
@@ -107,7 +106,7 @@ export default function FormTemplate () {
         span={12}
         id="rangePickerItem"
         formItemLabel="RatePickerItem"
-        showTime={true}
+        showTime
         formItemLayout={{ labelCol: { span: 5 }, wrapperCol: { span: 19 } }}
       />
     </Form>

@@ -1,5 +1,5 @@
 /* 电话号码 */
-export const mobileReg =  /^(1\d{10})$/
+export const mobileReg = /^(1\d{10})$/
 
 /** 数字 */
 export const numberReg = /^([1-9]\d*|[0])(\.\d{1,2})?$/

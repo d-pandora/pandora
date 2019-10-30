@@ -8,7 +8,8 @@ import { StoreProvider } from './utils/store'
 render(
   <StoreProvider>
     <BrowserRouter>{Router}</BrowserRouter>
-  </StoreProvider>,document.getElementById('root'))
+  </StoreProvider>, document.getElementById('root'),
+)
 
 if ((module as any).hot) {
   (module as any).hot.accept()

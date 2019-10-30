@@ -28,18 +28,18 @@ interface FormItemProps {
 }
 
 
-export declare type OmitAttrs = 'id' | 'form';
+export declare type OmitAttrs = 'id' | 'form'
 
-export interface InputItemProps extends FormItemProps, Omit<InputProps, OmitAttrs>   {
+export interface InputItemProps extends FormItemProps, Omit<InputProps, OmitAttrs> {
 }
 
-export interface TextAreaItemProps extends FormItemProps, Omit<TextAreaProps, OmitAttrs>   {
+export interface TextAreaItemProps extends FormItemProps, Omit<TextAreaProps, OmitAttrs> {
 }
 
-export interface InputNumberItemProps extends FormItemProps, Omit<InputNumberProps, OmitAttrs>   {
+export interface InputNumberItemProps extends FormItemProps, Omit<InputNumberProps, OmitAttrs> {
 }
 
-export interface SelectItemProps extends FormItemProps, Omit<SelectProps, OmitAttrs>  {
+export interface SelectItemProps extends FormItemProps, Omit<SelectProps, OmitAttrs> {
   optionValueKey: string,
   optionLabelKey: string,
   optionPinyinKey?: string,

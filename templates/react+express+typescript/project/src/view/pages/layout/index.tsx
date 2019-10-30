@@ -1,7 +1,7 @@
 import React, { SFC } from 'react'
 import { Layout } from 'antd'
-import Menu from './menu'
 import TopTab from 'components/topTab'
+import Menu from './menu'
 import Header from './header'
 
 import './style.less'

@@ -8,7 +8,6 @@ const config = container.get<Config>('Config')
 const authIgnore = ['/api/login']
 
 export default async function auth(req: express.Request, res: express.Response, next: express.NextFunction) {
-
   if (authIgnore.indexOf(req.path) !== -1) {
     return next()
   }
@@ -22,7 +21,7 @@ export default async function auth(req: express.Request, res: express.Response, 
     }
     res.status(302)
     res.send({ data: false })
-    return
+    return false
   }
   return next()
 }

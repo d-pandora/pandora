@@ -1,6 +1,9 @@
 import { Container, inject, injectable } from 'inversify'
-import { autoProvide, fluentProvide, provide, buildProviderModule } from 'inversify-binding-decorators'
+import {
+  autoProvide, fluentProvide, provide, buildProviderModule,
+} from 'inversify-binding-decorators'
 import getDecorators from 'inversify-inject-decorators'
+
 const container = new Container()
 const { lazyInject } = getDecorators(container)
 
@@ -16,4 +19,6 @@ const provideSingleton = function (identifier: any) {
     .done()
 }
 
-export { container, autoProvide, provide, buildProviderModule, provideSingleton, provideNamed, inject, lazyInject, injectable }
+export {
+  container, autoProvide, provide, buildProviderModule, provideSingleton, provideNamed, inject, lazyInject, injectable,
+}

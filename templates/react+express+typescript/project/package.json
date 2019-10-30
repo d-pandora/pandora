@@ -9,7 +9,7 @@
     "server": "NODE_ENV=localdev nodemon dist/index.js",
     "web": "webpack-dev-server --progress --config webpack/dev.js",
     "build": "webpack  --progress  --config webpack/prod.js",
-    "lint": "eslint './src/**/*.{ts,tsx}'"
+    "lint": "eslint './src/**/*.{ts,tsx}' --fix"
   },
   "devDependencies": {
     "@types/compression": "^1.0.1",
@@ -29,13 +29,17 @@
     "@types/uuid": "^3.4.5",
     "@types/webpack-env": "^1.14.0",
     "@types/winston": "^2.4.4",
-    "@typescript-eslint/eslint-plugin": "^2.3.3",
+    "@typescript-eslint/eslint-plugin": "^2.3.0",
     "@typescript-eslint/parser": "^2.3.3",
     "css-loader": "^3.2.0",
     "eslint": "^6.5.1",
-    "eslint-config-alloy": "^3.0.0",
-    "eslint-plugin-react": "^7.16.0",
+    "eslint-config-airbnb-typescript": "^6.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "file-loader": "^4.2.0",
+    "ghooks": "^2.0.4",
     "html-webpack-plugin": "^3.2.0",
     "less-loader": "^5.0.0",
     "module-alias": "^2.2.1",
@@ -65,6 +69,7 @@
     "jsonwebtoken": "^8.5.1",
     "less": "^3.10.3",
     "lodash-es": "^4.17.15",
+    "moment": "^2.24.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router": "^5.1.2",
@@ -80,5 +85,29 @@
     "middlewares": "dist/middlewares",
     "service": "dist/service",
     "utils": "dist/utils"
+  },
+  "config": {
+    "validate-commit-msg": {
+      "types": [
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "chore",
+        "revert"
+      ],
+      "warnOnFail": false,
+      "maxSubjectLength": 100,
+      "subjectPattern": ".+",
+      "subjectPatternErrorMsg": "subject does not match subject pattern!",
+      "helpMessage": ""
+    },
+    "ghooks": {
+      "pre-commit": "npm run precommit-msg && npm run lint",
+      "commit-msg": "validate-commit-msg"
+    }
   }
 }

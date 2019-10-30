@@ -19,8 +19,7 @@ interface FormValue {
 const LOGIN_FORM_STORAGE_KEY = 'login-form-storage'
 // let PROJECTNAME_TOKEN = ''
 
-function Login () {
-
+function Login() {
   const storage = localStorage.getItem('login-form-storage')
 
   const storageJson = storage ? JSON.stringify(storage) as any : { username: '', password: '' }
@@ -34,8 +33,7 @@ function Login () {
     })
   }
 
-  async function handleLogin () {
-
+  async function handleLogin() {
     if (formValue.remember) {
       localStorage.setItem(LOGIN_FORM_STORAGE_KEY, JSON.stringify({
         username: formValue.username,
@@ -57,7 +55,7 @@ function Login () {
       message.error('用户名或者密码错误！')
     } else {
       localStorage.setItem(PROJECT_TOKERN_NAME, result)
-      location.href = '/'
+      window.location.href = '/'
     }
   }
 

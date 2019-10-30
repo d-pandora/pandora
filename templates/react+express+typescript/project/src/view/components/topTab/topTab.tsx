@@ -10,21 +10,21 @@ export interface IProps {
 
 const TopTab: SFC<IProps> = function (props) {
   const { renderItem } = props
-    
+
   const store = tabDataStore()
 
   const handleOpenTab = (event: Event) => {
     event.stopPropagation()
     const newtab = (event as CustomEvent).detail as ITab
-    const tabs = store.tabData.tabs
-    
+    const { tabs } = store.tabData
+
     if (tabs.some((tab: ITab) => tab.key === newtab.key)) {
       store.updateTabData({ activeKey: newtab.key })
     } else {
-      store.updateTabData({ tabs: [...tabs, newtab],activeKey: newtab.key })
+      store.updateTabData({ tabs: [...tabs, newtab], activeKey: newtab.key })
     }
   }
-  
+
   useEffect(() => {
     window.addEventListener(OPEN_TOPTAB_EVENT, handleOpenTab)
     return () => {
@@ -32,13 +32,13 @@ const TopTab: SFC<IProps> = function (props) {
     }
   }, [store])
 
-  let {
+  const {
     tabData,
     updateTabData,
     removeTab,
   } = store
   const { tabs, activeKey } = tabData
-  let history = useHistory()
+  const history = useHistory()
   const container = React.createRef<HTMLDivElement>()
 
   const handleClickTab = (item: ITab) => {
@@ -54,14 +54,12 @@ const TopTab: SFC<IProps> = function (props) {
 
   return (
     <div className="top-tab-container" ref={container}>
-      {tabs.map((item: ITab) => {
-        return renderItem({
-          item,
-          active: item.key === activeKey,
-          onClick: handleClickTab,
-          onClose: handleCloseTab,
-        })
-      })}
+      {tabs.map((item: ITab) => renderItem({
+        item,
+        active: item.key === activeKey,
+        onClick: handleClickTab,
+        onClose: handleCloseTab,
+      }))}
     </div>
   )
 }

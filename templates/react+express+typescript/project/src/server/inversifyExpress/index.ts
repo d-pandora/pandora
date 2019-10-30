@@ -6,8 +6,10 @@ import {
   Cookies, Session, Next, ResponseBody,
 } from './decorators'
 import { TYPE } from './constants'
-import { interfaces } from './interfaces'
-import { container, autoProvide, provide, buildProviderModule, provideSingleton, provideNamed, inject, lazyInject, injectable } from './ioc'
+import interfaces from './interfaces'
+import {
+  container, autoProvide, provide, buildProviderModule, provideSingleton, provideNamed, inject, lazyInject, injectable,
+} from './ioc'
 
 export {
   interfaces,
@@ -29,5 +31,5 @@ export {
   Session,
   Next,
   ResponseBody,
-  container, autoProvide, provide, buildProviderModule, provideSingleton, provideNamed, inject, lazyInject, injectable
+  container, autoProvide, provide, buildProviderModule, provideSingleton, provideNamed, inject, lazyInject, injectable,
 }

@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react'
 import { message } from 'antd'
 import { PROJECT_TOKERN_NAME } from 'utils/constants'
 
-export function fetchJSON (url: string, params: any) {
-
+export function fetchJSON(url: string, params: any) {
   const token = localStorage.getItem(PROJECT_TOKERN_NAME)
 
   const fetchparam = {
@@ -11,7 +10,7 @@ export function fetchJSON (url: string, params: any) {
     credentials: 'include',
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
-      'Connection': 'keep-alive',
+      Connection: 'keep-alive',
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
       ...params.headers,
       authorization: token,
@@ -19,11 +18,11 @@ export function fetchJSON (url: string, params: any) {
   }
 
   return fetch(url, fetchparam)
-    .then(resp => {
+    .then((resp) => {
       if (resp.status === 302) {
-        location.href = '/login'
+        window.location.href = '/login'
       }
-      if(resp.status === 404) {
+      if (resp.status === 404) {
         message.error('page not found')
       }
       if (resp.status === 403) {
@@ -34,10 +33,9 @@ export function fetchJSON (url: string, params: any) {
     .then((resp) => resp.json()).then((result: { status: number; data: any }) => {
       if (result.status) {
         return result.data
-      } else {
-        message.error(result.data, 2)
-        return false
       }
+      message.error(result.data, 2)
+      return false
     })
 }
 
@@ -75,14 +73,12 @@ const fetchJSONByMethod = (method: string, headers?: any) => (url: string) => (q
         queryUrl = queryUrl.replace(`:${key}`, query[key])
       }
     }
+  } else if (typeof query === 'string') {
+    params.body = query
+  } else if (headers && headers['Content-Type'] === 'application/json;charset=UTF-8') {
+    params.body = JSON.stringify(query)
   } else {
-    if (typeof query === 'string') {
-      params.body = query
-    } else if (headers && headers['Content-Type'] === 'application/json;charset=UTF-8') {
-      params.body = JSON.stringify(query)
-    } else {
-      params.body = buildParams(query)
-    }
+    params.body = buildParams(query)
   }
   return fetchJSON(queryUrl, params)
 }
@@ -95,9 +91,9 @@ export const fetchJSONByPut = fetchJSONByMethod('PUT')
 
 export const fetchJSONByDelete = fetchJSONByMethod('DELETE')
 
-export const fetchJSONStringByPost = fetchJSONByMethod('POST', {'Content-Type': 'application/json;charset=UTF-8'})
+export const fetchJSONStringByPost = fetchJSONByMethod('POST', { 'Content-Type': 'application/json;charset=UTF-8' })
 
-export const fetchJSONStringByPut = fetchJSONByMethod('PUT', {'Content-Type': 'application/json;charset=UTF-8'})
+export const fetchJSONStringByPut = fetchJSONByMethod('PUT', { 'Content-Type': 'application/json;charset=UTF-8' })
 
 export const useFetch = (fetchApi: (query?: any) => Promise<any>, initialValue: any, query?: any): [any, React.Dispatch<any>, boolean, boolean] => {
   const [response, setResponse] = useState(initialValue)
@@ -112,8 +108,8 @@ export const useFetch = (fetchApi: (query?: any) => Promise<any>, initialValue: 
         const result = await fetchApi(param)
         setResponse(result)
         setLoading(false)
-      } catch (error) {
-        setError(error)
+      } catch (e) {
+        setError(e)
         setLoading(false)
       }
     }

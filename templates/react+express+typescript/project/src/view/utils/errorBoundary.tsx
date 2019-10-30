@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 
 interface IProps {
   children: React.ReactNode;
@@ -7,25 +7,24 @@ interface IState {
   hasError: boolean,
 }
 
-/** 
+/**
  * TODO
  * 目前hooks还不支持 getDerivedStateFromError 和 componentDidCatch
  * 等支持了之后需要改成function component
 */
 export default class ErrorBoundary extends React.Component<IProps, IState> {
-
-  public static getDerivedStateFromError(error: Error) {
+  public static getDerivedStateFromError() {
     return { hasError: true }
   }
 
-  public constructor (props: IProps) {
+  public constructor(props: IProps) {
     super(props)
     this.state = {
       hasError: false,
     }
   }
 
-  public componentDidCatch(error: Error, errorInfo: any) {
+  public componentDidCatch() {
     // 将错误日志上报给服务器
   }
 
@@ -38,6 +37,7 @@ export default class ErrorBoundary extends React.Component<IProps, IState> {
         </div>
       )
     }
+    // eslint-disable-next-line
     return this.props.children
   }
 }

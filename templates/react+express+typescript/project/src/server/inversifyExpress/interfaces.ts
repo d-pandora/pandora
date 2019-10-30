@@ -33,10 +33,10 @@ declare namespace interfaces {
 
   export type METHOD_TYPE = 'get' | 'post' | 'put' | 'delete' | 'all'
 
-  export type BeforeMetadata = (args: any[], req: express.Request, res: express.Response, next: express.NextFunction)  => any[]
+  export type BeforeMetadata = (args: any[], req: express.Request, res: express.Response, next: express.NextFunction) => any[]
 
-  export type AfterMetadata = (result: any | Promise<any>, req: express.Request, res: express.Response, next: express.NextFunction)  => any | Promise<any>
+  export type AfterMetadata = (result: any | Promise<any>, req: express.Request, res: express.Response, next: express.NextFunction) => any | Promise<any>
 
 }
 
-export { interfaces }
+export default interfaces

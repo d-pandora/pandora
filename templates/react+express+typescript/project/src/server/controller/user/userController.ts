@@ -1,5 +1,7 @@
 import { Logger } from 'winston'
-import { Controller, Get, QueryParam, ResponseBody } from 'inversifyExpress/index'
+import {
+  Controller, Get, QueryParam, ResponseBody,
+} from 'inversifyExpress/index'
 import { provideNamed, inject } from 'inversifyExpress/ioc'
 import { TYPE } from 'inversifyExpress/constants'
 
@@ -9,7 +11,6 @@ import UserService from 'service/user/userService'
 @provideNamed(TYPE.Controller, 'UserController')
 @Controller('/')
 export default class UserController {
-
   @inject('Logger')
   private logger: Logger
 
@@ -20,11 +21,9 @@ export default class UserController {
   @ResponseBody
   public async getUserList(
     @QueryParam('id') id: number,
-    @QueryParam('name') name: string,
-    @QueryParam('mobile') mobile: string
   ) {
     const result = await this.UserService.getUserList(id)
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve) => {
       setTimeout(() => {
         resolve(true)
       }, 3000)
@@ -33,8 +32,7 @@ export default class UserController {
       totalCount: 100,
       currentPage: 1,
       pageSize: 20,
-      data: [],
+      data: [result],
     }
   }
-
 }

@@ -24,8 +24,7 @@ export interface ImperativeHandles {
 }
 
 
-function addEdit (props: any, ref: React.Ref<ImperativeHandles>) {
-
+function addEdit(props: any, ref: React.Ref<ImperativeHandles>) {
   const treeData = [
     {
       title: 'Node1',
@@ -53,16 +52,16 @@ function addEdit (props: any, ref: React.Ref<ImperativeHandles>) {
 
   const [visible, setVisible] = useState(false)
 
-  const [ type, setType ] = useState('add')
+  const [type, setType] = useState('add')
 
   const [formValue, setFormValue] = useState({})
 
   useImperativeHandle(ref, () => ({
-    show (formValue: FormValue, type?: 'add' | 'edit') {
+    show(formValue: FormValue, type?: 'add' | 'edit') {
       setFormValue(formValue)
       setVisible(true)
       setType(type || 'add')
-    }
+    },
   }))
 
   function cacheFormValue(value: any) {
@@ -73,11 +72,11 @@ function addEdit (props: any, ref: React.Ref<ImperativeHandles>) {
   }
 
 
-  function handleSave () {
+  function handleSave() {
 
   }
 
-  function handleCancel () {
+  function handleCancel() {
     setVisible(false)
   }
 
@@ -109,7 +108,7 @@ function addEdit (props: any, ref: React.Ref<ImperativeHandles>) {
           rules={[{ required: true }]}
           optionValueKey="code"
           optionLabelKey="mean"
-          options={[{ code: 1, mean: 'a'}, {code: 2, mean: 'b'}]}
+          options={[{ code: 1, mean: 'a' }, { code: 2, mean: 'b' }]}
           formItemLabel="SelectItem"
         />
         <RadioItem
@@ -117,7 +116,7 @@ function addEdit (props: any, ref: React.Ref<ImperativeHandles>) {
           rules={[{ required: true }]}
           optionValueKey="code"
           optionLabelKey="mean"
-          options={[{ code: 1, mean: 'a'}, {code: 2, mean: 'b'}]}
+          options={[{ code: 1, mean: 'a' }, { code: 2, mean: 'b' }]}
           formItemLabel="RadioItem"
         />
         <CheckboxItem
@@ -136,7 +135,7 @@ function addEdit (props: any, ref: React.Ref<ImperativeHandles>) {
         <RangePickerItem
           id="rangePickerItem"
           formItemLabel="RatePickerItem"
-          showTime={true}
+          showTime
         />
       </Form>
     </Modal>

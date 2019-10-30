@@ -1,5 +1,4 @@
 import React, { useRef } from 'react'
-import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { Table, Button, Col } from 'antd'
 import Form, {
@@ -15,8 +14,7 @@ import Form, {
 import AddEdit, { ImperativeHandles } from './addEdit'
 import userListStore from './store'
 
-export default function UserList () {
-
+export default function UserList() {
   const addEdit = useRef<ImperativeHandles>(null)
   const {
     formValue,
@@ -29,13 +27,37 @@ export default function UserList () {
     fetchTableData,
   } = userListStore()
 
-  function getColumns () {
+  function handleEdit(record: any) {
+    if (addEdit && addEdit.current) {
+      addEdit.current.show(record, 'edit')
+    }
+  }
+
+  function handleSubmit() {
+    fetchTableData({ ...formValue, currentPage: 1 })
+  }
+
+  function handleReset() {
+    setFormValue(initFormValue)
+  }
+
+  function onPageChange(current: number) {
+    fetchTableData({ ...formValue, currentPage: current })
+  }
+
+  function handleAdd() {
+    if (addEdit && addEdit.current) {
+      addEdit.current.show({})
+    }
+  }
+
+  function getColumns() {
     return [
       {
         title: '序号',
         width: 100,
         key: 'index',
-        render: (text: string, record: any, index: number) => index + 1
+        render: (text: string, record: any, index: number) => index + 1,
       },
       {
         title: '地址',
@@ -50,36 +72,12 @@ export default function UserList () {
         width: 120,
         render: (id: string, record: any) => (
           <div>
-            <Button size="small" type="primary" onClick={() => handleEdit(record)}></Button>
+            <Button size="small" type="primary" onClick={() => handleEdit(record)} />
             <Link to={`/order/detail/${id}`}>查看</Link>
           </div>
-        )
+        ),
       },
     ]
-  }
-
-  function handleSubmit () {
-    fetchTableData({ ...formValue, currentPage: 1 })
-  }
-
-  function handleReset () {
-    setFormValue(initFormValue)
-  }
-
-  function onPageChange(current: number) {
-    fetchTableData({ ...formValue, currentPage: current })
-  }
-
-  function handleAdd () {
-    if (addEdit && addEdit.current) {
-      addEdit.current.show({})
-    }
-  }
-
-  function handleEdit (record: any) {
-    if (addEdit && addEdit.current) {
-      addEdit.current.show(record, 'edit')
-    }
   }
 
   return (
@@ -106,7 +104,7 @@ export default function UserList () {
           rules={[{ required: true }]}
           optionValueKey="code"
           optionLabelKey="mean"
-          options={[{ code: 1, mean: 'a'}, {code: 2, mean: 'b'}]}
+          options={[{ code: 1, mean: 'a' }, { code: 2, mean: 'b' }]}
           formItemLabel="SelectItem"
         />
         <RadioItem
@@ -115,7 +113,7 @@ export default function UserList () {
           rules={[{ required: true }]}
           optionValueKey="code"
           optionLabelKey="mean"
-          options={[{ code: 1, mean: 'a'}, {code: 2, mean: 'b'}]}
+          options={[{ code: 1, mean: 'a' }, { code: 2, mean: 'b' }]}
           formItemLabel="RadioItem"
         />
         <CheckboxItem
@@ -139,7 +137,7 @@ export default function UserList () {
           span={12}
           id="rangePickerItem"
           formItemLabel="RatePickerItem"
-          showTime={true}
+          showTime
           formItemLayout={{ labelCol: { span: 5 }, wrapperCol: { span: 19 } }}
         />
         <Col style={{ float: 'right', textAlign: 'right' }} className="pull-right">
@@ -152,7 +150,7 @@ export default function UserList () {
         loading={loading}
         columns={getColumns()}
         dataSource={tableData.data}
-        bordered={true}
+        bordered
         rowKey="id"
         size="small"
         pagination={{
