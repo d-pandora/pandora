@@ -1,6 +1,7 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Table, Button, Col } from 'antd'
+import moment from 'moment'
 import Form, {
   InputItem,
   InputNumberItem,
@@ -12,37 +13,34 @@ import Form, {
   RangePickerItem,
 } from 'components/form/index'
 import AddEdit, { ImperativeHandles } from './addEdit'
-import userListStore from './store'
+import { userListStore } from './store'
 
 export default function UserList() {
   const addEdit = useRef<ImperativeHandles>(null)
-  const {
-    formValue,
-    tableData,
-    treeData,
-    loading,
-    initFormValue,
-    cacheFormValue,
-    setFormValue,
-    fetchTableData,
-  } = userListStore()
+
+  const [state, actions] = userListStore.useState()
 
   function handleEdit(record: any) {
     if (addEdit && addEdit.current) {
-      addEdit.current.show(record, 'edit')
+      addEdit.current.show({
+        ...record,
+        datePickerItem: moment(record.datePickerItem),
+        rangePickerItem: [moment(record.rangePickerItem[0]), moment(record.rangePickerItem[1])],
+      }, 'edit')
     }
   }
 
   function handleSubmit() {
-    fetchTableData({ ...formValue, currentPage: 1 })
+    actions.fetchTableData({ ...state.formValue, currentPage: 1 })
   }
 
   function handleReset() {
-    setFormValue(initFormValue)
+    actions.setFormValue()
   }
 
   function onPageChange(current: number) {
-    fetchTableData({ ...formValue, currentPage: current })
+
+    actions.fetchTableData({ ...state.formValue, currentPage: current })
   }
 
   function handleAdd() {
@@ -60,10 +58,52 @@ export default function UserList() {
         render: (text: string, record: any, index: number) => index + 1,
       },
       {
-        title: '地址',
+        title: 'inputItem',
         width: 100,
-        key: 'addr',
-        dataIndex: 'addr',
+        key: 'inputItem',
+        dataIndex: 'inputItem',
+      },
+      {
+        title: 'inputNumberItem',
+        width: 100,
+        key: 'inputNumberItem',
+        dataIndex: 'inputNumberItem',
+      },
+      {
+        title: 'selectItem',
+        width: 100,
+        key: 'selectItem',
+        dataIndex: 'selectItem',
+      },
+      {
+        title: 'radioItem',
+        width: 100,
+        key: 'radioItem',
+        dataIndex: 'radioItem',
+      },
+      {
+        title: 'checkboxItem',
+        width: 100,
+        key: 'checkboxItem',
+        dataIndex: 'checkboxItem',
+      },
+      {
+        title: 'treeSelectItem',
+        width: 100,
+        key: 'treeSelectItem',
+        dataIndex: 'treeSelectItem',
+      },
+      {
+        title: 'datePickerItem',
+        width: 100,
+        key: 'datePickerItem',
+        dataIndex: 'datePickerItem',
+      },
+      {
+        title: 'rangePickerItem',
+        width: 100,
+        key: 'rangePickerItem',
+        dataIndex: 'rangePickerItem',
       },
       {
         key: 'detail',
@@ -72,7 +112,7 @@ export default function UserList() {
         width: 120,
         render: (id: string, record: any) => (
           <div>
-            <Button size="small" type="primary" onClick={() => handleEdit(record)} />
+            <Button size="small" type="primary" onClick={() => handleEdit(record)}>编辑</Button>
             <Link to={`/order/detail/${id}`}>查看</Link>
           </div>
         ),
@@ -83,8 +123,8 @@ export default function UserList() {
   return (
     <div>
       <Form
-        formValue={formValue}
-        cacheFormValue={cacheFormValue}
+        formValue={state.formValue}
+        cacheFormValue={actions.cacheFormValue}
       >
         <InputItem
           span={6}
@@ -124,7 +164,7 @@ export default function UserList() {
         <TreeSelectItem
           span={6}
           id="treeSelectItem"
-          treeData={treeData}
+          treeData={state.treeData}
           formItemLabel="TreeSelectItem"
         />
         <DatePickerItem
@@ -147,17 +187,17 @@ export default function UserList() {
       </Form>
       <Button className="mb8 mt8" type="primary" onClick={handleAdd}>新增</Button>
       <Table
-        loading={loading}
+        // loading={state.tableData.loading}
         columns={getColumns()}
-        dataSource={tableData.data}
+        dataSource={state.tableData.data}
         bordered
         rowKey="id"
         size="small"
         pagination={{
           onChange: onPageChange,
-          pageSize: tableData.pageSize,
-          total: tableData.totalCount,
-          current: tableData.currentPage,
+          pageSize: state.tableData.pageSize,
+          total: state.tableData.totalCount,
+          current: state.tableData.currentPage,
         }}
       />
       <AddEdit ref={addEdit} />

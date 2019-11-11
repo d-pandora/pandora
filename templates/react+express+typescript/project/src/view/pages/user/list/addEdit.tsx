@@ -23,7 +23,6 @@ export interface ImperativeHandles {
   show(formValue: FormValue, type?: 'add' | 'edit'): void;
 }
 
-
 function addEdit(props: any, ref: React.Ref<ImperativeHandles>) {
   const treeData = [
     {
@@ -121,7 +120,7 @@ function addEdit(props: any, ref: React.Ref<ImperativeHandles>) {
         />
         <CheckboxItem
           id="checkboxItem"
-          formItemLabel="RadioItem"
+          formItemLabel="CheckboxItem"
         />
         <TreeSelectItem
           id="treeSelectItem"

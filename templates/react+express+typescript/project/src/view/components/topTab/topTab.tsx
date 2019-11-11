@@ -1,7 +1,7 @@
 import React, { SFC, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { OPEN_TOPTAB_EVENT } from 'utils/constants'
-import tabDataStore, { ITab } from './store'
+import { ITab, topTabStore } from './store'
 import { ITabProps } from './tab'
 
 export interface IProps {
@@ -11,45 +11,48 @@ export interface IProps {
 const TopTab: SFC<IProps> = function (props) {
   const { renderItem } = props
 
-  const store = tabDataStore()
+  const [state, actions] = topTabStore.useState()
+
+  const history = useHistory()
 
   const handleOpenTab = (event: Event) => {
     event.stopPropagation()
     const newtab = (event as CustomEvent).detail as ITab
-    const { tabs } = store.tabData
+    const { tabs } = state
 
-    if (tabs.some((tab: ITab) => tab.key === newtab.key)) {
-      store.updateTabData({ activeKey: newtab.key })
+    if (tabs.find((tab: ITab) => tab.key === newtab.key)) {
+      actions.updateActiveTab(newtab.key)
     } else {
-      store.updateTabData({ tabs: [...tabs, newtab], activeKey: newtab.key })
+      actions.updateTabData(newtab)
     }
   }
+
+  // did mount init tabData from localStorage
+  useEffect(() => {
+    actions.initTabData()
+  }, [])
 
   useEffect(() => {
     window.addEventListener(OPEN_TOPTAB_EVENT, handleOpenTab)
     return () => {
       window.removeEventListener(OPEN_TOPTAB_EVENT, handleOpenTab)
     }
-  }, [store])
+  }, [state])
 
-  const {
-    tabData,
-    updateTabData,
-    removeTab,
-  } = store
-  const { tabs, activeKey } = tabData
-  const history = useHistory()
+  useEffect(() => {
+    history.push(state.activeKey)
+  }, [state.activeKey])
+
+  const { tabs, activeKey } = state
+
   const container = React.createRef<HTMLDivElement>()
 
   const handleClickTab = (item: ITab) => {
     history.push(item.key)
-    updateTabData({ activeKey: item.key })
+    actions.updateActiveTab(item.key)
   }
   const handleCloseTab = (item: ITab) => {
-    const newKey = removeTab(item.key)
-    if (newKey !== activeKey) {
-      history.push(newKey)
-    }
+    actions.removeTab(item.key)
   }
 
   return (

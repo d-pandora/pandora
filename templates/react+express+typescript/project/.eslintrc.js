@@ -43,6 +43,9 @@ module.exports = {
     "jsx-a11y/label-has-associated-control": 0,
     "no-shadow": 0,
     "func-names": 0,
+    "no-param-reassign": 0,
+    "@typescript-eslint/no-unused-vars": 0,
+    "implicit-arrow-linebreak": 0,
   },
   "settings": {
     "react": {

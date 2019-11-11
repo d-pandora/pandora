@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form as AntdForm, Row } from 'antd'
+import { cloneDeep } from 'lodash'
 
 import { FormProps } from './interface'
 
@@ -27,7 +28,7 @@ export default AntdForm.create<FormProps>({
     props.cacheFormValue({ [key]: field[key].value === undefined ? '' : field[key].value, fields: { ...fields, ...field } })
   },
   mapPropsToFields(props) {
-    const fields = props.formValue.fields || {}
+    const fields = cloneDeep(props.formValue.fields || {})
     Object.keys(props.formValue).forEach((key: any) => {
       if (key === 'fields') {
         return

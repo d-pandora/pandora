@@ -22,17 +22,24 @@ export default class UserController {
   public async getUserList(
     @QueryParam('id') id: number,
   ) {
-    const result = await this.UserService.getUserList(id)
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(true)
-      }, 3000)
+    this.UserService.getUserList(id)
+    await new Promise((re, rj) => {
+      setTimeout(() => re(true), 2000)
     })
     return {
       totalCount: 100,
       currentPage: 1,
       pageSize: 20,
-      data: [result],
+      data: [{
+        inputItem: 'inputItem',
+        inputNumberItem: 1,
+        selectItem: 1,
+        radioItem: 1,
+        checkboxItem: 1,
+        treeSelectItem: [1],
+        datePickerItem: new Date(),
+        rangePickerItem: [new Date(), new Date()],
+      }],
     }
   }
 }
