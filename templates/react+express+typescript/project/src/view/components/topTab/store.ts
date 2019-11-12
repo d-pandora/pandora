@@ -16,14 +16,29 @@ const initTabData: TabData = {
   activeKey: '',
 }
 
-export const topTabStore = createStore(initTabData, {
-  initTabData: () => (state) => {
-    const storageState = localStorage.getItem('topTabs')
-    if (storageState) {
-      state = JSON.parse(storageState)
-    }
-    return state
+interface IPersistedStorage<S> {
+  set(key: string, value: S): void
+  get(key: string): S | null
+  generateKey?(name: string): string;
+}
+
+const createStorage = <T>(name: string): IPersistedStorage<T> => ({
+  set(key: string, value: T) {
+    localStorage.setItem(key, JSON.stringify(value))
   },
+  get(key: string) {
+    const s = localStorage.getItem(key)
+    return s ? JSON.parse(s) : null
+  },
+  generateKey() {
+    return name
+  },
+})
+
+const storage = createStorage<TabData>('topTab')
+
+export const topTabStore = createStore(initTabData, {
+
   updateTabData: (value: ITab) => async (state) => {
     state = {
       tabs: [
@@ -32,12 +47,10 @@ export const topTabStore = createStore(initTabData, {
       ],
       activeKey: value.key,
     }
-    localStorage.setItem('topTabs', JSON.stringify(state))
     return state
   },
   updateActiveTab: (activeKey: string) => (state) => {
     state.activeKey = activeKey
-    localStorage.setItem('topTabs', JSON.stringify(state))
   },
   removeTab: (key: string) => (state) => {
     const { tabs, activeKey } = state
@@ -59,8 +72,8 @@ export const topTabStore = createStore(initTabData, {
       tabs: newTabs,
       activeKey: newActiveKey,
     }
-    localStorage.setItem('topTabs', JSON.stringify(state))
     return state
   },
-
+}, {
+  persist: storage,
 })

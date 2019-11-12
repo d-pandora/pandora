@@ -27,11 +27,6 @@ const TopTab: SFC<IProps> = function (props) {
     }
   }
 
-  // did mount init tabData from localStorage
-  useEffect(() => {
-    actions.initTabData()
-  }, [])
-
   useEffect(() => {
     window.addEventListener(OPEN_TOPTAB_EVENT, handleOpenTab)
     return () => {
