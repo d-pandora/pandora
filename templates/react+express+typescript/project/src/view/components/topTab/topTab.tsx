@@ -1,11 +1,11 @@
 import React, { SFC, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { OPEN_TOPTAB_EVENT } from 'utils/constants'
-import { ITab, topTabStore } from './store'
+import topTabStore, { ITab } from './store'
 import { ITabProps } from './tab'
 
 export interface IProps {
-  renderItem: (item: ITabProps) => JSX.Element | null,
+  renderItem: (item: ITabProps) => JSX.Element | null;
 }
 
 const TopTab: SFC<IProps> = function (props) {

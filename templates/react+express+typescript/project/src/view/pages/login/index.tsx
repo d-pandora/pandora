@@ -10,30 +10,30 @@ import { PROJECT_TOKERN_NAME } from 'utils/constants'
 import './index.less'
 
 interface FormValue {
-  username: string,
-  password: string,
-  remember?: boolean
+  username: string;
+  password: string;
+  remember?: boolean;
 }
 
 // 账号密码存储key
 const LOGIN_FORM_STORAGE_KEY = 'login-form-storage'
 // let PROJECTNAME_TOKEN = ''
 
-function Login() {
+function Login(): JSX.Element {
   const storage = localStorage.getItem('login-form-storage')
 
   const storageJson = storage ? JSON.stringify(storage) as any : { username: '', password: '' }
 
   const [formValue, setFormValue]: [FormValue, React.Dispatch<React.SetStateAction<FormValue>>] = useState(storageJson)
 
-  function cacheFormValue(value: any) {
+  function cacheFormValue(value: any): void {
     setFormValue({
       ...formValue,
       ...value,
     })
   }
 
-  async function handleLogin() {
+  async function handleLogin(): Promise<void> {
     if (formValue.remember) {
       localStorage.setItem(LOGIN_FORM_STORAGE_KEY, JSON.stringify({
         username: formValue.username,

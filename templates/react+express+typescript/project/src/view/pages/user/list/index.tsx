@@ -13,7 +13,7 @@ import Form, {
   RangePickerItem,
 } from 'components/form/index'
 import AddEdit, { ImperativeHandles } from './addEdit'
-import { userListStore } from './store'
+import userListStore from './store'
 
 export default function UserList() {
   const addEdit = useRef<ImperativeHandles>(null)
@@ -39,7 +39,6 @@ export default function UserList() {
   }
 
   function onPageChange(current: number) {
-
     actions.fetchTableData({ ...state.formValue, currentPage: current })
   }
 

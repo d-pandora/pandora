@@ -21,7 +21,7 @@ export default class UserController {
   @ResponseBody
   public async getUserList(
     @QueryParam('id') id: number,
-  ) {
+  ): Promise<any> {
     this.UserService.getUserList(id)
     await new Promise((re, rj) => {
       setTimeout(() => re(true), 2000)

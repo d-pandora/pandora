@@ -1,14 +1,14 @@
 import { createStore } from 'east-store'
 
 export interface ITab {
-  value: string, // tab上显示的文字
-  title?: string, // 鼠标hover时提示
-  key: string,
+  value: string; // tab上显示的文字
+  title?: string; // 鼠标hover时提示
+  key: string;
 }
 
 interface TabData {
-  tabs: ITab[],
-  activeKey: string,
+  tabs: ITab[];
+  activeKey: string;
 }
 
 const initTabData: TabData = {
@@ -17,8 +17,8 @@ const initTabData: TabData = {
 }
 
 interface IPersistedStorage<S> {
-  set(key: string, value: S): void
-  get(key: string): S | null
+  set(key: string, value: S): void;
+  get(key: string): S | null;
   generateKey?(name: string): string;
 }
 
@@ -37,7 +37,7 @@ const createStorage = <T>(name: string): IPersistedStorage<T> => ({
 
 const storage = createStorage<TabData>('topTab')
 
-export const topTabStore = createStore(initTabData, {
+const topTabStore = createStore(initTabData, {
 
   updateTabData: (value: ITab) => async (state) => {
     state = {
@@ -77,3 +77,5 @@ export const topTabStore = createStore(initTabData, {
 }, {
   persist: storage,
 })
+
+export default topTabStore

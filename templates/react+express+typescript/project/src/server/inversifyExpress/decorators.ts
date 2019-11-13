@@ -3,14 +3,14 @@ import interfaces from './interfaces'
 import { METADATA_KEY, PARAMETER_TYPE } from './constants'
 
 export function Controller(path: string, ...middleWares: interfaces.Middleware[]) {
-  return function (target: any) {
+  return function (target: any): void {
     const metadata = { target, path, middleWares }
     Reflect.defineMetadata(METADATA_KEY.controller, metadata, target)
   }
 }
 
 function Method(method: interfaces.METHOD_TYPE, path: string, ...middleWares: interfaces.Middleware[]): interfaces.HandlerDecorator {
-  return function (target: any, methodName: string) {
+  return function (target: any, methodName: string): void {
     const metadata: interfaces.ControllerMethodMetadata = {
       methodName,
       method,
@@ -49,7 +49,7 @@ export function Delete(path: string, ...middleWares: interfaces.Middleware[]): i
 }
 
 function Params(type: PARAMETER_TYPE, parameterName: string): ParameterDecorator {
-  return function (target: any, methodName: string, index : number) {
+  return function (target: any, methodName: string, index: number) {
     const metadata: interfaces.ParameterMetadata = {
       type,
       parameterName,
@@ -86,7 +86,7 @@ export const Session = paramDecoratorFactory(PARAMETER_TYPE.SESSION)
 export const Next = paramDecoratorFactory(PARAMETER_TYPE.NEXT)
 
 export function After(reducer: (result: any, req: express.Request, res: express.Response, next: express.RequestHandler) => void) {
-  return function (target: any, methodName: string) {
+  return function (target: any, methodName: string): void {
     if (methodName) {
       Reflect.defineMetadata(METADATA_KEY.controllerAfter, reducer, target.constructor, methodName)
     } else {

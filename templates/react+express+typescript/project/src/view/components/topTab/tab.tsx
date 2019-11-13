@@ -5,10 +5,10 @@ import { ITab } from './store'
 type ClickEvent = React.MouseEvent<HTMLDivElement, MouseEvent>
 
 export interface ITabProps {
-  item: ITab,
-  active?: boolean,
-  onClick?: (item: ITab) => void,
-  onClose?: (item: ITab) => void,
+  item: ITab;
+  active?: boolean;
+  onClick?: (item: ITab) => void;
+  onClose?: (item: ITab) => void;
 }
 
 function Tab(props: ITabProps) {

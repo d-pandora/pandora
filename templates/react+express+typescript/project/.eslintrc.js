@@ -4,7 +4,18 @@ module.exports = {
   //   'alloy/react',
   //   'alloy/typescript',
   // ],
-  extends: ["airbnb-typescript"],
+  // extends: ["airbnb-typescript"],
+  'extends': [
+		'eslint-config-airbnb',
+		'plugin:@typescript-eslint/recommended'
+	],
+
+	parser: '@typescript-eslint/parser',
+	plugins: [
+		'@typescript-eslint',
+		'@typescript-eslint/eslint-plugin',
+		'react'
+	],
   env: {
     // 这里填入你的项目用到的环境
     // 它们预定义了不同环境的全局变量，比如：
@@ -32,10 +43,8 @@ module.exports = {
     "no-prototype-builtins": 0,
     "no-restricted-syntax": 0,
     "class-methods-use-this": 0,
-    "import/no-cycle": 0,
     "react/jsx-props-no-spreading": 0,
     "react/destructuring-assignment": 0,
-    "import/prefer-default-export": 0,
     "jsx-a11y/anchor-is-valid": 0,
     "jsx-a11y/no-static-element-interactions": 0,
     "jsx-a11y/click-events-have-key-events": 0,
@@ -46,6 +55,11 @@ module.exports = {
     "no-param-reassign": 0,
     "@typescript-eslint/no-unused-vars": 0,
     "implicit-arrow-linebreak": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/interface-name-prefix": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/no-explicit-any": 0,
   },
   "settings": {
     "react": {

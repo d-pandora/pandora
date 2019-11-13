@@ -30,7 +30,7 @@ const treeData = [
 ]
 
 
-export const userListStore = createStore({
+const userListStore = createStore({
   tableData: {
     totalCount: 0,
     currentPage: 1,
@@ -48,8 +48,6 @@ export const userListStore = createStore({
     return state
   },
   setFormValue: () => (state) => {
-    const t = state?.tableData?.currentPage
-
     state.formValue = {
       ...initFormValue,
     }
@@ -61,3 +59,5 @@ export const userListStore = createStore({
     return state
   },
 })
+
+export default userListStore

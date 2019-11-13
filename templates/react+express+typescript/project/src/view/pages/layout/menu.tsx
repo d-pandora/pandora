@@ -7,13 +7,13 @@ import { OPEN_TOPTAB_EVENT } from 'utils/constants'
 const { SubMenu } = Menu
 
 interface IMenu {
-  name: string,
-  url: string,
-  icon?: string,
-  children?: IMenu[],
+  name: string;
+  url: string;
+  icon?: string;
+  children?: IMenu[];
 }
 export interface IProps {
-  data: IMenu[],
+  data: IMenu[];
 }
 
 function MenuComponent(props: IProps) {

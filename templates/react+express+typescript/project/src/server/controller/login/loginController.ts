@@ -27,7 +27,7 @@ export default class LoginController {
   public async login(
     @RequestBody('username') username: string,
     @RequestBody('password') password: string,
-  ) {
+  ): Promise<string> {
     const result = await this.loginService.checkUser(username, password)
 
     if (result) {

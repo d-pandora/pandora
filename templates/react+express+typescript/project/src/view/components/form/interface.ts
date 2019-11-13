@@ -5,12 +5,10 @@ import { InputNumberProps } from 'antd/es/input-number'
 import { RadioProps } from 'antd/es/radio'
 import { CheckboxProps } from 'antd/es/checkbox'
 import { TreeSelectProps } from 'antd/es/tree-select'
-import { DatePickerProps, RangePickerProps, RangePickerValue } from 'antd/es/date-picker/interface'
-
-export { RangePickerValue }
+import { DatePickerProps, RangePickerProps } from 'antd/es/date-picker/interface'
 
 export interface FormProps extends FormComponentProps {
-  className?: string,
+  className?: string;
   children: React.ReactNode;
   formValue: { [key: string]: any };
   cacheFormValue: Function;
@@ -19,8 +17,8 @@ export interface FormProps extends FormComponentProps {
 interface FormItemProps {
   id: string;
   formItemLayout?: {
-    labelCol: { span: number },
-    wrapperCol: { span: number },
+    labelCol: { span: number };
+    wrapperCol: { span: number };
   };
   span?: number;
   rules?: any[];
@@ -40,10 +38,10 @@ export interface InputNumberItemProps extends FormItemProps, Omit<InputNumberPro
 }
 
 export interface SelectItemProps extends FormItemProps, Omit<SelectProps, OmitAttrs> {
-  optionValueKey: string,
-  optionLabelKey: string,
-  optionPinyinKey?: string,
-  options: any[]
+  optionValueKey: string;
+  optionLabelKey: string;
+  optionPinyinKey?: string;
+  options: any[];
 }
 
 export interface RadioItemProps extends FormItemProps, Omit<RadioProps, OmitAttrs> {

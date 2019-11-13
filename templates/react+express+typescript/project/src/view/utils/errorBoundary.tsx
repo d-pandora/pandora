@@ -4,7 +4,7 @@ interface IProps {
   children: React.ReactNode;
 }
 interface IState {
-  hasError: boolean,
+  hasError: boolean;
 }
 
 /**

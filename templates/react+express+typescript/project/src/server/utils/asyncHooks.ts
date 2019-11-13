@@ -12,8 +12,8 @@ function print(format: any, ...args: any[]) {
 let currentCtxId = -1
 
 interface Context {
-  id: number
-  [key: string]: any,
+  id: number;
+  [key: string]: any;
 }
 
 export default class AsyncHooks {
