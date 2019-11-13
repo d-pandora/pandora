@@ -54,6 +54,8 @@ module.exports = {
     "@typescript-eslint/interface-name-prefix": 0,
     "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/no-explicit-any": 0,
+    "object-curly-newline": 0,
+    "no-unused-expressions": 0,
   },
   "settings": {
     "react": {
@@ -63,7 +65,6 @@ module.exports = {
       node: {
           extensions: ['.js', '.jsx', '.ts', '.tsx'],
           moduleDirectory: ['node_modules', 'src/server', 'src/view'],
-          
       },
   },
   }

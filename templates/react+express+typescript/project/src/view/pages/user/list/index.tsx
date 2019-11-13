@@ -1,6 +1,6 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Table, Button, Col } from 'antd'
+import { Table, Button, Col, Modal } from 'antd'
 import moment from 'moment'
 import Form, {
   InputItem,
@@ -12,13 +12,16 @@ import Form, {
   DatePickerItem,
   RangePickerItem,
 } from 'components/form/index'
+import UploadExcel, { UploadExcelHandles } from 'components/upload/excel'
 import AddEdit, { ImperativeHandles } from './addEdit'
 import userListStore from './store'
 
 export default function UserList() {
   const addEdit = useRef<ImperativeHandles>(null)
+  const uploadRef = useRef<UploadExcelHandles>(null)
 
   const [state, actions] = userListStore.useState()
+  const [visible, setVisible] = useState(false)
 
   function handleEdit(record: any) {
     if (addEdit && addEdit.current) {
@@ -119,6 +122,10 @@ export default function UserList() {
     ]
   }
 
+  function handleImport() {
+    uploadRef.current?.handleUpload()
+  }
+
   return (
     <div>
       <Form
@@ -185,6 +192,7 @@ export default function UserList() {
         </Col>
       </Form>
       <Button className="mb8 mt8" type="primary" onClick={handleAdd}>新增</Button>
+      <Button className="mb8 mt8" type="primary" onClick={() => setVisible(true)}>上传文件</Button>
       <Table
         // loading={state.tableData.loading}
         columns={getColumns()}
@@ -200,6 +208,17 @@ export default function UserList() {
         }}
       />
       <AddEdit ref={addEdit} />
+      <Modal
+        title="上传文件"
+        visible={visible}
+        onOk={handleImport}
+        onCancel={() => setVisible(false)}
+      >
+        <UploadExcel
+          ref={uploadRef}
+          url="/api/test"
+        />
+      </Modal>
     </div>
   )
 }

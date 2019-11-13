@@ -1,5 +1,6 @@
 import { message } from 'antd'
 import { PROJECT_TOKERN_NAME } from 'utils/constants'
+import { url } from 'inspector'
 
 export function fetchJSON(url: string, params: any) {
   const token = localStorage.getItem(PROJECT_TOKERN_NAME)
@@ -81,6 +82,8 @@ const fetchJSONByMethod = (method: string, headers?: any) => (url: string) => (q
   }
   return fetchJSON(queryUrl, params)
 }
+
+export const fetchFormData = (url: string, formData: FormData) => fetchJSON(url, { method: 'POST', body: formData })
 
 export const fetchJSONByGet = fetchJSONByMethod('GET')
 
