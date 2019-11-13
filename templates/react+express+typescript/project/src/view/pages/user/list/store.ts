@@ -48,6 +48,8 @@ export const userListStore = createStore({
     return state
   },
   setFormValue: () => (state) => {
+    const t = state?.tableData?.currentPage
+
     state.formValue = {
       ...initFormValue,
     }
