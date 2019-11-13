@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { fetchJSONByGet } from 'utils/fetchApi'
+import { fetchUserListApi } from 'api/user'
 import { createStore } from 'east-store'
 
 const initFormValue = {
@@ -54,7 +54,7 @@ const userListStore = createStore({
     return state
   },
   fetchTableData: (query) => async (state) => {
-    const result = await fetchJSONByGet('/api/user/list')(query)
+    const result = await fetchUserListApi(query)
     state.tableData = result
     return state
   },

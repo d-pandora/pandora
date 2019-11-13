@@ -20,7 +20,6 @@ function Form(props: FormProps): JSX.Element {
   )
 }
 
-
 export default AntdForm.create<FormProps>({
   onFieldsChange(props, field) {
     const key = Object.keys(field)[0]

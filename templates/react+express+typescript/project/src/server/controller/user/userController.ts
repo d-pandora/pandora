@@ -31,10 +31,11 @@ export default class UserController {
       currentPage: 1,
       pageSize: 20,
       data: [{
+        id: 1,
         inputItem: 'inputItem',
         inputNumberItem: 1,
-        selectItem: 1,
-        radioItem: 1,
+        selectItem: 2,
+        radioItem: 2,
         checkboxItem: 1,
         treeSelectItem: [1],
         datePickerItem: new Date(),

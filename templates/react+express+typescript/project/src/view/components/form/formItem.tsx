@@ -95,7 +95,7 @@ export function SelectItem(props: SelectItemProps) {
               {options && options.map((option, index) => (
                 <Option
                   key={index.toString()}
-                  value={option[optionValueKey || 'code'].toString()}
+                  value={option[optionValueKey || 'code']}
                 >
                   {option[optionLabelKey || 'mean']}
                 </Option>
@@ -128,7 +128,7 @@ export function RadioItem(props: RadioItemProps) {
               {options && options.map((option, index) => (
                 <Radio
                   key={index.toString()}
-                  value={optionValueKey && option[optionValueKey].toString()}
+                  value={optionValueKey && option[optionValueKey]}
                 >
                   {optionLabelKey && option[optionLabelKey]}
                 </Radio>
