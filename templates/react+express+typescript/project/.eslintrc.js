@@ -53,7 +53,7 @@ module.exports = {
     "no-shadow": 0,
     "func-names": 0,
     "no-param-reassign": 0,
-    "@typescript-eslint/no-unused-vars": 0,
+    "@typescript-eslint/no-unused-vars": ['error'],
     "implicit-arrow-linebreak": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
     "@typescript-eslint/no-namespace": "off",

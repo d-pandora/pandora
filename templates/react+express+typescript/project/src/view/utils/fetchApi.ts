@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { message } from 'antd'
 import { PROJECT_TOKERN_NAME } from 'utils/constants'
 

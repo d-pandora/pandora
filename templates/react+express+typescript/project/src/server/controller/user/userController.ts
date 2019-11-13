@@ -23,7 +23,7 @@ export default class UserController {
     @QueryParam('id') id: number,
   ): Promise<any> {
     this.UserService.getUserList(id)
-    await new Promise((re, rj) => {
+    await new Promise((re) => {
       setTimeout(() => re(true), 2000)
     })
     return {
