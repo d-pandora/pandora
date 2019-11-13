@@ -1,11 +1,5 @@
 module.exports = {
-  // extends: [
-  //   'alloy',
-  //   'alloy/react',
-  //   'alloy/typescript',
-  // ],
-  // extends: ["airbnb-typescript"],
-  'extends': [
+  extends: [
 		'eslint-config-airbnb',
 		'plugin:@typescript-eslint/recommended'
 	],
