@@ -25,6 +25,7 @@ if (process.env.NODE_ENV === 'localdev') {
       new winston.transports.Console(),
     ],
     format: winston.format.combine(
+      winston.format.colorize(),
       winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss,SSS' }),
       winston.format.printf((info) => {
         let traceId

@@ -1,7 +1,8 @@
 import React, { useState, ReactNode, useImperativeHandle, forwardRef } from 'react'
-import { Upload, Icon, Alert, List, message } from 'antd'
+import { Upload, Icon, Alert, List, message, Button } from 'antd'
 import { RcFile, UploadFile } from 'antd/es/upload/interface'
 import { fetchFormData } from 'utils/fetchApi'
+import './style.less'
 
 export interface UploadExcelProps {
   disabled?: boolean;
@@ -11,7 +12,9 @@ export interface UploadExcelProps {
   url: string;
   // true auto upload when file validate success, default false;
   flashUpload?: boolean;
-  onChange?: (fileList: UploadFile[]) => void | PromiseLike<void>;
+  onChange?: (fileList: RcFile[]) => void | PromiseLike<void>;
+  // 导入结果头部提示
+  messageTip?: (result?: UploadResult) => ReactNode | string;
 }
 
 interface ErrorProps {
@@ -19,33 +22,42 @@ interface ErrorProps {
   message: string;
 }
 
+interface UploadResult {
+  data: any;
+  errorList: ErrorProps[];
+}
+
 export interface UploadExcelHandles {
   handleUpload(): void;
-  getFileList(): UploadFile[];
+  getFileList(): RcFile[];
 }
 
 function UploadExcel(props: UploadExcelProps, ref?: React.Ref<UploadExcelHandles>): JSX.Element {
-  const { disabled, maxLength, uploadText, maxSize, url, flashUpload } = props
+  const { disabled, maxLength, uploadText, maxSize, url, flashUpload, messageTip } = props
 
-  const [fileList, setFileList] = useState<UploadFile[]>([])
+  const [fileList, setFileList] = useState<RcFile[]>([])
 
   const [errorList, setErrorList] = useState<ErrorProps[]>([])
+
+  const [uploadResult, setUploadResult] = useState<UploadResult>()
 
   async function handleUpload() {
     setErrorList([])
     const formData = new FormData()
     fileList.forEach((file: any) => {
-      formData.append('files[]', file.originFileObj)
+      formData.append('files', file)
     })
-    const result = await fetchFormData(url, formData)
-    if (result.errorList && result.errorList.length) {
-      setErrorList(result.errorList)
-    } else {
+    const result: UploadResult = await fetchFormData(url, formData)
+    if (result) {
       message.success('上传成功！')
     }
+    if (result.errorList && result.errorList.length) {
+      setErrorList(result.errorList)
+    }
+    setUploadResult(result)
   }
 
-  function getFileList(): UploadFile[] {
+  function getFileList(): RcFile[] {
     return fileList
   }
 
@@ -58,44 +70,46 @@ function UploadExcel(props: UploadExcelProps, ref?: React.Ref<UploadExcelHandles
   function handleBeforeUpload(file: RcFile): boolean {
     if (maxSize && maxSize < file.size) {
       message.error('文件大小超过限制，请重新上传！')
-    } else if (!file.name.includes('.xlsx')) {
-      message.error('请上传excel格式的文件！')
-    } else {
-      setFileList([...fileList, file])
+      return false
     }
+    if (!file.name.includes('.xlsx')) {
+      message.error('请上传excel格式的文件！')
+      return false
+    }
+    setFileList([...fileList, file])
     return !!flashUpload
   }
 
-  function handleChange({ file, fileList }: { file: UploadFile; fileList: UploadFile[]}) {
-    setFileList(fileList)
+  function handleChange({ file }: { file: UploadFile }) {
     if (file.status === 'done' && flashUpload) {
       handleUpload()
     }
   }
 
+  function handleRemove(file: UploadFile) {
+    fileList.splice(fileList.findIndex((f) => f.uid === file.uid), 1)
+    setFileList([...fileList])
+  }
+
   const uploadButton = (
-    <div>
+    <Button type="primary">
       <Icon type="upload" />
       {uploadText || '上传文件'}
-    </div>
+    </Button>
   )
 
   return (
-    <div>
+    <div className="upload-excel">
       <Upload
         fileList={fileList}
         beforeUpload={handleBeforeUpload}
-        // onRemove={handleRemove}
         onChange={handleChange}
+        onRemove={handleRemove}
       >
         {disabled || (maxLength && fileList.length >= maxLength) ? null : uploadButton}
       </Upload>
-      <div className="error-message">
-        <Alert
-          type="error"
-          message={<span style={{ color: 'red' }} key="gateway error">导入失败，请检查文件</span>}
-          banner
-        />
+      <div className="error-message mt16">
+        {messageTip ? messageTip(uploadResult) : null}
         <Alert
           key="dfa"
           type="error"
@@ -105,7 +119,7 @@ function UploadExcel(props: UploadExcelProps, ref?: React.Ref<UploadExcelHandles
                 itemLayout="horizontal"
                 dataSource={errorList}
                 renderItem={(item) => (
-                  <List.Item title={`第${item.index + 1}行，${item.message}`} />
+                  <List.Item>{`第${item.index + 1}行，${item.message}`}</List.Item>
                 )}
               />
             )

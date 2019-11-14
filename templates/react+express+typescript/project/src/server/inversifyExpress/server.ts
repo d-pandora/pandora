@@ -73,16 +73,23 @@ export default class InversifyExpressServer {
 
       const method = controller[methodName].bind(controller)
       let args = this.extractParameters(req, res, next, parameterMetadata)
-      if (controllerBeforeMetadata) {
-        args = await controllerBeforeMetadata(args, req, res, next)
-      }
-      let result = await method(...args)
-      this.logger.info(`${req.method} ${req.path} ====> result`, result)
-      if (controllerAfterMetadata) {
-        result = await controllerAfterMetadata(result, req, res, next)
-      }
-      if (result && !result.headersSent) {
-        res.send(result)
+      try {
+        if (controllerBeforeMetadata) {
+          args = await controllerBeforeMetadata(args, req, res, next)
+        }
+        let result = await method(...args)
+        this.logger.info(`${req.method} ${req.path} ====> result`, result)
+        if (controllerAfterMetadata) {
+          result = await controllerAfterMetadata(result, req, res, next)
+        }
+        if (result && !result.headersSent) {
+          res.send(result)
+        }
+      } catch (error) {
+        this.logger.error(error.message)
+        if (controllerAfterMetadata) {
+          controllerAfterMetadata(error, req, res, next)
+        }
       }
     }
   }

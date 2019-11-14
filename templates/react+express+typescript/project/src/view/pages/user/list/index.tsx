@@ -13,6 +13,7 @@ import Form, {
   RangePickerItem,
 } from 'components/form/index'
 import UploadExcel, { UploadExcelHandles } from 'components/upload/excel'
+import { fetchUploadUserApi } from 'api/user'
 import AddEdit, { ImperativeHandles } from './addEdit'
 import userListStore from './store'
 
@@ -191,7 +192,7 @@ export default function UserList() {
           <Button type="primary" onClick={handleSubmit}>submit</Button>
         </Col>
       </Form>
-      <Button className="mb8 mt8" type="primary" onClick={handleAdd}>新增</Button>
+      <Button className="mb8 mt8 mr16" type="primary" onClick={handleAdd}>新增</Button>
       <Button className="mb8 mt8" type="primary" onClick={() => setVisible(true)}>上传文件</Button>
       <Table
         // loading={state.tableData.loading}
@@ -216,7 +217,9 @@ export default function UserList() {
       >
         <UploadExcel
           ref={uploadRef}
-          url="/api/test"
+          url={fetchUploadUserApi}
+          maxLength={1}
+          messageTip={(result) => result?.data && (<div>共{result?.data?.totalCount}条, 成功{result?.data?.success}条, 失败{result?.data?.fail}条</div>)}
         />
       </Modal>
     </div>

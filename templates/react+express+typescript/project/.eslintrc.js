@@ -56,6 +56,7 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": 0,
     "object-curly-newline": 0,
     "no-unused-expressions": 0,
+    "react/jsx-one-expression-per-line": 0,
   },
   "settings": {
     "react": {

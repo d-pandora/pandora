@@ -1,6 +1,5 @@
 import { message } from 'antd'
 import { PROJECT_TOKERN_NAME } from 'utils/constants'
-import { url } from 'inspector'
 
 export function fetchJSON(url: string, params: any) {
   const token = localStorage.getItem(PROJECT_TOKERN_NAME)
@@ -11,7 +10,6 @@ export function fetchJSON(url: string, params: any) {
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
       Connection: 'keep-alive',
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
       ...params.headers,
       authorization: token,
     },
@@ -30,11 +28,11 @@ export function fetchJSON(url: string, params: any) {
       }
       return resp
     })
-    .then((resp) => resp.json()).then((result: { status: number; data: any }) => {
+    .then((resp) => resp.json()).then((result: { status: number; data: any; msg?: string }) => {
       if (result.status) {
         return result.data
       }
-      message.error(result.data, 2)
+      message.error(result.msg, 2)
       return false
     })
 }
@@ -85,13 +83,13 @@ const fetchJSONByMethod = (method: string, headers?: any) => (url: string) => (q
 
 export const fetchFormData = (url: string, formData: FormData) => fetchJSON(url, { method: 'POST', body: formData })
 
-export const fetchJSONByGet = fetchJSONByMethod('GET')
+export const fetchJSONByGet = fetchJSONByMethod('GET', { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' })
 
-export const fetchJSONByPost = fetchJSONByMethod('POST')
+export const fetchJSONByPost = fetchJSONByMethod('POST', { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' })
 
-export const fetchJSONByPut = fetchJSONByMethod('PUT')
+export const fetchJSONByPut = fetchJSONByMethod('PUT', { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' })
 
-export const fetchJSONByDelete = fetchJSONByMethod('DELETE')
+export const fetchJSONByDelete = fetchJSONByMethod('DELETE', { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' })
 
 export const fetchJSONStringByPost = fetchJSONByMethod('POST', { 'Content-Type': 'application/json;charset=UTF-8' })
 
