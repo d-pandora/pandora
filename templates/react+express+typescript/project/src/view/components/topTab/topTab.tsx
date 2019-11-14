@@ -11,7 +11,7 @@ export interface IProps {
 const TopTab: SFC<IProps> = function (props) {
   const { renderItem } = props
 
-  const [state, actions] = topTabStore.useState()
+  const [state, actions] = topTabStore.useStore()
 
   const history = useHistory()
 

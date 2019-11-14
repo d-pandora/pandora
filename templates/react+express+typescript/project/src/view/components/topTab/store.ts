@@ -1,4 +1,4 @@
-import { createStore } from 'east-store'
+import { createStore, IPersistedStorage } from 'east-store'
 
 export interface ITab {
   value: string; // tab上显示的文字
@@ -14,12 +14,6 @@ interface TabData {
 const initTabData: TabData = {
   tabs: [],
   activeKey: '',
-}
-
-interface IPersistedStorage<S> {
-  set(key: string, value: S): void;
-  get(key: string): S | null;
-  generateKey?(name: string): string;
 }
 
 const createStorage = <T>(name: string): IPersistedStorage<T> => ({

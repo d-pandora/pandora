@@ -1,8 +1,10 @@
 import { Logger } from 'winston'
 import xlsx from 'node-xlsx'
+import express from 'express'
 import multer from 'multer'
+import moment from 'moment'
 import {
-  Controller, Get, QueryParam, ResponseBody, Post, Request,
+  Controller, Get, QueryParam, ResponseBody, Post, Request, Response,
 } from 'inversifyExpress/index'
 import { provideNamed, inject } from 'inversifyExpress/ioc'
 import { TYPE } from 'inversifyExpress/constants'
@@ -90,5 +92,37 @@ export default class UserController {
         fail: 80,
       },
     }
+  }
+
+  @Get('api/user/list/export')
+  public async exportUserList(
+    @Response() res: express.Response,
+  ) {
+    const columns = [
+      { key: 'name', title: '用户名称' },
+      { key: 'age', title: '年龄' },
+      { key: 'heigh', title: '身高' },
+      { key: 'sex', title: '性别' },
+      { key: 'mobile', title: '手机号' },
+    ]
+    const data: any = [columns.map((column: any) => column.title)]
+    const option = { '!cols': [{ wch: 20 }, { wch: 20 }, { wch: 20 }, { wch: 60 }, { wch: 60 }] }
+
+    const result = Array.from({ length: 10 }).map((i, index) => ({
+      name: `enochjs${index}`,
+      age: `age${index}`,
+      heigh: `heigh${index}`,
+      sex: `sex${index}`,
+      mobile: `mobile${index}`,
+    }))
+    result.forEach((item: any) => {
+      data.push(columns.map((column) => item[column.key]))
+    })
+    res.attachment(`用户列表-${moment().format('YYYY-MM-DD')}.xlsx`)
+    const buffer = xlsx.build([{
+      name: '用户列表',
+      data,
+    }], option)
+    res.send(buffer)
   }
 }

@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { fetchUserListApi } from 'api/user'
+import { fetchUserListApi, fetchUseListExportApi } from 'api/user'
 import { createStore } from 'east-store'
 
 const initFormValue = {
@@ -39,7 +39,11 @@ const userListStore = createStore({
   },
   formValue: initFormValue,
   treeData,
+  tableLoading: false,
 }, {
+  toggleLoading: () => (state) => {
+    state.tableLoading = !state.tableLoading
+  },
   cacheFormValue: (value: typeof initFormValue) => (state) => {
     state.formValue = {
       ...state.formValue,
@@ -54,9 +58,14 @@ const userListStore = createStore({
     return state
   },
   fetchTableData: (query) => async (state) => {
+    userListStore.getActions().toggleLoading()
     const result = await fetchUserListApi(query)
+    userListStore.getActions().toggleLoading()
     state.tableData = result
     return state
+  },
+  fetchUseListExport: (filename: string, query?: any) => () => {
+    fetchUseListExportApi(query, filename)
   },
 })
 

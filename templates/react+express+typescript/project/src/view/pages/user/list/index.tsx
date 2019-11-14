@@ -21,7 +21,7 @@ export default function UserList() {
   const addEdit = useRef<ImperativeHandles>(null)
   const uploadRef = useRef<UploadExcelHandles>(null)
 
-  const [state, actions] = userListStore.useState()
+  const [state, actions] = userListStore.useStore()
   const [visible, setVisible] = useState(false)
 
   function handleEdit(record: any) {
@@ -127,6 +127,10 @@ export default function UserList() {
     uploadRef.current?.handleUpload()
   }
 
+  function handleExport() {
+    actions.fetchUseListExport('testttt')
+  }
+
   return (
     <div>
       <Form
@@ -192,10 +196,15 @@ export default function UserList() {
           <Button type="primary" onClick={handleSubmit}>submit</Button>
         </Col>
       </Form>
-      <Button className="mb8 mt8 mr16" type="primary" onClick={handleAdd}>新增</Button>
-      <Button className="mb8 mt8" type="primary" onClick={() => setVisible(true)}>上传文件</Button>
+      <div className="mb8 mt8">
+        <Button className="mr16" type="primary" onClick={handleAdd}>新增</Button>
+        <Button className="mr16" type="primary" onClick={() => setVisible(true)}>上传文件</Button>
+        <Button className="mr16" type="primary" onClick={handleExport}>
+          批量导出
+        </Button>
+      </div>
       <Table
-        // loading={state.tableData.loading}
+        loading={state.tableLoading}
         columns={getColumns()}
         dataSource={state.tableData.data}
         bordered

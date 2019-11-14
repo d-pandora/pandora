@@ -1,10 +1,22 @@
 import { message } from 'antd'
 import { PROJECT_TOKERN_NAME } from 'utils/constants'
 
-export function fetchJSON(url: string, params: any) {
-  const token = localStorage.getItem(PROJECT_TOKERN_NAME)
+function checkStatus(resp: Response) {
+  if (resp.status === 302) {
+    window.location.href = '/login'
+  }
+  if (resp.status === 404) {
+    message.error('page not found')
+  }
+  if (resp.status === 403) {
+    message.error('没有权限，请联系运营人员！')
+  }
+  return resp
+}
 
-  const fetchparam = {
+function mergeParams(params: any) {
+  const token = localStorage.getItem(PROJECT_TOKERN_NAME)
+  return {
     ...params,
     credentials: 'include',
     headers: {
@@ -14,28 +26,36 @@ export function fetchJSON(url: string, params: any) {
       authorization: token,
     },
   }
+}
 
-  return fetch(url, fetchparam)
-    .then((resp) => {
-      if (resp.status === 302) {
-        window.location.href = '/login'
-      }
-      if (resp.status === 404) {
-        message.error('page not found')
-      }
-      if (resp.status === 403) {
-        message.error('没有权限，请联系运营人员！')
-      }
-      return resp
-    })
-    .then((resp) => resp.json()).then((result: { status: number; data: any; msg?: string }) => {
+function fetchData(url: string, params: any) {
+  const fetchparam = mergeParams(params)
+  return fetch(url, fetchparam).then((resp) => checkStatus(resp))
+}
+
+const fetchJSON = (url: string, params: any) =>
+  fetchData(url, params)
+    .then((resp) => resp.json())
+    .then((result: { status: number; data: any; msg?: string }) => {
       if (result.status) {
         return result.data
       }
       message.error(result.msg, 2)
       return false
     })
-}
+
+const downloadFetch = (url: string, params: any, filename?: string) =>
+  fetchData(url, params)
+    .then((resp) => resp.blob())
+    .then((blob) => {
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = filename || '导出.xlsx'
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+    })
 
 const buildParams = (obj: any) => {
   if (!obj) {
@@ -50,7 +70,7 @@ const buildParams = (obj: any) => {
   return params.join('&')
 }
 
-const fetchJSONByMethod = (method: string, headers?: any) => (url: string) => (query?: any) => {
+const fetchJSONByMethod = (method: string, headers?: any, download?: boolean) => (url: string) => (query?: any, filename?: string) => {
   const params: any = {
     method,
     headers: headers || {},
@@ -78,6 +98,9 @@ const fetchJSONByMethod = (method: string, headers?: any) => (url: string) => (q
   } else {
     params.body = buildParams(query)
   }
+  if (download) {
+    return downloadFetch(queryUrl, params, filename)
+  }
   return fetchJSON(queryUrl, params)
 }
 
@@ -94,3 +117,5 @@ export const fetchJSONByDelete = fetchJSONByMethod('DELETE', { 'Content-Type': '
 export const fetchJSONStringByPost = fetchJSONByMethod('POST', { 'Content-Type': 'application/json;charset=UTF-8' })
 
 export const fetchJSONStringByPut = fetchJSONByMethod('PUT', { 'Content-Type': 'application/json;charset=UTF-8' })
+
+export const fetchDownloadByGet = fetchJSONByMethod('GET', { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }, true)

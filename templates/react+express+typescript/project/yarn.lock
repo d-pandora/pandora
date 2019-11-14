@@ -2145,9 +2145,9 @@ duplexify@^3.4.2, duplexify@^3.6.0:
     stream-shift "^1.0.0"
 
 east-store@^1.0.0-beta:
-  version "1.0.0-beta"
-  resolved "https://registry.npm.taobao.org/east-store/download/east-store-1.0.0-beta.tgz#13177a8e77384cc6475b87a5535138851c61cc0d"
-  integrity sha1-Exd6jnc4TMZHW4elU1E4hRxhzA0=
+  version "1.0.0-beta.3"
+  resolved "https://registry.npm.taobao.org/east-store/download/east-store-1.0.0-beta.3.tgz#d2be55e12d1454981e025b9599c246d966677622"
+  integrity sha1-0r5V4S0UVJgeAluVmcJG2WZndiI=
   dependencies:
     immer "^5.0.0"
 
@@ -3516,7 +3516,7 @@ image-size@~0.5.0:
 
 immer@^5.0.0:
   version "5.0.0"
-  resolved "https://registry.npm.taobao.org/immer/download/immer-5.0.0.tgz#07f462b7d95f7e86c214a861ecacd766d42b8c0a"
+  resolved "https://registry.npm.taobao.org/immer/download/immer-5.0.0.tgz?cache=0&sync_timestamp=1572467962490&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fimmer%2Fdownload%2Fimmer-5.0.0.tgz#07f462b7d95f7e86c214a861ecacd766d42b8c0a"
   integrity sha1-B/Rit9lffobCFKhh7KzXZtQrjAo=
 
 immutable@^3.7.4:
