@@ -36,7 +36,7 @@ function Tab(props: ITabProps) {
     >
       {value}
       {' '}
-      <Icon type="close" onClick={handleClose} />
+      <Icon className="tab-close" type="close" onClick={handleClose} />
     </div>
   )
 }

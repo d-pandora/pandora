@@ -32,7 +32,6 @@ const createStorage = <T>(name: string): IPersistedStorage<T> => ({
 const storage = createStorage<TabData>('topTab')
 
 const topTabStore = createStore(initTabData, {
-
   updateTabData: (value: ITab) => async (state) => {
     state = {
       tabs: [
