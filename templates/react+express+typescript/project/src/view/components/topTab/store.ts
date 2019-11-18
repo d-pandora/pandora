@@ -6,7 +6,7 @@ export interface ITab {
   key: string;
 }
 
-interface TabData {
+export interface TabData {
   tabs: ITab[];
   activeKey: string;
 }
@@ -32,7 +32,11 @@ const createStorage = <T>(name: string): IPersistedStorage<T> => ({
 const storage = createStorage<TabData>('topTab')
 
 const topTabStore = createStore(initTabData, {
-  updateTabData: (value: ITab) => async (state) => {
+  setTabData: (value: TabData) => (state) => {
+    state.tabs = value.tabs
+    state.activeKey = value.activeKey
+  },
+  updateTabData: (value: ITab) => (state) => {
     state = {
       tabs: [
         ...state.tabs,

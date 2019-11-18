@@ -15,7 +15,7 @@ function Tab(props: ITabProps) {
   const {
     item, active, onClick, onClose,
   } = props
-  const { value, title } = item
+  const { value, title, key } = item
   const handleClick = () => {
     if (typeof onClick === 'function') {
       onClick(item)
@@ -27,11 +27,13 @@ function Tab(props: ITabProps) {
       onClose(item)
     }
   }
+
   return (
     <div
       className={active ? 'tab active-tab' : 'tab'}
       key={title}
       title={title}
+      data-key={key}
       onClick={handleClick}
     >
       {value}
