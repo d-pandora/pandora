@@ -44,7 +44,7 @@ const userListStore = createStore({
   toggleLoading: () => (state) => {
     state.tableLoading = !state.tableLoading
   },
-  cacheFormValue: (value: typeof initFormValue) => (state) => {
+  formFieldChange: (value: typeof initFormValue) => (state) => {
     state.formValue = {
       ...state.formValue,
       ...value,

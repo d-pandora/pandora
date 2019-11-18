@@ -11,15 +11,13 @@ export interface FormProps extends FormComponentProps {
   className?: string;
   children: React.ReactNode;
   formValue: { [key: string]: any };
-  cacheFormValue: Function;
+  formFieldChange: Function;
 }
 
 interface FormItemProps {
   id: string;
-  formItemLayout?: {
-    labelCol: { span: number };
-    wrapperCol: { span: number };
-  };
+  labelCol?: number;
+  wrapperCol?: number;
   span?: number;
   rules?: any[];
   formItemLabel?: string;

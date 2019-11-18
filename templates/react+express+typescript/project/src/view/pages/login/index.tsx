@@ -26,7 +26,7 @@ function Login(): JSX.Element {
 
   const [formValue, setFormValue]: [FormValue, React.Dispatch<React.SetStateAction<FormValue>>] = useState(storageJson)
 
-  function cacheFormValue(value: any): void {
+  function formFieldChange(value: any): void {
     setFormValue({
       ...formValue,
       ...value,
@@ -63,28 +63,31 @@ function Login(): JSX.Element {
     <Form
       className="login-form"
       formValue={formValue}
-      cacheFormValue={cacheFormValue}
+      formFieldChange={formFieldChange}
     >
       <h2 style={{ textAlign: 'center', fontSize: '28px' }}>登  录</h2>
       <InputItem
         size="large"
         rules={[{ required: true }]}
         id="username"
-        formItemLayout={{ labelCol: { span: 5 }, wrapperCol: { span: 24 } }}
+        labelCol={5}
+        wrapperCol={24}
       />
       <InputItem
         size="large"
         type="password"
         rules={[{ required: true }]}
         id="password"
-        formItemLayout={{ labelCol: { span: 5 }, wrapperCol: { span: 24 } }}
+        labelCol={5}
+        wrapperCol={24}
       />
       <label>
         <Col span={8} style={{ padding: 0 }}>
           <CheckboxItem
             id="remember"
             formItemLabel=""
-            formItemLayout={{ labelCol: { span: 5 }, wrapperCol: { span: 24 } }}
+            labelCol={5}
+            wrapperCol={24}
           />
         </Col>
         <Col span={16} style={{ lineHeight: '40px', textAlign: 'right' }}><a>记住密码</a></Col>

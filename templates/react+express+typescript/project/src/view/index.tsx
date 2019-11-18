@@ -1,12 +1,17 @@
 import { render } from 'react-dom'
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
+import { ConfigProvider } from 'antd'
+import zhCN from 'antd/es/locale/zh_CN'
+import 'moment/locale/zh-cn'
 import Router from './routes'
 import './styles/base.less'
 import './styles/index.less'
 
 render(
-  <BrowserRouter>{Router}</BrowserRouter>,
+  <ConfigProvider locale={zhCN}>
+    <BrowserRouter>{Router}</BrowserRouter>
+  </ConfigProvider>,
   document.getElementById('root'),
 )
 

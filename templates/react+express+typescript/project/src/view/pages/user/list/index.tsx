@@ -135,7 +135,7 @@ export default function UserList() {
     <div>
       <Form
         formValue={state.formValue}
-        cacheFormValue={actions.cacheFormValue}
+        formFieldChange={actions.formFieldChange}
       >
         <InputItem
           span={6}
@@ -182,14 +182,16 @@ export default function UserList() {
           span={6}
           id="datePickerItem"
           formItemLabel="DatePickerItem"
-          formItemLayout={{ labelCol: { span: 5 }, wrapperCol: { span: 19 } }}
+          labelCol={5}
+          wrapperCol={14}
         />
         <RangePickerItem
           span={12}
           id="rangePickerItem"
           formItemLabel="RatePickerItem"
           showTime
-          formItemLayout={{ labelCol: { span: 5 }, wrapperCol: { span: 19 } }}
+          labelCol={5}
+          wrapperCol={14}
         />
         <Col style={{ float: 'right', textAlign: 'right' }} className="pull-right">
           <Button className="mr8" onClick={handleReset}>clear</Button>

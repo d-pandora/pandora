@@ -24,7 +24,7 @@ export default AntdForm.create<FormProps>({
   onFieldsChange(props, field) {
     const key = Object.keys(field)[0]
     const fields = props.formValue.fields || {}
-    props.cacheFormValue({ [key]: field[key].value === undefined ? '' : field[key].value, fields: { ...fields, ...field } })
+    props.formFieldChange({ [key]: field[key].value === undefined ? '' : field[key].value, fields: { ...fields, ...field } })
   },
   mapPropsToFields(props) {
     const fields = cloneDeep(props.formValue.fields || {})

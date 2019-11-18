@@ -19,7 +19,7 @@ export default function FormTemplate() {
     rangePickerItem: [moment(), moment()],
   })
 
-  function cacheFormValue(value: any) {
+  function formFieldChange(value: any) {
     setState({
       ...state,
       ...value,
@@ -54,7 +54,7 @@ export default function FormTemplate() {
   return (
     <Form
       formValue={state}
-      cacheFormValue={cacheFormValue}
+      formFieldChange={formFieldChange}
     >
       <InputItem
         span={6}
@@ -107,7 +107,8 @@ export default function FormTemplate() {
         id="rangePickerItem"
         formItemLabel="RatePickerItem"
         showTime
-        formItemLayout={{ labelCol: { span: 5 }, wrapperCol: { span: 19 } }}
+        labelCol={5}
+        wrapperCol={14}
       />
     </Form>
   )
