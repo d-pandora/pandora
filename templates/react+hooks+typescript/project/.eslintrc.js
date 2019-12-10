@@ -57,6 +57,7 @@ module.exports = {
     "object-curly-newline": 0,
     "no-unused-expressions": 0,
     "react/jsx-one-expression-per-line": 0,
+    "no-plusplus": 0,
   },
   "settings": {
     "react": {

@@ -6,7 +6,8 @@ const initFormValue = {
   inputItem: '123456',
   selectItem: '2',
   treeSelectItem: ['0-1'],
-  rangePickerItem: [moment(), moment()],
+  start: moment('2019-11-11'),
+  end: moment(),
 }
 
 const treeData = [

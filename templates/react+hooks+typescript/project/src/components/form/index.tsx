@@ -1,4 +1,6 @@
-import Form, { FormContext } from './formWrapper'
+import Form from './form'
+import SearchForm from './searchForm'
+import FormContext from './formContext'
 
 import {
   InputItem,
@@ -10,6 +12,8 @@ import {
   DatePickerItem,
   RangePickerItem,
 } from './formItem'
+
+import { IFormColumnValue } from './interface'
 
 export default Form
 
@@ -23,4 +27,6 @@ export {
   DatePickerItem,
   RangePickerItem,
   FormContext,
+  SearchForm,
+  IFormColumnValue,
 }

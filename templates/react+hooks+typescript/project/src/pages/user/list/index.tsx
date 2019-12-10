@@ -11,6 +11,8 @@ import Form, {
   TreeSelectItem,
   DatePickerItem,
   RangePickerItem,
+  SearchForm,
+  IFormColumnValue,
 } from 'components/form/index'
 import UploadExcel, { UploadExcelHandles } from 'components/upload/excel'
 import { fetchUploadUserApi } from 'api/user'
@@ -131,73 +133,42 @@ export default function UserList() {
     actions.fetchUseListExport('testttt')
   }
 
+  function getFormColumns() {
+    const formColumns: IFormColumnValue[] = [
+      {
+        type: 'text',
+        id: 'shopId',
+        formItemLabel: 'ID',
+        span: 6,
+      },
+      {
+        type: 'select',
+        id: 'status',
+        formItemLabel: '状态',
+        options: [{ code: 1, mean: 'a' }, { code: 2, mean: 'b' }],
+        optionLabelKey: 'mean',
+        optionValueKey: 'code',
+        span: 6,
+      },
+      {
+        type: 'rangePicker',
+        id: ['start', 'end'],
+        formItemLabel: '日期',
+        allowClear: true,
+        span: 12,
+      },
+    ]
+    return formColumns
+  }
+
   return (
     <div>
-      <Form
+      <SearchForm
+        formColumns={getFormColumns()}
         formValue={state.formValue}
         formFieldChange={actions.formFieldChange}
-      >
-        <InputItem
-          span={6}
-          rules={[{ required: true }]}
-          id="inputItem"
-          formItemLabel="InputItem"
-        />
-        <InputNumberItem
-          span={6}
-          rules={[{ required: true }]}
-          id="inputNumberItem"
-          formItemLabel="InputNumberItem"
-        />
-        <SelectItem
-          span={6}
-          id="selectItem"
-          rules={[{ required: true }]}
-          optionValueKey="code"
-          optionLabelKey="mean"
-          options={[{ code: 1, mean: 'a' }, { code: 2, mean: 'b' }]}
-          formItemLabel="SelectItem"
-        />
-        <RadioItem
-          span={6}
-          id="radioItem"
-          rules={[{ required: true }]}
-          optionValueKey="code"
-          optionLabelKey="mean"
-          options={[{ code: 1, mean: 'a' }, { code: 2, mean: 'b' }]}
-          formItemLabel="RadioItem"
-        />
-        <CheckboxItem
-          span={6}
-          id="checkboxItem"
-          formItemLabel="RadioItem"
-        />
-        <TreeSelectItem
-          span={6}
-          id="treeSelectItem"
-          treeData={state.treeData}
-          formItemLabel="TreeSelectItem"
-        />
-        <DatePickerItem
-          span={6}
-          id="datePickerItem"
-          formItemLabel="DatePickerItem"
-          labelCol={5}
-          wrapperCol={14}
-        />
-        <RangePickerItem
-          span={12}
-          id="rangePickerItem"
-          formItemLabel="RatePickerItem"
-          showTime
-          labelCol={5}
-          wrapperCol={14}
-        />
-        <Col style={{ float: 'right', textAlign: 'right' }} className="pull-right">
-          <Button className="mr8" onClick={handleReset}>clear</Button>
-          <Button type="primary" onClick={handleSubmit}>submit</Button>
-        </Col>
-      </Form>
+        onSearch={handleSubmit}
+      />
       <div className="mb8 mt8">
         <Button className="mr16" type="primary" onClick={handleAdd}>新增</Button>
         <Button className="mr16" type="primary" onClick={() => setVisible(true)}>上传文件</Button>

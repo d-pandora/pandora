@@ -21,6 +21,7 @@ interface FormItemProps {
   span?: number;
   rules?: any[];
   formItemLabel?: string;
+  initialValue?: any;
 }
 
 
@@ -59,4 +60,35 @@ export interface DatePickerItemProps extends FormItemProps, Omit<DatePickerProps
 }
 
 export interface RangePickerItemProps extends FormItemProps, Omit<RangePickerProps, OmitAttrs> {
+}
+
+export interface IFormColumnValue {
+  id: string | string[];
+  type: string;
+  formItemLabel: string;
+  onChange?: Function;
+  options?: any[];
+  optionValueKey?: string;
+  optionLabelKey?: string;
+  optionPinyinKey?: string;
+  allowClear?: boolean;
+  validate?: Function;
+  rules?: any[];
+  span?: number;
+  labelCol?: any;
+  wrapperCol?: any;
+  onSearch?: Function;
+  placeholder?: any;
+  mode?: any;
+  showTime?: boolean | object;
+  format?: string;
+  dropdownMatchSelectWidth?: boolean;
+}
+
+export interface SearchFormProps extends FormComponentProps {
+  formColumns: IFormColumnValue[];
+  formValue: any;
+  formFieldChange: Function;
+  className?: string;
+  onSearch?: Function;
 }
