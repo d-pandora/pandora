@@ -47,6 +47,7 @@
     "antd": "^3.25.2",
     "east-store": "^1.0.0-beta",
     "fixed-data-table-2": "^1.0.1",
+    "history": "^4.10.1",
     "less": "^3.10.3",
     "lodash": "^4.17.15",
     "lodash-es": "^4.17.15",

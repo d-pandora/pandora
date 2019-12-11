@@ -92,3 +92,5 @@ export interface SearchFormProps extends FormComponentProps {
   className?: string;
   onSearch?: Function;
 }
+
+export declare type ValidateCallback<V> = (errors: any, values: V) => void

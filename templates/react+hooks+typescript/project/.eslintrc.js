@@ -58,6 +58,8 @@ module.exports = {
     "no-unused-expressions": 0,
     "react/jsx-one-expression-per-line": 0,
     "no-plusplus": 0,
+    "space-before-function-paren": ["error", "always"],
+    "padded-blocks": [2],
   },
   "settings": {
     "react": {

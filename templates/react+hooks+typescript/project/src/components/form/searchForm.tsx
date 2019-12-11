@@ -9,11 +9,11 @@ import { SearchFormProps, IFormColumnValue } from './interface'
 import './style.less'
 
 
-function SearchForm(props: SearchFormProps): JSX.Element {
+function SearchForm (props: SearchFormProps): JSX.Element {
   const labelCol = 10
   const wrapperCol = 14
 
-  function getText(item: any) {
+  function getText (item: any) {
     return (
       <InputItem
         id={item.id}
@@ -26,7 +26,7 @@ function SearchForm(props: SearchFormProps): JSX.Element {
     )
   }
 
-  function getSelect(item: any) {
+  function getSelect (item: any) {
     return (
       <SelectItem
         id={item.id}
@@ -47,7 +47,7 @@ function SearchForm(props: SearchFormProps): JSX.Element {
     )
   }
 
-  function getDatePicker(item: any) {
+  function getDatePicker (item: any) {
     return (
       <DatePickerItem
         format={item.format}
@@ -61,7 +61,7 @@ function SearchForm(props: SearchFormProps): JSX.Element {
     )
   }
 
-  function getRangePicker(item: any) {
+  function getRangePicker (item: any) {
     return (
       <RangePickerItem
         format={item.format}
@@ -76,7 +76,7 @@ function SearchForm(props: SearchFormProps): JSX.Element {
     )
   }
 
-  function renderFormItem(item: IFormColumnValue) {
+  function renderFormItem (item: IFormColumnValue) {
     switch (item.type) {
       case 'datePicker': return getDatePicker(item)
       case 'select': return getSelect(item)
@@ -86,7 +86,7 @@ function SearchForm(props: SearchFormProps): JSX.Element {
     }
   }
 
-  function renderRow(arr: IFormColumnValue[]) {
+  function renderRow (arr: IFormColumnValue[]) {
     return (
       <div className="clearfix" style={{ zIndex: 100, position: 'relative' }}>
         {
@@ -98,8 +98,8 @@ function SearchForm(props: SearchFormProps): JSX.Element {
     )
   }
 
-  function onSearch() {
-    props?.onSearch()
+  function onSearch () {
+    // props?.onSearch()
   }
 
   return (
@@ -118,7 +118,7 @@ function SearchForm(props: SearchFormProps): JSX.Element {
 }
 
 export default Form.create<SearchFormProps>({
-  onFieldsChange(props, field) {
+  onFieldsChange (props, field) {
     const key = Object.keys(field)[0]
     const fields = props.formValue.fields || {}
     const keysValue: any = {}
@@ -137,7 +137,7 @@ export default Form.create<SearchFormProps>({
       props.formFieldChange({ [key]: field[key].value || '', fields: { ...fields, ...field } })
     }
   },
-  mapPropsToFields(props) {
+  mapPropsToFields (props) {
     const fields = cloneDeep(props.formValue.fields || {})
     props.formColumns.map((item: any) => {
       if (Array.isArray(item.id)) {

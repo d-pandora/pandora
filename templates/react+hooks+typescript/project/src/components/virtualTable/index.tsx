@@ -38,7 +38,7 @@ export interface VirtualTableHandles {
   filterData(filterFn: (record: any) => boolean): void;
 }
 
-function VirtualTable(props: VirtualTableProps, ref?: React.Ref<VirtualTableHandles>) {
+function VirtualTable (props: VirtualTableProps, ref?: React.Ref<VirtualTableHandles>) {
   const { bordered, columns, rowSelection, rowHeight, headerHeight, rowKey, scrollToRow, onRowClick, onRowDoubleClick } = props
   const [list, setList] = useState([] as any[])
   const [checkedAll, setCheckedAll] = useState(false)
@@ -49,21 +49,27 @@ function VirtualTable(props: VirtualTableProps, ref?: React.Ref<VirtualTableHand
   // map datasource
   const dataSourceMap = useMemo(() => {
     const map = new Map()
-    dataSource.forEach((item) => { map.set(item[rowKey], item) })
+    dataSource.forEach((item) => {
+      map.set(item[rowKey], item)
+    })
     return map
   }, [dataSource])
 
   // calc table width
   const calcWidth = useMemo(() => {
     let width = 16 + (rowSelection ? 60 : 0)
-    columns.forEach(((column) => { width += column.width ?? defaultWidth }))
+    columns.forEach(((column) => {
+      width += column.width ?? defaultWidth
+    }))
     return width
   }, [columns])
 
   // rowSelection set rowChecked true
   useEffect(() => {
     if (rowSelection) {
-      dataSource.forEach((item) => { item.rowChecked = false })
+      dataSource.forEach((item) => {
+        item.rowChecked = false
+      })
     }
   }, [])
 
@@ -71,7 +77,7 @@ function VirtualTable(props: VirtualTableProps, ref?: React.Ref<VirtualTableHand
     setList(dataSource)
   }, [dataSource])
 
-  function filterData(Fn: Function) {
+  function filterData (Fn: Function) {
     const filterlist = dataSource.filter((item) => Fn(item))
     const dataMap = new Map()
     filterlist.forEach((item) => dataMap.set(item[rowKey], item))
@@ -83,7 +89,7 @@ function VirtualTable(props: VirtualTableProps, ref?: React.Ref<VirtualTableHand
     setList(filterlist)
   }
 
-  function getSeletedRowKey() {
+  function getSeletedRowKey () {
     return dataSource.filter((item) => item.rowChecked).map((item) => item[rowKey])
   }
 
@@ -92,7 +98,7 @@ function VirtualTable(props: VirtualTableProps, ref?: React.Ref<VirtualTableHand
     filterData,
   }))
 
-  function handleChange(rowIndex: number) {
+  function handleChange (rowIndex: number) {
     list[rowIndex].rowChecked = !list[rowIndex].rowChecked
     dataSource[rowIndex].rowChecked = list[rowIndex].rowChecked
     const checkedLength = list.filter((item) => item.rowChecked).length
@@ -101,7 +107,7 @@ function VirtualTable(props: VirtualTableProps, ref?: React.Ref<VirtualTableHand
     setIndeterminate(!!(checkedLength && checkedLength < list.length))
   }
 
-  function handleSelectAll() {
+  function handleSelectAll () {
     list.forEach((item) => {
       item.rowChecked = !checkedAll
       // change dataSource checked
@@ -111,7 +117,7 @@ function VirtualTable(props: VirtualTableProps, ref?: React.Ref<VirtualTableHand
     setCheckedAll(!checkedAll)
   }
 
-  function getSelectionRow() {
+  function getSelectionRow () {
     return (
       <Column
         key="table-row-selection"
@@ -134,7 +140,7 @@ function VirtualTable(props: VirtualTableProps, ref?: React.Ref<VirtualTableHand
     )
   }
 
-  function getColumns() {
+  function getColumns () {
     let renderColumns = []
     if (rowSelection) {
       renderColumns.push(getSelectionRow())
@@ -154,11 +160,11 @@ function VirtualTable(props: VirtualTableProps, ref?: React.Ref<VirtualTableHand
     return renderColumns
   }
 
-  function getWidth(clentWidth: number) {
+  function getWidth (clentWidth: number) {
     return Math.min(calcWidth, clentWidth)
   }
 
-  function rowClassNameGetter(rowIndex: number) {
+  function rowClassNameGetter (rowIndex: number) {
     if (rowIndex === scrollToRow) {
       return 'active-row'
     }

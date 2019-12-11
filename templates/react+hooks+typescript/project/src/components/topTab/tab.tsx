@@ -11,7 +11,7 @@ export interface ITabProps {
   onClose?: (item: ITab) => void;
 }
 
-function Tab(props: ITabProps) {
+function Tab (props: ITabProps) {
   const {
     item, active, onClick, onClose,
   } = props

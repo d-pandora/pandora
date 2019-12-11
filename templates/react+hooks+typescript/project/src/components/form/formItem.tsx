@@ -21,7 +21,7 @@ const { Option } = Select
 const { TextArea } = Input
 const { RangePicker } = DatePicker
 
-export function InputItem(props: InputItemProps) {
+export function InputItem (props: InputItemProps) {
   const { form } = useContext(FormContext)
   const {
     labelCol, wrapperCol, formItemLabel, rules, id, span, initialValue, ...inputProps
@@ -40,7 +40,7 @@ export function InputItem(props: InputItemProps) {
   )
 }
 
-export function InputNumberItem(props: InputNumberItemProps) {
+export function InputNumberItem (props: InputNumberItemProps) {
   const { form } = useContext(FormContext)
   const {
     labelCol, wrapperCol, formItemLabel, rules, id, span, initialValue, ...inputNumberProps
@@ -59,7 +59,7 @@ export function InputNumberItem(props: InputNumberItemProps) {
   )
 }
 
-export function TextAreaItem(props: TextAreaItemProps) {
+export function TextAreaItem (props: TextAreaItemProps) {
   const { form } = useContext(FormContext)
   const {
     labelCol, wrapperCol, formItemLabel, rules, id, span, initialValue, ...inputProps
@@ -78,7 +78,7 @@ export function TextAreaItem(props: TextAreaItemProps) {
   )
 }
 
-export function SelectItem(props: SelectItemProps) {
+export function SelectItem (props: SelectItemProps) {
   const { form } = useContext(FormContext)
   const {
     labelCol, wrapperCol, formItemLabel, rules, id, optionValueKey, optionLabelKey, options, span, initialValue, ...selectProps
@@ -110,7 +110,7 @@ export function SelectItem(props: SelectItemProps) {
   )
 }
 
-export function RadioItem(props: RadioItemProps) {
+export function RadioItem (props: RadioItemProps) {
   const { form } = useContext(FormContext)
   const {
     labelCol, wrapperCol, formItemLabel, rules, id, optionValueKey, optionLabelKey, options, span, initialValue, ...radioProps
@@ -144,7 +144,7 @@ export function RadioItem(props: RadioItemProps) {
   )
 }
 
-export function CheckboxItem(props: CheckboxItemProps) {
+export function CheckboxItem (props: CheckboxItemProps) {
   const { form } = useContext(FormContext)
   const {
     labelCol, wrapperCol, formItemLabel, rules, id, span, checkBoxLabel, initialValue,
@@ -164,7 +164,7 @@ export function CheckboxItem(props: CheckboxItemProps) {
   )
 }
 
-export function TreeSelectItem(props: TreeSelectItemProps) {
+export function TreeSelectItem (props: TreeSelectItemProps) {
   const { form } = useContext(FormContext)
   const {
     labelCol, wrapperCol, formItemLabel, rules, id, span, initialValue, ...treeSeleteOptions
@@ -183,7 +183,7 @@ export function TreeSelectItem(props: TreeSelectItemProps) {
   )
 }
 
-export function DatePickerItem(props: DatePickerItemProps) {
+export function DatePickerItem (props: DatePickerItemProps) {
   const { form } = useContext(FormContext)
   const {
     labelCol, wrapperCol, formItemLabel, rules, id, span, initialValue, ...datePickerOptions
@@ -202,7 +202,7 @@ export function DatePickerItem(props: DatePickerItemProps) {
   )
 }
 
-export function RangePickerItem(props: RangePickerItemProps) {
+export function RangePickerItem (props: RangePickerItemProps) {
   const { form } = useContext(FormContext)
   const {
     labelCol, wrapperCol, formItemLabel, rules, id, span, initialValue, ...rangePickerOptions

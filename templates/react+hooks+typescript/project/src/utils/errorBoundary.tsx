@@ -13,22 +13,22 @@ interface IState {
  * 等支持了之后需要改成function component
 */
 export default class ErrorBoundary extends React.Component<IProps, IState> {
-  public static getDerivedStateFromError() {
+  public static getDerivedStateFromError () {
     return { hasError: true }
   }
 
-  public constructor(props: IProps) {
+  public constructor (props: IProps) {
     super(props)
     this.state = {
       hasError: false,
     }
   }
 
-  public componentDidCatch() {
+  public componentDidCatch () {
     // 将错误日志上报给服务器
   }
 
-  public render() {
+  public render () {
     const { hasError } = this.state
     if (hasError) {
       return (

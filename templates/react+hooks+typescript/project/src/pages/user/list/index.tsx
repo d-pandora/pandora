@@ -1,16 +1,8 @@
 import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Table, Button, Col, Modal } from 'antd'
+import { Table, Button, Modal } from 'antd'
 import moment from 'moment'
-import Form, {
-  InputItem,
-  InputNumberItem,
-  SelectItem,
-  CheckboxItem,
-  RadioItem,
-  TreeSelectItem,
-  DatePickerItem,
-  RangePickerItem,
+import {
   SearchForm,
   IFormColumnValue,
 } from 'components/form/index'
@@ -19,14 +11,14 @@ import { fetchUploadUserApi } from 'api/user'
 import AddEdit, { ImperativeHandles } from './addEdit'
 import userListStore from './store'
 
-export default function UserList() {
+export default function UserList () {
   const addEdit = useRef<ImperativeHandles>(null)
   const uploadRef = useRef<UploadExcelHandles>(null)
 
   const [state, actions] = userListStore.useStore()
   const [visible, setVisible] = useState(false)
 
-  function handleEdit(record: any) {
+  function handleEdit (record: any) {
     if (addEdit && addEdit.current) {
       addEdit.current.show({
         ...record,
@@ -36,25 +28,25 @@ export default function UserList() {
     }
   }
 
-  function handleSubmit() {
+  function handleSubmit () {
     actions.fetchTableData({ ...state.formValue, currentPage: 1 })
   }
 
-  function handleReset() {
-    actions.setFormValue()
-  }
+  // function handleReset () {
+  //   actions.setFormValue()
+  // }
 
-  function onPageChange(current: number) {
+  function onPageChange (current: number) {
     actions.fetchTableData({ ...state.formValue, currentPage: current })
   }
 
-  function handleAdd() {
+  function handleAdd () {
     if (addEdit && addEdit.current) {
       addEdit.current.show({})
     }
   }
 
-  function getColumns() {
+  function getColumns () {
     return [
       {
         title: '序号',
@@ -125,15 +117,15 @@ export default function UserList() {
     ]
   }
 
-  function handleImport() {
+  function handleImport () {
     uploadRef.current?.handleUpload()
   }
 
-  function handleExport() {
+  function handleExport () {
     actions.fetchUseListExport('testttt')
   }
 
-  function getFormColumns() {
+  function getFormColumns () {
     const formColumns: IFormColumnValue[] = [
       {
         type: 'text',

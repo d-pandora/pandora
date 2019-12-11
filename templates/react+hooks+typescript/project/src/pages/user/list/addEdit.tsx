@@ -1,6 +1,6 @@
-import React, { useState, useImperativeHandle, forwardRef } from 'react'
+import React, { useState, useImperativeHandle, forwardRef, useRef } from 'react'
 import { Drawer, Button } from 'antd'
-import { Moment } from 'moment'
+import moment, { Moment } from 'moment'
 import Form, {
   InputItem,
   InputNumberItem,
@@ -11,6 +11,7 @@ import Form, {
   DatePickerItem,
   RangePickerItem,
 } from 'components/form/index'
+import { FormHandles } from 'components/form/form'
 
 interface FormValue {
   inputItem?: string;
@@ -23,7 +24,7 @@ export interface ImperativeHandles {
   show(formValue: FormValue, type?: 'add' | 'edit'): void;
 }
 
-function addEdit(props: any, ref: React.Ref<ImperativeHandles>) {
+function addEdit (props: any, ref: React.Ref<ImperativeHandles>) {
   const treeData = [
     {
       title: 'Node1',
@@ -55,15 +56,17 @@ function addEdit(props: any, ref: React.Ref<ImperativeHandles>) {
 
   const [formValue, setFormValue] = useState({})
 
+  const formRef = useRef<FormHandles>(null)
+
   useImperativeHandle(ref, () => ({
-    show(formValue: FormValue, type?: 'add' | 'edit') {
+    show (formValue: FormValue, type?: 'add' | 'edit') {
       setFormValue(formValue)
       setVisible(true)
       setType(type || 'add')
     },
   }))
 
-  function formFieldChange(value: any) {
+  function formFieldChange (value: any) {
     setFormValue({
       ...formValue,
       ...value,
@@ -71,11 +74,30 @@ function addEdit(props: any, ref: React.Ref<ImperativeHandles>) {
   }
 
 
-  function handleSave() {
+  function handleSave () {
+    formRef.current?.validate((err: Error, values: any) => {
+      if (!err) {
+        console.log('..../', err, values)
+      }
+    })
+    console.log('....this.ref', formRef.current?.setFormValue({
+      inputItem: 1,
+      inputNumberItem: 1,
+      selectItem: 2,
+      radioItem: 2,
+      checkboxItem: true,
+      treeSelectItem: '0-1',
+      datePickerItem: moment(),
+      rangePickerItem: [moment(), moment()],
+    }))
+    console.log('....this.getvalue', formRef.current?.getFormValue())
+    setTimeout(() => {
+      formRef.current?.clear()
+    }, 300)
     // todo
   }
 
-  function handleCancel() {
+  function handleCancel () {
     setVisible(false)
   }
 
@@ -97,6 +119,7 @@ function addEdit(props: any, ref: React.Ref<ImperativeHandles>) {
       <Form
         formValue={formValue}
         formFieldChange={formFieldChange}
+        wrappedComponentRef={formRef}
       >
         <InputItem
           rules={[{ required: true }]}

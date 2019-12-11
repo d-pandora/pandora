@@ -5,6 +5,6 @@ export const OPEN_TOPTAB_EVENT = 'open_top_tab_event'
 // 菜单列表
 export const menuList = [
   { name: 'Users', url: '/user/list', icon: '' },
-  { name: 'About', url: '/about', icon: '' },
+  { name: 'RiderDetail', url: '/rider/detail', icon: '' },
   { name: 'VirtualTable', url: '/virtual/table', icon: '' },
 ]

@@ -32,7 +32,7 @@ export interface UploadExcelHandles {
   getFileList(): RcFile[];
 }
 
-function UploadExcel(props: UploadExcelProps, ref?: React.Ref<UploadExcelHandles>): JSX.Element {
+function UploadExcel (props: UploadExcelProps, ref?: React.Ref<UploadExcelHandles>): JSX.Element {
   const { disabled, maxLength, uploadText, maxSize, url, flashUpload, messageTip } = props
 
   const [fileList, setFileList] = useState<RcFile[]>([])
@@ -41,7 +41,7 @@ function UploadExcel(props: UploadExcelProps, ref?: React.Ref<UploadExcelHandles
 
   const [uploadResult, setUploadResult] = useState<UploadResult>()
 
-  async function handleUpload() {
+  async function handleUpload () {
     setErrorList([])
     const formData = new FormData()
     fileList.forEach((file: any) => {
@@ -57,7 +57,7 @@ function UploadExcel(props: UploadExcelProps, ref?: React.Ref<UploadExcelHandles
     setUploadResult(result)
   }
 
-  function getFileList(): RcFile[] {
+  function getFileList (): RcFile[] {
     return fileList
   }
 
@@ -67,7 +67,7 @@ function UploadExcel(props: UploadExcelProps, ref?: React.Ref<UploadExcelHandles
     getFileList,
   }))
 
-  function handleBeforeUpload(file: RcFile): boolean {
+  function handleBeforeUpload (file: RcFile): boolean {
     if (maxSize && maxSize < file.size) {
       message.error('文件大小超过限制，请重新上传！')
       return false
@@ -80,13 +80,13 @@ function UploadExcel(props: UploadExcelProps, ref?: React.Ref<UploadExcelHandles
     return !!flashUpload
   }
 
-  function handleChange({ file }: { file: UploadFile }) {
+  function handleChange ({ file }: { file: UploadFile }) {
     if (file.status === 'done' && flashUpload) {
       handleUpload()
     }
   }
 
-  function handleRemove(file: UploadFile) {
+  function handleRemove (file: UploadFile) {
     fileList.splice(fileList.findIndex((f) => f.uid === file.uid), 1)
     setFileList([...fileList])
   }

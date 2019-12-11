@@ -11,7 +11,7 @@ import Form, {
   RangePickerItem,
 } from 'components/form/index'
 
-export default function FormTemplate() {
+export default function FormTemplate () {
   const [state, setState] = useState({
     inputItem: '123456',
     selectItem: '2',
@@ -19,7 +19,7 @@ export default function FormTemplate() {
     rangePickerItem: [moment(), moment()],
   })
 
-  function formFieldChange(value: any) {
+  function formFieldChange (value: any) {
     setState({
       ...state,
       ...value,
