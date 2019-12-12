@@ -7,7 +7,7 @@ import './style.less'
 
 
 function Form (props: FormProps, ref?: React.Ref<FormHandles>): JSX.Element {
-  function setFormValue (value: FormProps['formValue']) {
+  function setFormValue (value: any) {
     props.form.setFieldsValue(value)
   }
 

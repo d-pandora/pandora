@@ -10,8 +10,6 @@ import { DatePickerProps, RangePickerProps } from 'antd/es/date-picker/interface
 export interface FormProps extends FormComponentProps {
   className?: string;
   children: React.ReactNode;
-  formValue: { [key: string]: any };
-  formFieldChange: Function;
 }
 
 interface FormItemProps {
@@ -90,14 +88,15 @@ export interface SearchFormProps extends FormComponentProps {
   formValue: any;
   formFieldChange: Function;
   className?: string;
-  onSearch?: Function;
+  onSearch: Function;
+  onClear?: Function;
 }
 
 export declare type ValidateCallback<V> = (errors: any, values: V) => void
 
 export interface FormHandles {
-  setFormValue(value: FormProps['formValue']): void;
-  getFormValue(): FormProps['formValue'];
-  validate(callback: ValidateCallback<FormProps['formValue']>): void;
+  setFormValue(value: any): void;
+  getFormValue(): any;
+  validate(callback: ValidateCallback<any>): void;
   clear(): void;
 }

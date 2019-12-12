@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useRef } from 'react'
+import { Button } from 'antd'
 import moment from 'moment'
 import Form, {
   InputItem,
@@ -9,23 +10,10 @@ import Form, {
   TreeSelectItem,
   DatePickerItem,
   RangePickerItem,
+  FormHandles,
 } from 'components/form/index'
 
-export default function FormTemplate () {
-  const [state, setState] = useState({
-    inputItem: '123456',
-    selectItem: '2',
-    treeSelectItem: ['0-0-2'],
-    rangePickerItem: [moment(), moment()],
-  })
-
-  function formFieldChange (value: any) {
-    setState({
-      ...state,
-      ...value,
-    })
-  }
-
+export default function FormTamplate () {
   const treeData = [
     {
       title: 'Node1',
@@ -51,65 +39,91 @@ export default function FormTemplate () {
     },
   ]
 
+  const formRef = useRef<FormHandles>(null)
+
+  function handleSetFormValue () {
+    formRef.current?.setFormValue({
+      inputItem: 1,
+      inputNumberItem: 1,
+      selectItem: 2,
+      radioItem: 2,
+      checkboxItem: true,
+      treeSelectItem: '0-1',
+      datePickerItem: moment(),
+      rangePickerItem: [moment(), moment()],
+    })
+  }
+
+  function handleClearFormValue () {
+    formRef.current?.clear()
+  }
+
+  function handleValidateFormValue () {
+    formRef.current?.validate((err: Error, values: any) => {
+      if (!err) {
+        console.log('....', err, values)
+      }
+    })
+  }
+
+
   return (
-    <Form
-      formValue={state}
-      formFieldChange={formFieldChange}
-    >
+    <Form wrappedComponentRef={formRef}>
       <InputItem
-        span={6}
         rules={[{ required: true }]}
         id="inputItem"
         formItemLabel="InputItem"
+        labelCol={7}
       />
       <InputNumberItem
-        span={6}
         rules={[{ required: true }]}
         id="inputNumberItem"
         formItemLabel="InputNumberItem"
+        labelCol={7}
       />
       <SelectItem
-        span={6}
         id="selectItem"
         rules={[{ required: true }]}
         optionValueKey="code"
         optionLabelKey="mean"
         options={[{ code: 1, mean: 'a' }, { code: 2, mean: 'b' }]}
         formItemLabel="SelectItem"
+        labelCol={7}
       />
       <RadioItem
-        span={6}
         id="radioItem"
         rules={[{ required: true }]}
         optionValueKey="code"
         optionLabelKey="mean"
         options={[{ code: 1, mean: 'a' }, { code: 2, mean: 'b' }]}
         formItemLabel="RadioItem"
+        labelCol={7}
       />
       <CheckboxItem
-        span={6}
         id="checkboxItem"
-        formItemLabel="RadioItem"
+        formItemLabel="CheckboxItem"
+        labelCol={7}
       />
       <TreeSelectItem
-        span={6}
         id="treeSelectItem"
         treeData={treeData}
         formItemLabel="TreeSelectItem"
+        labelCol={7}
       />
       <DatePickerItem
-        span={6}
         id="datePickerItem"
         formItemLabel="DatePickerItem"
+        labelCol={7}
       />
       <RangePickerItem
-        span={12}
         id="rangePickerItem"
         formItemLabel="RatePickerItem"
         showTime
-        labelCol={5}
-        wrapperCol={14}
+        labelCol={7}
       />
+      <Button onClick={handleSetFormValue}>set value</Button>
+      <Button onClick={handleClearFormValue}>clear value</Button>
+      <Button onClick={handleValidateFormValue}>validate value</Button>
     </Form>
   )
 }

@@ -12,7 +12,7 @@ const routes = (
   <div className="superman-rider">
     <ErrorBoundary>
       <Suspense fallback={<Spin className="layout-spinning" />}>
-        <Route exact path="/user/list" component={UserList} />
+        <Route exact path="/rider/list" component={UserList} />
         <Route exact path="/virtual/table" component={VirtaulTable} />
         <Route exact path="/rider/detail" component={RiderDetail} />
       </Suspense>

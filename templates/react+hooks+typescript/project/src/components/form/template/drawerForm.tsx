@@ -24,7 +24,7 @@ export interface ImperativeHandles {
   show(formValue: FormValue, type?: 'add' | 'edit'): void;
 }
 
-function addEdit (props: any, ref: React.Ref<ImperativeHandles>) {
+function dawerForm (props: any, ref: React.Ref<ImperativeHandles>) {
   const treeData = [
     {
       title: 'Node1',
@@ -175,14 +175,14 @@ function addEdit (props: any, ref: React.Ref<ImperativeHandles>) {
         }}
       >
         <Button onClick={handleCancel} style={{ marginRight: 8 }}>
-          Cancel
+          取消
         </Button>
         <Button onClick={handleSave} type="primary">
-          Submit
+          确定
         </Button>
       </div>
     </Drawer>
   )
 }
 
-export default forwardRef(addEdit)
+export default forwardRef(dawerForm)

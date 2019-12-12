@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col } from 'antd'
+import { Row, Col, Button } from 'antd'
 import Forbidden from './forbidden/index'
 import BasicInfo from './basicInfo/index'
 import Statistic from './statistic/index'
@@ -19,15 +19,15 @@ export default function Basic (): JSX.Element {
       <div className="content">
         <div className="left">
           <BasicInfo />
-          <Row gutter={8}>
+          <Row gutter={2}>
             <Col span={12}>
               <Statistic />
             </Col>
             <Col span={12}>
               <Account />
             </Col>
-            <Grade />
           </Row>
+          <Grade />
         </div>
         <div className="right">
           <Check />

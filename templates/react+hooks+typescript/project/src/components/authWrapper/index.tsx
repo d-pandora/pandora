@@ -9,7 +9,6 @@ interface IProps {
 export default function AuthWrapper (props: IProps): JSX.Element {
   const { authCode, children } = props
   const [globalConfig] = commonStore.useStore()
-  console.log('authcode', authCode, globalConfig.AUTHCODE, globalConfig.AUTHCODE[authCode])
   if (!globalConfig.AUTHCODE[authCode]) {
     return <div />
   }

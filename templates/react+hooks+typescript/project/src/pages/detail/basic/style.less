@@ -1,9 +1,40 @@
 .rider-basic {
   display: flex;
+  padding: 0 16px;
   height: inherit;
   flex-direction: column;
   .rider-forbidden {
-    margin: 16px;
+    margin: 16px 0;
+    background:rgba(247,94,93,0.15);
+    padding: 10px;
+    color: #666666;
+    .warning {
+      color: #FF8300;
+      margin: 0 8px 0 2px;
+    }
+    .operate {
+      color: #FF8300;
+      user-select: none;
+      margin-left: 8px;
+    }
+  }
+  .panel {
+    background: #fff;
+    padding: 22px 24px;
+    margin-bottom: 16px;
+    .title {
+      font-size: 16px;
+      color: #333333;
+      .count {
+        color: #999999;
+        margin-left: 4px;
+      }
+    }
+    .operate {
+      color: #0083FF;
+      float: right;
+      user-select: none;
+    }
   }
   .content {
     display: flex;
@@ -12,6 +43,7 @@
     flex: 1;
     .left {
       flex: 1;
+      margin-right: 16px;
     }
     .right{
       width: 344px;

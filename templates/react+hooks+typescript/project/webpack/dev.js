@@ -48,7 +48,11 @@ module.exports = {
           { loader: 'css-loader' },
           { loader: 'less-loader',
             options: {
-              modifyVars: { 'font-size-base': '12px' },
+              modifyVars: {
+                "primary-color": "#0083ff",
+                "font-size-base": "14px",
+                "border-radius-base": "2px"
+              },
               javascriptEnabled: true,
             },
           }

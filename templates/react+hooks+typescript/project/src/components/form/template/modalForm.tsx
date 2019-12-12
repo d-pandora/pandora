@@ -24,7 +24,7 @@ export interface ImperativeHandles {
   show(formValue: FormValue, type?: 'add' | 'edit'): void;
 }
 
-function addEdit (props: any, ref: React.Ref<ImperativeHandles>) {
+function modalForm (props: any, ref: React.Ref<ImperativeHandles>) {
   const treeData = [
     {
       title: 'Node1',
@@ -185,4 +185,4 @@ function addEdit (props: any, ref: React.Ref<ImperativeHandles>) {
   )
 }
 
-export default forwardRef(addEdit)
+export default forwardRef(modalForm)

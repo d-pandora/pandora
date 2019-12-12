@@ -4,8 +4,8 @@ import '../style.less'
 
 export default function Qualification (): JSX.Element {
   return (
-    <div className="rider-qualification">
-      接单资格
+    <div className="rider-qualification panel">
+      <div className="title">接单资格</div>
     </div>
   )
 }

@@ -5,9 +5,7 @@ import { cloneDeep } from 'lodash'
 import FormContext from './formContext'
 import { InputItem, SelectItem, RangePickerItem, DatePickerItem } from './index'
 import { SearchFormProps, IFormColumnValue } from './interface'
-
 import './style.less'
-
 
 function SearchForm (props: SearchFormProps): JSX.Element {
   const labelCol = 10
@@ -86,29 +84,23 @@ function SearchForm (props: SearchFormProps): JSX.Element {
     }
   }
 
-  function renderRow (arr: IFormColumnValue[]) {
-    return (
-      <div className="clearfix" style={{ zIndex: 100, position: 'relative' }}>
-        {
-          arr.map((item, key) => (
-            <Col md={item.span || 24} sm={24} key={`key-${key + 1}`} style={{ padding: 0 }}>{renderFormItem(item)}</Col>
-          ))
-        }
-      </div>
-    )
+  function onSearch () {
+    props.onSearch()
   }
 
-  function onSearch () {
-    // props?.onSearch()
+  function handleClear () {
+    props.onClear && props.onClear()
   }
 
   return (
     <Form className={`form-wrapper ${props.className}`}>
       <FormContext.Provider value={props as any}>
         <Row gutter={16}>
-          {renderRow(props.formColumns)}
+          {props.formColumns.map((item, key) => (
+            <Col md={item.span || 24} sm={24} key={`key-${key + 1}`} style={{ padding: 0 }}>{renderFormItem(item)}</Col>
+          ))}
           <span className="pull-right">
-            <Button className="mr10" type="primary">清空</Button>
+            { props.onClear ? <Button className="mr10" onClick={handleClear}>清空</Button> : null}
             <Button className="mr10" type="primary" onClick={onSearch}>搜索</Button>
           </span>
         </Row>
