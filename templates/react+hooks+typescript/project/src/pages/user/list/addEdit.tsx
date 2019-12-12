@@ -10,8 +10,8 @@ import Form, {
   TreeSelectItem,
   DatePickerItem,
   RangePickerItem,
+  FormHandles,
 } from 'components/form/index'
-import { FormHandles } from 'components/form/form'
 
 interface FormValue {
   inputItem?: string;

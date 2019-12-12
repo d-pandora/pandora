@@ -1,16 +1,10 @@
 import React, { forwardRef, useImperativeHandle } from 'react'
 import { Form as AntdForm, Row } from 'antd'
 import FormContext from './formContext'
-import { FormProps, ValidateCallback } from './interface'
+import { FormProps, FormHandles } from './interface'
 
 import './style.less'
 
-export interface FormHandles {
-  setFormValue(value: FormProps['formValue']): void;
-  getFormValue(): FormProps['formValue'];
-  validate(callback: ValidateCallback<FormProps['formValue']>): void;
-  clear(): void;
-}
 
 function Form (props: FormProps, ref?: React.Ref<FormHandles>): JSX.Element {
   function setFormValue (value: FormProps['formValue']) {

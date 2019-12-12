@@ -1,13 +1,16 @@
 import React from 'react'
+import AuthWrapper from 'components/authWrapper/index'
 
 import Header from './header/index'
 import Basic from './basic/index'
 
 export default function RiderDetail () {
   return (
-    <div style={{ display: 'flex', height: '100%', flexDirection: 'column', background: '#F2F2F2' }}>
-      <Header />
-      <Basic />
+    <div className="rider-detail">
+      <AuthWrapper authCode="ALLOW_ASSOCIATE_WORDS">
+        <Header />
+        <Basic />
+      </AuthWrapper>
     </div>
   )
 }

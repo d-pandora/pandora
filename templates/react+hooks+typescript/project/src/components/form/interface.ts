@@ -94,3 +94,10 @@ export interface SearchFormProps extends FormComponentProps {
 }
 
 export declare type ValidateCallback<V> = (errors: any, values: V) => void
+
+export interface FormHandles {
+  setFormValue(value: FormProps['formValue']): void;
+  getFormValue(): FormProps['formValue'];
+  validate(callback: ValidateCallback<FormProps['formValue']>): void;
+  clear(): void;
+}

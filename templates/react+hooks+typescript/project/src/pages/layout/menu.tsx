@@ -47,7 +47,7 @@ function MenuComponent (props: IProps) {
                 )}
               >
                 {
-                  menu.children.map((subMenu: any) => <Menu.Item key={subMenu.url}><span>{subMenu.name}</span></Menu.Item>)
+                  menu.children.map((subMenu: any) => <Menu.Item data-title={subMenu.name} key={subMenu.url}><span>{subMenu.name}</span></Menu.Item>)
                 }
               </SubMenu>
             )

@@ -13,7 +13,7 @@ import {
   RangePickerItem,
 } from './formItem'
 
-import { IFormColumnValue } from './interface'
+import { IFormColumnValue, FormHandles } from './interface'
 
 export default Form
 
@@ -29,4 +29,5 @@ export {
   FormContext,
   SearchForm,
   IFormColumnValue,
+  FormHandles,
 }
