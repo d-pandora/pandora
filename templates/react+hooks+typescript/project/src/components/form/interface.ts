@@ -6,6 +6,7 @@ import { RadioProps } from 'antd/es/radio'
 import { CheckboxProps } from 'antd/es/checkbox'
 import { TreeSelectProps } from 'antd/es/tree-select'
 import { DatePickerProps, RangePickerProps } from 'antd/es/date-picker/interface'
+import { UserSearchSelectProps } from 'components/select/userSearchSelect'
 
 export interface FormProps extends FormComponentProps {
   className?: string;
@@ -81,6 +82,7 @@ export interface IFormColumnValue {
   showTime?: boolean | object;
   format?: string;
   dropdownMatchSelectWidth?: boolean;
+  searchType?: 'user' | 'rider' | 'staff';
 }
 
 export interface SearchFormProps extends FormComponentProps {
@@ -99,4 +101,9 @@ export interface FormHandles {
   getFormValue(): any;
   validate(callback: ValidateCallback<any>): void;
   clear(): void;
+}
+
+
+export interface UserSelectProps extends UserSearchSelectProps, FormItemProps {
+  id: string;
 }

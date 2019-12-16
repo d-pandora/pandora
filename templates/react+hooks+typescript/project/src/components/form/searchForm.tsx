@@ -3,7 +3,7 @@ import { Form, Row, Col, Button } from 'antd'
 import moment from 'moment'
 import { cloneDeep } from 'lodash'
 import FormContext from './formContext'
-import { InputItem, SelectItem, RangePickerItem, DatePickerItem } from './index'
+import { InputItem, SelectItem, RangePickerItem, DatePickerItem, UserSelectItem } from './index'
 import { SearchFormProps, IFormColumnValue } from './interface'
 import './style.less'
 
@@ -74,8 +74,22 @@ function SearchForm (props: SearchFormProps): JSX.Element {
     )
   }
 
+  function getUserSearch (item: any) {
+    return (
+      <UserSelectItem
+        id={item.id}
+        type={item.searchType}
+        labelCol={item.labelCol || labelCol}
+        wrapperCol={item.wrapperCol || wrapperCol}
+        formItemLabel={item.formItemLabel}
+        rules={item.rules}
+      />
+    )
+  }
+
   function renderFormItem (item: IFormColumnValue) {
     switch (item.type) {
+      case 'userSearch': return getUserSearch(item)
       case 'datePicker': return getDatePicker(item)
       case 'select': return getSelect(item)
       case 'rangePicker': return getRangePicker(item)

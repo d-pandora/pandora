@@ -11,6 +11,7 @@ import {
   RadioItem,
   DatePickerItem,
   RangePickerItem,
+  UserSelectItem,
 } from './formItem'
 
 import { IFormColumnValue, FormHandles } from './interface'
@@ -30,4 +31,5 @@ export {
   SearchForm,
   IFormColumnValue,
   FormHandles,
+  UserSelectItem,
 }

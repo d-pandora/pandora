@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import {
   Form, Input, Select, InputNumber, Radio, Checkbox, TreeSelect, DatePicker, Col,
 } from 'antd'
+import UserSearchSelect from 'components/select/userSearchSelect'
 import FormContext from './formContext'
 
 import {
@@ -14,6 +15,7 @@ import {
   TreeSelectItemProps,
   DatePickerItemProps,
   RangePickerItemProps,
+  UserSelectProps,
 } from './interface'
 
 const FormItem = Form.Item
@@ -220,6 +222,25 @@ export function RangePickerItem (props: RangePickerItemProps) {
               key={id.toString()}
               {...rangePickerOptions}
             />,
+          )
+        }
+      </FormItem>
+    </Col>
+  )
+}
+
+export function UserSelectItem (props: UserSelectProps) {
+  const { form } = useContext(FormContext)
+  const { labelCol, wrapperCol, formItemLabel, rules, id, span, initialValue, type } = props
+  return (
+    <Col span={span || 24}>
+      <FormItem labelCol={{ span: labelCol || 10 }} wrapperCol={{ span: wrapperCol || 14 }} label={formItemLabel}>
+        {
+          form.getFieldDecorator(id.toString(), {
+            initialValue,
+            rules: rules || [],
+          })(
+            <UserSearchSelect form={form} type={type} />,
           )
         }
       </FormItem>

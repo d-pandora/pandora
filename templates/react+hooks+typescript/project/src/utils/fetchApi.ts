@@ -1,4 +1,5 @@
 import { message } from 'antd'
+import { API_BATMAN } from './constants'
 
 function checkStatus (resp: Response) {
   if (resp.status === 302) {
@@ -27,7 +28,8 @@ function mergeParams (params: any) {
 
 function fetchData (url: string, params: any) {
   const fetchparam = mergeParams(params)
-  return fetch(url, fetchparam).then((resp) => checkStatus(resp))
+  const realUrl = url.indexOf('http') === -1 ? `${API_BATMAN}/${url}` : url
+  return fetch(realUrl, fetchparam).then((resp) => checkStatus(resp))
 }
 
 const fetchJSON = (url: string, params: any) =>
@@ -73,27 +75,32 @@ const fetchJSONByMethod = (method: string, headers?: any, download?: boolean) =>
     headers: headers || {},
   }
   let queryUrl = url
-  if (method === 'GET') {
-    if (query) {
-      queryUrl += '?'
-      for (const key in query) {
-        if (query.hasOwnProperty(key)) {
-          queryUrl += `&${key}=${query[key] || ''}`
+  switch (method) {
+    case 'GET':
+      if (query) {
+        queryUrl += '?'
+        for (const key in query) {
+          if (query.hasOwnProperty(key)) {
+            queryUrl += `&${key}=${query[key]}`
+          }
         }
       }
-    }
-  } else if (method === 'DELETE') {
-    for (const key in query) {
-      if (query.hasOwnProperty(key)) {
-        queryUrl = queryUrl.replace(`:${key}`, query[key])
-      }
-    }
-  } else if (typeof query === 'string') {
-    params.body = query
-  } else if (headers && headers['Content-Type'] === 'application/json;charset=UTF-8') {
-    params.body = JSON.stringify(query)
-  } else {
-    params.body = buildParams(query)
+      break
+    case 'JSONPOST':
+      query = JSON.stringify(query)
+      params.method = 'POST'
+      params.body = query
+      break
+    case 'JSONPUT':
+      query = JSON.stringify(query)
+      params.method = 'PUT'
+      params.body = query
+      break
+    case 'POST':
+    case 'PUT':
+      params.body = buildParams(query)
+      break
+    default: break
   }
   if (download) {
     return downloadFetch(queryUrl, params, filename)
@@ -103,16 +110,16 @@ const fetchJSONByMethod = (method: string, headers?: any, download?: boolean) =>
 
 export const fetchFormData = (url: string, formData: FormData) => fetchJSON(url, { method: 'POST', body: formData })
 
-export const fetchJSONByGet = fetchJSONByMethod('GET', { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' })
+export const fetchJSONByGet = fetchJSONByMethod('GET')
 
-export const fetchJSONByPost = fetchJSONByMethod('POST', { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' })
+export const fetchJSONByPost = fetchJSONByMethod('POST')
 
-export const fetchJSONByPut = fetchJSONByMethod('PUT', { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' })
+export const fetchJSONByPut = fetchJSONByMethod('PUT')
 
-export const fetchJSONByDelete = fetchJSONByMethod('DELETE', { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' })
+export const fetchJSONByDelete = fetchJSONByMethod('DELETE')
 
-export const fetchJSONStringByPost = fetchJSONByMethod('POST', { 'Content-Type': 'application/json;charset=UTF-8' })
+export const fetchJSONStringByPost = fetchJSONByMethod('JSONPOST', { 'Content-Type': 'application/json;charset=UTF-8' })
 
-export const fetchJSONStringByPut = fetchJSONByMethod('PUT', { 'Content-Type': 'application/json;charset=UTF-8' })
+export const fetchJSONStringByPut = fetchJSONByMethod('JSONPUT', { 'Content-Type': 'application/json;charset=UTF-8' })
 
-export const fetchDownloadByGet = fetchJSONByMethod('GET', { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }, true)
+export const fetchDownloadByGet = fetchJSONByMethod('GET', true)

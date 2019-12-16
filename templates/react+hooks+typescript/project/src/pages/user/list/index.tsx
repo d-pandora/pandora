@@ -149,6 +149,14 @@ export default function UserList () {
         allowClear: true,
         span: 12,
       },
+      {
+        type: 'userSearch',
+        id: 'userSearch',
+        searchType: 'staff',
+        formItemLabel: '员工',
+        allowClear: true,
+        span: 6,
+      },
     ]
     return formColumns
   }
