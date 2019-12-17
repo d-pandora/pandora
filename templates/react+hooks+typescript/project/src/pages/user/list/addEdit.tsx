@@ -11,6 +11,7 @@ import Form, {
   DatePickerItem,
   RangePickerItem,
   FormHandles,
+  UserSelectItem,
 } from 'components/form/index'
 
 interface FormValue {
@@ -78,6 +79,7 @@ function addEdit (props: any, ref: React.Ref<ImperativeHandles>) {
       treeSelectItem: '0-1',
       datePickerItem: moment(),
       rangePickerItem: [moment(), moment()],
+      UserSelectItem: '03796',
     }))
     console.log('....this.getvalue', formRef.current?.getFormValue())
     setTimeout(() => {
@@ -159,6 +161,13 @@ function addEdit (props: any, ref: React.Ref<ImperativeHandles>) {
           formItemLabel="RatePickerItem"
           showTime
           labelCol={7}
+        />
+        <UserSelectItem
+          type="staff"
+          id="UserSelectItem"
+          formItemLabel="UserSelectItem"
+          labelCol={7}
+          rules={[{ required: true }]}
         />
       </Form>
       <div

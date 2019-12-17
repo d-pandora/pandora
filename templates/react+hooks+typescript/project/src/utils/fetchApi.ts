@@ -14,20 +14,16 @@ function checkStatus (resp: Response) {
   return resp
 }
 
-function mergeParams (params: any) {
-  return {
+function fetchData (url: string, params: any) {
+  const fetchparam = {
     ...params,
     credentials: 'include',
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
-      Connection: 'keep-alive',
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
       ...params.headers,
     },
   }
-}
-
-function fetchData (url: string, params: any) {
-  const fetchparam = mergeParams(params)
   const realUrl = url.indexOf('http') === -1 ? `${API_BATMAN}/${url}` : url
   return fetch(realUrl, fetchparam).then((resp) => checkStatus(resp))
 }
@@ -69,7 +65,7 @@ const buildParams = (obj: any) => {
   return params.join('&')
 }
 
-const fetchJSONByMethod = (method: string, headers?: any, download?: boolean) => (url: string) => (query?: any, filename?: string) => {
+const fetchJSONByMethod = (method: string, headers?: any) => (url: string) => (query?: any, filename?: string) => {
   const params: any = {
     method,
     headers: headers || {},
@@ -77,6 +73,7 @@ const fetchJSONByMethod = (method: string, headers?: any, download?: boolean) =>
   let queryUrl = url
   switch (method) {
     case 'GET':
+    case 'DOWNLOAD':
       if (query) {
         queryUrl += '?'
         for (const key in query) {
@@ -102,7 +99,8 @@ const fetchJSONByMethod = (method: string, headers?: any, download?: boolean) =>
       break
     default: break
   }
-  if (download) {
+  if (method === 'DOWNLOAD') {
+    params.method = 'GET'
     return downloadFetch(queryUrl, params, filename)
   }
   return fetchJSON(queryUrl, params)
@@ -122,4 +120,4 @@ export const fetchJSONStringByPost = fetchJSONByMethod('JSONPOST', { 'Content-Ty
 
 export const fetchJSONStringByPut = fetchJSONByMethod('JSONPUT', { 'Content-Type': 'application/json;charset=UTF-8' })
 
-export const fetchDownloadByGet = fetchJSONByMethod('GET', true)
+export const fetchDownloadByGet = fetchJSONByMethod('DOWNLOAD')
