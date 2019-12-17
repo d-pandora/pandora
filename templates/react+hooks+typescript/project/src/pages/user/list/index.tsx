@@ -5,7 +5,7 @@ import moment from 'moment'
 import {
   SearchForm,
   IFormColumnValue,
-} from 'components/form/index'
+} from 'components/form'
 import UploadExcel, { UploadExcelHandles } from 'components/upload/excel'
 import { fetchUploadUserApi } from 'api/user'
 import AddEdit, { ImperativeHandles } from './addEdit'

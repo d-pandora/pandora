@@ -105,9 +105,7 @@ function dawerForm (props: any, ref: React.Ref<ImperativeHandles>) {
         zIndex: 10,
       }}
     >
-      <Form
-        wrappedComponentRef={formRef}
-      >
+      <Form wrappedComponentRef={formRef}>
         <InputItem
           rules={[{ required: true }]}
           id="inputItem"
