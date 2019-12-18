@@ -1,4 +1,11 @@
 {
+  "Icon": {
+    "prefix": "@icon",
+    "body": [
+      "<Icon type=\"${value}\" />"
+    ],
+    "description": "dwa-icon"
+  },
   "SearchForm": {
     "prefix": "@sf",
     "body": [
