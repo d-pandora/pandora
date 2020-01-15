@@ -1,11 +1,12 @@
 {
   "name": "d-pandora",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "cli tool",
   "main": "bin/index.js",
   "bin": {
     "d-pandora": "bin/index.js"
   },
+  "author": "enochjs@163.com",
   "license": "MIT",
   "scripts": {
     "compile": "tsc --watch"
